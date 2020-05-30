@@ -1,0 +1,6 @@
+framework module Pods_Jointify {
+  umbrella header "Pods-Jointify-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -13,15 +13,14 @@ struct CameraButton: View {
         Button(action: {
             // what the button does
             print("Button pressed")
-            
-        }) {
+        }, label: {
             // what the button looks like
             Text("Open camera")
                 .fontWeight(.bold)
                 .font(.title)
                 .foregroundColor(.white)
-            
-        }
+        })
+
         .padding()
         .background(Color.blue)
         .cornerRadius(40)
@@ -31,7 +30,7 @@ struct CameraButton: View {
 
 struct CameraButton_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(ColorScheme.allCases, id: \.hashValue) { colorScheme in
+        ForEach(ColorScheme.allCases, id: \.hashValue) { _ in
             CameraButton()
         }.background(Color("Background")).previewLayout(.sizeThatFits)
     }

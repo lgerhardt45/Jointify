@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76FB0BCAC64D40DE3D042719 /* Pods_Jointify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21F6BA9AA7770A6DA6E8D97A /* Pods_Jointify.framework */; };
 		80094B66247F0F60002A1A27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B65247F0F60002A1A27 /* AppDelegate.swift */; };
 		80094B68247F0F60002A1A27 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B67247F0F60002A1A27 /* SceneDelegate.swift */; };
 		80094B6A247F0F60002A1A27 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B69247F0F60002A1A27 /* ContentView.swift */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		21F6BA9AA7770A6DA6E8D97A /* Pods_Jointify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jointify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		42A522F27D017F9FD101C8F8 /* Pods-Jointify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.release.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.release.xcconfig"; sourceTree = "<group>"; };
 		80094B62247F0F60002A1A27 /* Jointify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jointify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80094B65247F0F60002A1A27 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80094B67247F0F60002A1A27 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +29,7 @@
 		80094B71247F0F6B002A1A27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		80094B73247F0F6B002A1A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80094B7B24806073002A1A27 /* CameraButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraButton.swift; sourceTree = "<group>"; };
+		9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.debug.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76FB0BCAC64D40DE3D042719 /* Pods_Jointify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +49,8 @@
 			children = (
 				80094B64247F0F60002A1A27 /* Jointify */,
 				80094B63247F0F60002A1A27 /* Products */,
+				B6B8CE96A77C97B73D3375F5 /* Pods */,
+				D006AA83BBCB0183CF89E4F6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +85,23 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		B6B8CE96A77C97B73D3375F5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */,
+				42A522F27D017F9FD101C8F8 /* Pods-Jointify.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D006AA83BBCB0183CF89E4F6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				21F6BA9AA7770A6DA6E8D97A /* Pods_Jointify.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -85,6 +109,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80094B76247F0F6B002A1A27 /* Build configuration list for PBXNativeTarget "Jointify" */;
 			buildPhases = (
+				808297452482F66700DB4A1C /* ShellScript */,
+				DE025868040F5896EC01E20C /* [CP] Check Pods Manifest.lock */,
 				80094B5E247F0F60002A1A27 /* Sources */,
 				80094B5F247F0F60002A1A27 /* Frameworks */,
 				80094B60247F0F60002A1A27 /* Resources */,
@@ -143,6 +169,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		808297452482F66700DB4A1C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
+		DE025868040F5896EC01E20C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Jointify-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		80094B5E247F0F60002A1A27 /* Sources */ = {
@@ -286,6 +354,7 @@
 		};
 		80094B77247F0F6B002A1A27 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -306,6 +375,7 @@
 		};
 		80094B78247F0F6B002A1A27 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 42A522F27D017F9FD101C8F8 /* Pods-Jointify.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

@@ -10,11 +10,10 @@
 import SwiftUI
 import AVKit
 
-
 // MARK: ContentView
 struct ContentView: View {
     
-    @State var image: Image? = nil
+    @State var image: Image?
     
     var body: some View {
         ZStack {
