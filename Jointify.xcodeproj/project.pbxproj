@@ -15,7 +15,18 @@
 		80094B6F247F0F6B002A1A27 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80094B6E247F0F6B002A1A27 /* Preview Assets.xcassets */; };
 		80094B72247F0F6B002A1A27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80094B70247F0F6B002A1A27 /* LaunchScreen.storyboard */; };
 		80094B7C24806073002A1A27 /* CameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B7B24806073002A1A27 /* CameraButton.swift */; };
+		808297512483142600DB4A1C /* JointifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808297502483142600DB4A1C /* JointifyTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		808297532483142600DB4A1C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 80094B5A247F0F60002A1A27 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 80094B61247F0F60002A1A27;
+			remoteInfo = Jointify;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		21F6BA9AA7770A6DA6E8D97A /* Pods_Jointify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jointify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,6 +40,9 @@
 		80094B71247F0F6B002A1A27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		80094B73247F0F6B002A1A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80094B7B24806073002A1A27 /* CameraButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraButton.swift; sourceTree = "<group>"; };
+		8082974E2483142600DB4A1C /* JointifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JointifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		808297502483142600DB4A1C /* JointifyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointifyTests.swift; sourceTree = "<group>"; };
+		808297522483142600DB4A1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.debug.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -41,6 +55,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8082974B2483142600DB4A1C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -48,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				80094B64247F0F60002A1A27 /* Jointify */,
+				8082974F2483142600DB4A1C /* JointifyTests */,
 				80094B63247F0F60002A1A27 /* Products */,
 				B6B8CE96A77C97B73D3375F5 /* Pods */,
 				D006AA83BBCB0183CF89E4F6 /* Frameworks */,
@@ -58,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				80094B62247F0F60002A1A27 /* Jointify.app */,
+				8082974E2483142600DB4A1C /* JointifyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +106,15 @@
 				80094B6E247F0F6B002A1A27 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8082974F2483142600DB4A1C /* JointifyTests */ = {
+			isa = PBXGroup;
+			children = (
+				808297502483142600DB4A1C /* JointifyTests.swift */,
+				808297522483142600DB4A1C /* Info.plist */,
+			);
+			path = JointifyTests;
 			sourceTree = "<group>";
 		};
 		B6B8CE96A77C97B73D3375F5 /* Pods */ = {
@@ -124,6 +156,24 @@
 			productReference = 80094B62247F0F60002A1A27 /* Jointify.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8082974D2483142600DB4A1C /* JointifyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 808297552483142600DB4A1C /* Build configuration list for PBXNativeTarget "JointifyTests" */;
+			buildPhases = (
+				8082974A2483142600DB4A1C /* Sources */,
+				8082974B2483142600DB4A1C /* Frameworks */,
+				8082974C2483142600DB4A1C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				808297542483142600DB4A1C /* PBXTargetDependency */,
+			);
+			name = JointifyTests;
+			productName = JointifyTests;
+			productReference = 8082974E2483142600DB4A1C /* JointifyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -136,6 +186,10 @@
 				TargetAttributes = {
 					80094B61247F0F60002A1A27 = {
 						CreatedOnToolsVersion = 11.4.1;
+					};
+					8082974D2483142600DB4A1C = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 80094B61247F0F60002A1A27;
 					};
 				};
 			};
@@ -153,6 +207,7 @@
 			projectRoot = "";
 			targets = (
 				80094B61247F0F60002A1A27 /* Jointify */,
+				8082974D2483142600DB4A1C /* JointifyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -165,6 +220,13 @@
 				80094B72247F0F6B002A1A27 /* LaunchScreen.storyboard in Resources */,
 				80094B6F247F0F6B002A1A27 /* Preview Assets.xcassets in Resources */,
 				80094B6C247F0F6B002A1A27 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8082974C2483142600DB4A1C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +286,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8082974A2483142600DB4A1C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				808297512483142600DB4A1C /* JointifyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		808297542483142600DB4A1C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 80094B61247F0F60002A1A27 /* Jointify */;
+			targetProxy = 808297532483142600DB4A1C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		80094B70247F0F6B002A1A27 /* LaunchScreen.storyboard */ = {
@@ -394,6 +472,46 @@
 			};
 			name = Release;
 		};
+		808297562483142600DB4A1C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4SK5JS59G8;
+				INFOPLIST_FILE = JointifyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = lukasgerhardt.JointifyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Jointify.app/Jointify";
+			};
+			name = Debug;
+		};
+		808297572483142600DB4A1C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4SK5JS59G8;
+				INFOPLIST_FILE = JointifyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = lukasgerhardt.JointifyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Jointify.app/Jointify";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -411,6 +529,15 @@
 			buildConfigurations = (
 				80094B77247F0F6B002A1A27 /* Debug */,
 				80094B78247F0F6B002A1A27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		808297552483142600DB4A1C /* Build configuration list for PBXNativeTarget "JointifyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				808297562483142600DB4A1C /* Debug */,
+				808297572483142600DB4A1C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
