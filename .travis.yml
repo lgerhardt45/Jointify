@@ -1,0 +1,5 @@
+os: osx
+osx_image: xcode11.4
+script:
+  - xcodebuild clean build test -workspace Jointify.xcworkspace -scheme Jointify
+  - ./Pods/SwiftLint/swiftlint
