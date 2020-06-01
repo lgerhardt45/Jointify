@@ -19,4 +19,4 @@ struct Test {
     }
 }
 
-// DONE!
+// Now I'm really done!
