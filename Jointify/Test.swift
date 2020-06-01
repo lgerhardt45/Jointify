@@ -13,4 +13,8 @@ import Foundation
 struct Test {
     let number: Int
     let name: String
+    
+    func printMe() {
+        print("Number: \(number), name: \(name)")
+    }
 }
