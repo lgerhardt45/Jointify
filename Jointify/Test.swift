@@ -18,3 +18,5 @@ struct Test {
         print("Number: \(number), name: \(name)")
     }
 }
+
+// DONE!
