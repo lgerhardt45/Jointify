@@ -16,8 +16,6 @@
 		80094B72247F0F6B002A1A27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80094B70247F0F6B002A1A27 /* LaunchScreen.storyboard */; };
 		80094B7C24806073002A1A27 /* CameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B7B24806073002A1A27 /* CameraButton.swift */; };
 		808297512483142600DB4A1C /* JointifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808297502483142600DB4A1C /* JointifyTests.swift */; };
-		8082976724853ABC00DB4A1C /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8082976624853ABB00DB4A1C /* Test.swift */; };
-		8082976824853ABC00DB4A1C /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8082976624853ABB00DB4A1C /* Test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +43,6 @@
 		8082974E2483142600DB4A1C /* JointifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JointifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		808297502483142600DB4A1C /* JointifyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointifyTests.swift; sourceTree = "<group>"; };
 		808297522483142600DB4A1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8082976624853ABB00DB4A1C /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.debug.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,7 +96,6 @@
 				80094B70247F0F6B002A1A27 /* LaunchScreen.storyboard */,
 				80094B73247F0F6B002A1A27 /* Info.plist */,
 				80094B6D247F0F6B002A1A27 /* Preview Content */,
-				8082976624853ABB00DB4A1C /* Test.swift */,
 			);
 			path = Jointify;
 			sourceTree = "<group>";
@@ -283,7 +279,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8082976724853ABC00DB4A1C /* Test.swift in Sources */,
 				80094B66247F0F60002A1A27 /* AppDelegate.swift in Sources */,
 				80094B68247F0F60002A1A27 /* SceneDelegate.swift in Sources */,
 				80094B7C24806073002A1A27 /* CameraButton.swift in Sources */,
@@ -296,7 +291,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				808297512483142600DB4A1C /* JointifyTests.swift in Sources */,
-				8082976824853ABC00DB4A1C /* Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
