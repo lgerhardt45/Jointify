@@ -16,28 +16,30 @@ struct ContentView: View {
     @State var image: Image?
     @State var showActionSheet: Bool = false
     @State var sourceType: Int = 0 // If source is camerea 0, if source gallery 1
-    let defaultImage: Image = Image("placeholder") // Default image to show to user, before he selected an image
+    @State var showWelcomeScreen: Bool = true
+    //let defaultImage: Image = Image("placeholder") // Default image to show to user, before he selected an image
     
     var body: some View {
         ZStack {
             VStack {
                 Spacer()
-                Spacer()
-                Text("Welcome!")
-                    .fontWeight(.bold)
-                    .font(.system(size: 60))
-                    .foregroundColor(.blue)
-                Spacer()
-                Spacer()
-                CameraButton(showActionSheet: $showActionSheet)
-                Spacer()
-                Text("Your image selection:")
-                    .font(.system(size: 40))
-                    .foregroundColor(.blue)
-                image?
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 250, height: 250)
+                if showWelcomeScreen {
+                    Text("Welcome!")
+                        .fontWeight(.bold)
+                        .font(.system(size: 60))
+                        .foregroundColor(.blue)
+                    Spacer()
+                    CameraButton(showActionSheet: $showActionSheet)
+                } else {
+                    Text("Your image selection:")
+                        .font(.system(size: 40))
+                        .foregroundColor(.blue)
+                    image?
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 250, height: 250)
+                    AnalyzeButton()
+                }
                 Spacer()
             }
             .actionSheet(isPresented: $showActionSheet,
@@ -48,10 +50,12 @@ struct ContentView: View {
                                 ActionSheet.Button.default(Text("Camera"), action: {
                                     self.sourceType = 0
                                     self.showImagePicker.toggle()
-                                }),
+                                    self.showWelcomeScreen.toggle()
+                                    }),
                                 ActionSheet.Button.default(Text("Photo Gallery"), action: {
                                     self.sourceType = 1
                                     self.showImagePicker.toggle()
+                                    self.showWelcomeScreen.toggle()
                                 }),
                                 ActionSheet.Button.cancel()
                             ])
@@ -60,7 +64,7 @@ struct ContentView: View {
                 ImagePicker(isVisible: $showImagePicker, image: $image, sourceType: sourceType)
             }
         }
-        .onAppear { self.image = self.defaultImage}
+        //.onAppear { self.image = self.defaultImage} only needed if we want to display a default picture
     }
 }
 

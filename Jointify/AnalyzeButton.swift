@@ -1,20 +1,21 @@
 //
-//  CameraButton.swift
+//  AnalyzeButton.swift
 //  Jointify
 //
-//  Created by Lukas Gerhardt on 28.05.20.
+//  Created by Niklas Bergmüller on 02.06.20.
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
 import SwiftUI
 
-struct CameraButton: View {
-    @Binding var showActionSheet: Bool
+struct AnalyzeButton: View {
+    
+    @State var showingAnalyzedImageView: Bool = false
     
     var body: some View {
         Button(action: {
             // what the button does
-            self.showActionSheet.toggle()
+            self.showingAnalyzedImageView.toggle()
             print("Button pressed")
         }, label: {
             // what the button looks like
@@ -22,23 +23,18 @@ struct CameraButton: View {
                 Circle()
                     .frame(width: 38, height: 38)
                     .foregroundColor(.white)
-                    .overlay(Image(systemName: "square.and.arrow.up").foregroundColor(Color.blue)) // maybe camera.fill
-                Text("Select an image")
+                    .overlay(Image(systemName: "square.and.arrow.down")
+                    .foregroundColor(Color.blue)) // maybe camera.fill
+                Text("Analyze image")
                     .fontWeight(.bold)
                     .font(.title)
                     .foregroundColor(.white)
             }
-        })
+        }).sheet(isPresented: $showingAnalyzedImageView) {
+            AnalyzedImageView()
+        }
         .padding()
         .background(Color.blue)
         .cornerRadius(40)
-    }
-}
-
-struct CameraButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ForEach(ColorScheme.allCases, id: \.hashValue) { _ in
-            CameraButton(showActionSheet: .constant(false))
-        }.background(Color("Background")).previewLayout(.sizeThatFits)
     }
 }

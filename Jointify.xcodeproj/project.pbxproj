@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21269DBE2486A4760083C7E5 /* AnalyzeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21269DBD2486A4760083C7E5 /* AnalyzeButton.swift */; };
 		2141754124865483005CB6E5 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754024865483005CB6E5 /* ImagePicker.swift */; };
+		2141754924869E14005CB6E5 /* AnalyzedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754824869E14005CB6E5 /* AnalyzedImageView.swift */; };
 		76FB0BCAC64D40DE3D042719 /* Pods_Jointify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21F6BA9AA7770A6DA6E8D97A /* Pods_Jointify.framework */; };
 		80094B66247F0F60002A1A27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B65247F0F60002A1A27 /* AppDelegate.swift */; };
 		80094B68247F0F60002A1A27 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B67247F0F60002A1A27 /* SceneDelegate.swift */; };
@@ -32,7 +34,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		21269DBD2486A4760083C7E5 /* AnalyzeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeButton.swift; sourceTree = "<group>"; };
 		2141754024865483005CB6E5 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		2141754824869E14005CB6E5 /* AnalyzedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzedImageView.swift; sourceTree = "<group>"; };
 		21F6BA9AA7770A6DA6E8D97A /* Pods_Jointify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jointify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A522F27D017F9FD101C8F8 /* Pods-Jointify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.release.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.release.xcconfig"; sourceTree = "<group>"; };
 		80094B62247F0F60002A1A27 /* Jointify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jointify.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				80094B69247F0F60002A1A27 /* ContentView.swift */,
+				2141754824869E14005CB6E5 /* AnalyzedImageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -114,6 +119,7 @@
 				2141754024865483005CB6E5 /* ImagePicker.swift */,
 				80094B67247F0F60002A1A27 /* SceneDelegate.swift */,
 				80094B7B24806073002A1A27 /* CameraButton.swift */,
+				21269DBD2486A4760083C7E5 /* AnalyzeButton.swift */,
 				80094B6B247F0F6B002A1A27 /* Assets.xcassets */,
 				80094B70247F0F6B002A1A27 /* LaunchScreen.storyboard */,
 				80094B73247F0F6B002A1A27 /* Info.plist */,
@@ -303,6 +309,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8082976724853ABC00DB4A1C /* Test.swift in Sources */,
+				21269DBE2486A4760083C7E5 /* AnalyzeButton.swift in Sources */,
+				2141754924869E14005CB6E5 /* AnalyzedImageView.swift in Sources */,
 				80094B66247F0F60002A1A27 /* AppDelegate.swift in Sources */,
 				80094B68247F0F60002A1A27 /* SceneDelegate.swift in Sources */,
 				2141754124865483005CB6E5 /* ImagePicker.swift in Sources */,
