@@ -30,7 +30,10 @@ struct ContentView: View {
                 Spacer()
                 
                 NavigationLink(
-                destination: ChooseInputView(isNavigationBarHidden: $isNavigationBarHidden),
+                    destination: ChooseInputView(
+                        isNavigationBarHidden: $isNavigationBarHidden,
+                        sourceType: 0),
+                    // TODO: don't use hardoced value here
                 isActive: $isShowingSecondView) {
                     Button("Start measurement") {
                         self.isShowingSecondView = true
@@ -45,32 +48,6 @@ struct ContentView: View {
         }
     }
 }
-
-// Previous stuff:
-//       .actionSheet(isPresented: $showActionSheet,
-//                     content: { () -> ActionSheet in ActionSheet(
-//                        title: Text("Select Image"),
-//                        message: Text("Please select an image from the image gallery or use the camera"),
-//                        buttons: [
-//                            ActionSheet.Button.default(Text("Camera"), action: {
-//                                self.sourceType = 0
-//                                self.showImagePicker.toggle()
-//                                self.showWelcomeScreen.toggle()
-//                                }),
-//                            ActionSheet.Button.default(Text("Photo Gallery"), action: {
-//                                self.sourceType = 1
-//                                self.showImagePicker.toggle()
-//                                self.showWelcomeScreen.toggle()
-//                            }),
-//                            ActionSheet.Button.cancel()
-//                        ])
-//        })
-//        if showImagePicker {
-//            ImagePicker(isVisible: $showImagePicker, image: $image, sourceType: sourceType)
-//        }
-//    }
-//    //.onAppear { self.image = self.defaultImage} only needed if we want to display a default picture
-//}
 
 // MARK: - Previews
 struct ContentView_Previews: PreviewProvider {

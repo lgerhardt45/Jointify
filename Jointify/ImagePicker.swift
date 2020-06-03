@@ -12,10 +12,15 @@ struct ImagePicker: UIViewControllerRepresentable {
     
     @Binding var isVisible: Bool
     @Binding var image: Image?
+    @Binding var isShowingSelectedImage: Bool
+    @Binding var imagePickerCanceled: Bool
     var sourceType: Int
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(isVisible: $isVisible, image: $image)
+        Coordinator(isVisible: $isVisible,
+                    image: $image,
+                    isShowingSelectedImage: $isShowingSelectedImage,
+                    imagePickerCanceled: $imagePickerCanceled)
     }
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
@@ -41,10 +46,17 @@ struct ImagePicker: UIViewControllerRepresentable {
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         @Binding var isVisible: Bool
         @Binding var image: Image?
+        @Binding var isShowingSelectedImage: Bool
+        @Binding var imagePickerCanceled: Bool
         
-        init(isVisible: Binding<Bool>, image: Binding<Image?>) {
+        init(isVisible: Binding<Bool>,
+             image: Binding<Image?>,
+             isShowingSelectedImage: Binding<Bool>,
+             imagePickerCanceled: Binding<Bool>) {
             _isVisible = isVisible
             _image = image
+            _isShowingSelectedImage = isShowingSelectedImage
+            _imagePickerCanceled = imagePickerCanceled
         }
         
         func imagePickerController(_ picker: UIImagePickerController,
@@ -53,10 +65,12 @@ struct ImagePicker: UIViewControllerRepresentable {
                 image = Image(uiImage: uiImage)
             }
             isVisible = false
+            isShowingSelectedImage = false
         }
         
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             isVisible = false
+            imagePickerCanceled.toggle()
         }
     }
 }
