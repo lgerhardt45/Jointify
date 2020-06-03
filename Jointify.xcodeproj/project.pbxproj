@@ -21,6 +21,8 @@
 		808297512483142600DB4A1C /* JointifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808297502483142600DB4A1C /* JointifyTests.swift */; };
 		8082976724853ABC00DB4A1C /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8082976624853ABB00DB4A1C /* Test.swift */; };
 		8082976824853ABC00DB4A1C /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8082976624853ABB00DB4A1C /* Test.swift */; };
+		8082976A2487091600DB4A1C /* ChooseInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808297692487091600DB4A1C /* ChooseInputView.swift */; };
+		8082976B2487091700DB4A1C /* ChooseInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808297692487091600DB4A1C /* ChooseInputView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,7 @@
 		808297502483142600DB4A1C /* JointifyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointifyTests.swift; sourceTree = "<group>"; };
 		808297522483142600DB4A1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8082976624853ABB00DB4A1C /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		808297692487091600DB4A1C /* ChooseInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseInputView.swift; sourceTree = "<group>"; };
 		9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.debug.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +82,7 @@
 			children = (
 				80094B69247F0F60002A1A27 /* ContentView.swift */,
 				2141754824869E14005CB6E5 /* AnalyzedImageView.swift */,
+				808297692487091600DB4A1C /* ChooseInputView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -314,6 +318,7 @@
 				80094B66247F0F60002A1A27 /* AppDelegate.swift in Sources */,
 				80094B68247F0F60002A1A27 /* SceneDelegate.swift in Sources */,
 				2141754124865483005CB6E5 /* ImagePicker.swift in Sources */,
+				8082976A2487091600DB4A1C /* ChooseInputView.swift in Sources */,
 				80094B7C24806073002A1A27 /* CameraButton.swift in Sources */,
 				80094B6A247F0F60002A1A27 /* ContentView.swift in Sources */,
 			);
@@ -323,6 +328,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8082976B2487091700DB4A1C /* ChooseInputView.swift in Sources */,
 				808297512483142600DB4A1C /* JointifyTests.swift in Sources */,
 				8082976824853ABC00DB4A1C /* Test.swift in Sources */,
 			);

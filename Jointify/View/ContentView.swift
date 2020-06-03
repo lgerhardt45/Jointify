@@ -10,65 +10,69 @@
 import SwiftUI
 import AVKit
 
-// MARK: ContentView
+// MARK: - ContentView
 struct ContentView: View {
-    @State var showImagePicker: Bool = false
-    @State var image: Image?
-    @State var showActionSheet: Bool = false
-    @State var sourceType: Int = 0 // If source is camerea 0, if source gallery 1
-    @State var showWelcomeScreen: Bool = true
-    //let defaultImage: Image = Image("placeholder") // Default image to show to user, before he selected an image
-    
+
+    @State private var isShowingSecondView = false
+    @State var isNavigationBarHidden: Bool = true
+
     var body: some View {
-        ZStack {
+        NavigationView {
             VStack {
                 Spacer()
-                if showWelcomeScreen {
-                    Text("Welcome!")
-                        .fontWeight(.bold)
-                        .font(.system(size: 60))
-                        .foregroundColor(.blue)
-                    Spacer()
-                    CameraButton(showActionSheet: $showActionSheet)
-                } else {
-                    Text("Your image selection:")
-                        .font(.system(size: 40))
-                        .foregroundColor(.blue)
-                    image?
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 250, height: 250)
-                    AnalyzeButton()
+                
+                Text("Welcome!")
+                    .fontWeight(.bold)
+                    .font(.largeTitle)
+                    .foregroundColor(.blue)
+                    .navigationBarTitle("")
+                    .navigationBarHidden(self.isNavigationBarHidden)
+                Spacer()
+                
+                NavigationLink(
+                destination: ChooseInputView(isNavigationBarHidden: $isNavigationBarHidden),
+                isActive: $isShowingSecondView) {
+                    Button("Start measurement") {
+                        self.isShowingSecondView = true
+                    }.padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(5)
                 }
+                
                 Spacer()
             }
-            .actionSheet(isPresented: $showActionSheet,
-                         content: { () -> ActionSheet in ActionSheet(
-                            title: Text("Select Image"),
-                            message: Text("Please select an image from the image gallery or use the camera"),
-                            buttons: [
-                                ActionSheet.Button.default(Text("Camera"), action: {
-                                    self.sourceType = 0
-                                    self.showImagePicker.toggle()
-                                    self.showWelcomeScreen.toggle()
-                                    }),
-                                ActionSheet.Button.default(Text("Photo Gallery"), action: {
-                                    self.sourceType = 1
-                                    self.showImagePicker.toggle()
-                                    self.showWelcomeScreen.toggle()
-                                }),
-                                ActionSheet.Button.cancel()
-                            ])
-            })
-            if showImagePicker {
-                ImagePicker(isVisible: $showImagePicker, image: $image, sourceType: sourceType)
-            }
         }
-        //.onAppear { self.image = self.defaultImage} only needed if we want to display a default picture
     }
 }
 
-// MARK: Previews
+// Previous stuff:
+//       .actionSheet(isPresented: $showActionSheet,
+//                     content: { () -> ActionSheet in ActionSheet(
+//                        title: Text("Select Image"),
+//                        message: Text("Please select an image from the image gallery or use the camera"),
+//                        buttons: [
+//                            ActionSheet.Button.default(Text("Camera"), action: {
+//                                self.sourceType = 0
+//                                self.showImagePicker.toggle()
+//                                self.showWelcomeScreen.toggle()
+//                                }),
+//                            ActionSheet.Button.default(Text("Photo Gallery"), action: {
+//                                self.sourceType = 1
+//                                self.showImagePicker.toggle()
+//                                self.showWelcomeScreen.toggle()
+//                            }),
+//                            ActionSheet.Button.cancel()
+//                        ])
+//        })
+//        if showImagePicker {
+//            ImagePicker(isVisible: $showImagePicker, image: $image, sourceType: sourceType)
+//        }
+//    }
+//    //.onAppear { self.image = self.defaultImage} only needed if we want to display a default picture
+//}
+
+// MARK: - Previews
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

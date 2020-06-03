@@ -6,8 +6,10 @@
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
+// MARK: Imports
 import SwiftUI
 
+// MARK: - AnalyzedImageView
 struct AnalyzedImageView: View {
     
     var body: some View {
@@ -29,4 +31,11 @@ struct AnalyzedImageView: View {
         }.navigationBarTitle("Analyzed Image")
     }
     
+}
+
+// MARK: - Previews
+struct AnalyzedImageView_Previews: PreviewProvider {
+    static var previews: some View {
+        AnalyzedImageView()
+    }
 }
