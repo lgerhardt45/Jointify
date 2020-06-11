@@ -11,10 +11,15 @@ import SwiftUI
 
 // MARK: - ChooseInputView
 struct ChooseInputView: View {
+    
+    // MARK: Binding Instance Properties
     @Binding var isNavigationBarHidden: Bool
+    
+    // MARK: State Instance Properties
+    // ImagePickerVariables
     @State var image: Image?
     @State var isImagePickerShowing: Bool = false
-    @State var sourceType: Int // if 0 camera is selected, if 1 gallery
+    @State var sourceType: Int // 0 camera, 1 gallery
     @State var isShowingSelectionButton: Bool = true
     // if this is changed, the "your selected image" screen will be loaded in the same view
     @State var imagePickerCanceled: Bool = false
@@ -75,26 +80,27 @@ struct ChooseInputView: View {
                         .onAppear {
                             self.isNavigationBarHidden = false
                     }
-                } else if !imagePickerCanceled {
-                    Text("Your image selection:")
-                        .font(.system(size: 40))
-                        .foregroundColor(.blue)
-                    image?
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 250, height: 250)
-                    NavigationLink(
-                        destination: AnalyzedImageView(),
-                        // TODO: better solution
-                    isActive: $isShowingAnalyzedImageView) {
-                        Button("Analyze image") {
-                            self.isShowingAnalyzedImageView = true
-                        }.padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(5)
-                    }
                 }
+//                else if !imagePickerCanceled {
+//                    Text("Your image selection:")
+//                        .font(.system(size: 40))
+//                        .foregroundColor(.blue)
+//                    image?
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .frame(width: 250, height: 250)
+//                    NavigationLink(
+//                        destination: AnalyzedImageView(),
+//                        // TODO: better solution
+//                    isActive: $isShowingAnalyzedImageView) {
+//                        Button("Analyze image") {
+//                            self.isShowingAnalyzedImageView = true
+//                        }.padding()
+//                            .background(Color.blue)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(5)
+//                    }
+//                }
             }
         }
     }

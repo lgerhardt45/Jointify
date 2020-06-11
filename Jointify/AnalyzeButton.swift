@@ -38,3 +38,9 @@ struct AnalyzeButton: View {
         .cornerRadius(40)
     }
 }
+
+struct AnalyzeButton_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}

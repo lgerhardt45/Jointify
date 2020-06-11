@@ -20,7 +20,6 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 Spacer()
-                
                 Text("Welcome!")
                     .fontWeight(.bold)
                     .font(.largeTitle)

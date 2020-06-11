@@ -6,16 +6,22 @@
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
+// MARK: Imports
 import SwiftUI
 
+// MARK: - ImagePicker
 struct ImagePicker: UIViewControllerRepresentable {
     
+    // MARK: Binding 
     @Binding var isVisible: Bool
     @Binding var image: Image?
     @Binding var isShowingSelectedImage: Bool
     @Binding var imagePickerCanceled: Bool
+    
+    // MARK: Object Variables
     var sourceType: Int
     
+    // MARK: Functions
     func makeCoordinator() -> Coordinator {
         Coordinator(isVisible: $isVisible,
                     image: $image,
