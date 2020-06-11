@@ -1,0 +1,71 @@
+//
+//  WelcomeView.swift
+//  Jointify
+//
+//  Created by Lukas Gerhardt on 11.06.20.
+//  Copyright © 2020 Lukas Gerhardt. All rights reserved.
+//
+
+// MARK: Imports
+import SwiftUI
+
+// MARK: - ImportView
+struct WelcomeView: View {
+    
+    // MARK: State Instance Properties
+    // used to hide the navigation bar
+    @State private var isNavigationBarHidden: Bool = true
+    // used to activate the NavigationLink (next screen)
+    @State private var newRecordButtonPressed: Bool = false
+    
+    // MARK: Body
+    var body: some View {
+        
+        // starts the navigation stack (screens are loaded "on top" of each other
+        NavigationView {
+            VStack {
+                
+                // Spacing from top
+                Spacer().frame(height: 100)
+                
+                VStack {
+                    Text("Hallo Patient")
+                        .font(.largeTitle)
+                    Spacer()
+                        .frame(height: 50)
+                    
+                    NavigationLink(
+                        destination: InstructionsView(
+                            isNavigationBarHidden: $isNavigationBarHidden),
+                        isActive: $newRecordButtonPressed) {
+                            DefaultButton(action: {
+                                self.newRecordButtonPressed.toggle()
+                                self.isNavigationBarHidden = false
+                            }) {
+                                Text("Neue Aufnahme")
+                            }
+                    }
+                }
+                
+                Spacer(minLength: 50)
+                
+                PastRecords()
+                    .frame(height: 250) // size from bottom
+                
+            }.onAppear(perform: {
+                // always hidden on this screen
+                self.isNavigationBarHidden = true
+            })
+                // hide the navigation bar
+                .navigationBarTitle("")
+                .navigationBarHidden(self.isNavigationBarHidden)
+        }
+    }
+}
+
+// MARK: - Previews
+struct WelcomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        WelcomeView()
+    }
+}
