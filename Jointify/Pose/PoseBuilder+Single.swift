@@ -62,3 +62,4 @@ extension PoseBuilder {
         joint.isValid = joint.confidence >= configuration.jointConfidenceThreshold
     }
 }
+

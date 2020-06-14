@@ -12,30 +12,31 @@ import SwiftUI
 // MARK: - AnalyzedImageView
 struct AnalyzedImageView: View {
     
+    let finalImage: UIImage
+    
+    //let finalImg = Image(uiImage: finalImage)
+    
     var body: some View {
         VStack {
-            Spacer()
-            Text("Your analyzed image:")
-                .font(.system(size: 40))
-                .foregroundColor(.blue)
-                .padding()
-            Image("placeholder")
+            //Spacer()
+            //Text("Your analyzed image:")
+                //.font(.system(size: 40))
+                //.foregroundColor(.blue)
+                //.padding()
+            //Image(finalImage)
+            //Image("placeholder")
+           Image(uiImage: finalImage)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 250, height: 250)
-            Text("Thanks a lot!\nDoc Pförringer will get back to you with further feedback.")
-                .font(.system(size: 20))
-                .foregroundColor(.black)
-                .padding()
-            Spacer()
+                .frame(width: 300, height: 300)
+            //Text("Thanks a lot!\nDoc Pförringer will get back to you with further feedback.")
+                //.font(.system(size: 20))
+                //.foregroundColor(.black)
+                //.padding()
+            //Spacer()
         }.navigationBarTitle("Analyzed Image")
     }
     
 }
 
 // MARK: - Previews
-struct AnalyzedImageView_Previews: PreviewProvider {
-    static var previews: some View {
-        AnalyzedImageView()
-    }
-}

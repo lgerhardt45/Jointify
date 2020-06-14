@@ -11,6 +11,7 @@ import SwiftUI
 struct AnalyzeButton: View {
     
     @State var showingAnalyzedImageView: Bool = false
+    @State var finalImage: UIImage?
     
     var body: some View {
         Button(action: {
@@ -31,7 +32,7 @@ struct AnalyzeButton: View {
                     .foregroundColor(.white)
             }
         }).sheet(isPresented: $showingAnalyzedImageView) {
-            AnalyzedImageView()
+            AnalyzedImageView(finalImage: self.finalImage!)
         }
         .padding()
         .background(Color.blue)

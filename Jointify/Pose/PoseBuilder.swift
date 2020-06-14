@@ -30,3 +30,4 @@ struct PoseBuilder {
                                                        y: inputImage.size.height / output.modelInputSize.height)
     }
 }
+

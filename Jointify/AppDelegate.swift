@@ -8,6 +8,8 @@
 
 import UIKit
 
+//https://medium.com/tensorflow/real-time-human-pose-estimation-in-the-browser-with-tensorflow-js-7dd0bc881cd5
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

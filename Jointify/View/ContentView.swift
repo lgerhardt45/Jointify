@@ -25,8 +25,9 @@ struct ContentView: View {
                     .fontWeight(.bold)
                     .font(.largeTitle)
                     .foregroundColor(.blue)
-                    .navigationBarTitle("")
+                    .navigationBarTitle("") //Is this correct here?
                     .navigationBarHidden(self.isNavigationBarHidden)
+                
                 Spacer()
                 
                 NavigationLink(
