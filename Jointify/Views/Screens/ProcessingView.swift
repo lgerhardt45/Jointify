@@ -67,8 +67,9 @@ struct ProcessingView: View {
     }
     
     // MARK: Private Instance Methods
+    /// From https://stackoverflow.com/questions/42665271/swift-get-all-frames-from-video
+    /// takes the NSURL of a video and converts it to an UIImage array by taking frame by frame (one per second)
     private func transformVideoToImageArray(videoUrl: NSURL) -> [UIImage] {
-        // From https://stackoverflow.com/questions/42665271/swift-get-all-frames-from-video
         
         var frames: [UIImage]
         guard let videoUrl = self.videoUrl else {
