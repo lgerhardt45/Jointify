@@ -7,7 +7,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>We need camera access to analyse your measurement</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need camera access to analyse your measurement</string>
+	<string>Camera access is one of the fundamentals of this app</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
