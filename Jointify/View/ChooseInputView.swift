@@ -95,6 +95,8 @@ struct ChooseInputView: View {
                             //
                             self.finalImage = self.poseNet.predict(UIImage(named: "niklas-3")!)
                             //
+                            print(self.poseNet.calcAngleBetweenJoints("left"))
+                            print(self.poseNet.calcAngleBetweenJoints("right"))
                             self.isShowingAnalyzedImageView = true
                         }.padding()
                             .background(Color.blue)

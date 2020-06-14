@@ -140,6 +140,7 @@
 		21777E4124925E6F0044B250 /* Extensions+Types */ = {
 			isa = PBXGroup;
 			children = (
+				21777DDF24921D380044B250 /* UIImage+Extensions.swift */,
 				21777E4224925E6F0044B250 /* CGPoint+Extension.swift */,
 				21777E4324925E6F0044B250 /* CGImage+Extension.swift */,
 			);
@@ -177,7 +178,6 @@
 				21777E4124925E6F0044B250 /* Extensions+Types */,
 				80094B67247F0F60002A1A27 /* SceneDelegate.swift */,
 				80094B7B24806073002A1A27 /* CameraButton.swift */,
-				21777DDF24921D380044B250 /* UIImage+Extensions.swift */,
 				21269DBD2486A4760083C7E5 /* AnalyzeButton.swift */,
 				80094B6B247F0F6B002A1A27 /* Assets.xcassets */,
 				80094B70247F0F6B002A1A27 /* LaunchScreen.storyboard */,

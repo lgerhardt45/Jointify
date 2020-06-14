@@ -15,6 +15,7 @@ import CoreML
 import Vision
 import SwiftUI
 
+
 protocol PoseNetDelegate: AnyObject {
     func poseNet(_ poseNet: PoseNet, didPredict predictions: PoseNetOutput)
 }
@@ -40,6 +41,8 @@ class PoseNet {
     /// PoseNet models are available from the Model Gallery.
     let outputStride = 8
     
+    var degree: Float = 0.0
+    
     
     // The Core ML model that the PoseNet model uses to generate estimates for the poses.
     /// - Note: Other variants of the PoseNet model are available from the Model Gallery.
@@ -48,13 +51,27 @@ class PoseNet {
     /// The set of parameters passed to the pose builder when detecting poses.
     var poseBuilderConfiguration = PoseBuilderConfiguration()
     
+    /// Array of poses that is outputted from the model
+    var poseArray: [Pose] = []
+    
     /// A data structure used to describe a visual connection between two joints.
     struct JointSegment {
         let jointA: Joint.Name
         let jointB: Joint.Name
     }
 
+    //let side: String
+    
     /// An array of joint-pairs that define the lines of a pose's wireframe drawing.
+    /*
+    if side == "left" {
+        let jointSegments = [JointSegment(jointA: .leftHip, jointB: .leftKnee),
+                             JointSegment(jointA: .leftKnee, jointB: .leftAnkle)]
+    } else {
+        let jointSegments = [JointSegment(jointA: .rightHip, jointB: .rightKnee),
+                             JointSegment(jointA: .rightKnee, jointB: .rightAnkle)]
+    }
+    */
     let jointSegments = [
         // The connected joints that are on the left side of the body.
         //JointSegment(jointA: .leftHip, jointB: .leftShoulder),
@@ -98,7 +115,7 @@ class PoseNet {
 
         let dstImage = renderer.image { rendererContext in
             // Draw the current frame as the background for the new image.
-            draw(image: frame, in: rendererContext.cgContext)
+            drawImage(image: frame, in: rendererContext.cgContext)
 
             for pose in poses {
                 // Draw the segment lines.
@@ -117,12 +134,74 @@ class PoseNet {
 
                 // Draw the joints as circles above the segment lines.
                 for joint in pose.joints.values.filter({ $0.isValid }) {
-                    draw(circle: joint, in: rendererContext.cgContext)
+                    
+                    // TODO: add confidence statement
+                    /// IDs of joints can be found here https://github.com/tensorflow/tfjs-models/tree/master/posenet
+                    if joint.name.rawValue > 10 {
+                        drawJoints(circle: joint, in: rendererContext.cgContext)
+                    }
                 }
             }
         }
-
+        
+        /// Draw little box with degree number next to knee joint
+        /*
+        let kneeCoordinateX =
+        let kneeCoordinateY =
+        
+        if side == "left" {
+            id -> 13
+            pose.joint.position.x
+            pose.joint.position.y
+        } else {
+            id -> 14
+        }
+ */
+        
+        
         return dstImage
+    }
+    
+    ///
+    func calcAngleBetweenJoints(_ side: String) -> Float {
+        var jointNames: [String]
+        var jointPositions = [String: Float]()
+        
+        if side == "left" {
+            jointNames = ["leftHip", "leftKnee", "leftAnkle"]
+        } else {
+            jointNames = ["rightHip", "rightKnee", "rightAnkle"]
+        }
+
+        /// TODO: Evaluate if poseArray is even needed
+        for pose in poseArray {
+            for joint in pose.joints.values.filter({ $0.isValid }) {
+                if jointNames.contains(joint.nameToString()) {
+                    jointPositions[joint.nameToString() + "X"] = Float(joint.position.x)
+                    jointPositions[joint.nameToString() + "Y"] = Float(joint.position.y) // TODO: check if negative values are correct
+                }
+            }
+        }
+        
+        /// Create vectors leading from ankle and hip towards knee
+        let vectorKneeHip: [String: Float] = ["X": jointPositions[side + "HipX"]! - jointPositions[side + "KneeX"]!,
+                                              "Y": jointPositions[side + "HipY"]! - jointPositions[side + "KneeY"]!]
+        let vectorKneeAnkle: [String: Float] = ["X": jointPositions[side + "AnkleX"]! - jointPositions[side + "KneeX"]!,
+                                                "Y": jointPositions[side + "AnkleY"]! - jointPositions[side + "KneeY"]!]
+        /// Calculate inner angle of knee
+        let scalarProduct = (vectorKneeHip["X"]! * vectorKneeAnkle["X"]! + vectorKneeHip["Y"]! * vectorKneeAnkle["Y"]!)
+        let amountProduct = sqrt(pow(vectorKneeHip["X"]!, 2) + pow(vectorKneeHip["Y"]!, 2)) *
+            sqrt(pow(vectorKneeAnkle["X"]!, 2) + pow(vectorKneeAnkle["Y"]!, 2))
+        
+        var innerAngle: Float = 0.0
+        
+        // Prevent divided by zero bug
+        if amountProduct != 0.0 {
+            innerAngle = acos(scalarProduct / amountProduct) * 180 / Float.pi
+        } else {
+            print("Error. At least one vector is of size 0")
+        }
+        return innerAngle
     }
 
     /// Vertically flips and draws the given image.
@@ -130,7 +209,7 @@ class PoseNet {
     /// - parameters:
     ///     - image: The image to draw onto the context (vertically flipped).
     ///     - cgContext: The rendering context.
-    func draw(image: CGImage, in cgContext: CGContext) {
+    func drawImage(image: CGImage, in cgContext: CGContext) {
         cgContext.saveGState()
         // The given image is assumed to be upside down; therefore, the context
         // is flipped before rendering the image.
@@ -140,6 +219,7 @@ class PoseNet {
         cgContext.draw(image, in: drawingRect)
         cgContext.restoreGState()
     }
+ 
 
     /// Draws a line between two joints.
     ///
@@ -163,7 +243,7 @@ class PoseNet {
     /// - parameters:
     ///     - circle: A valid joint whose position is used as the circle's center.
     ///     - cgContext: The rendering context.
-    private func draw(circle joint: Joint, in cgContext: CGContext) {
+    private func drawJoints(circle joint: Joint, in cgContext: CGContext) {
         cgContext.setFillColor(jointColor.cgColor)
 
         let rectangle = CGRect(x: joint.position.x - jointRadius, y: joint.position.y - jointRadius,
@@ -202,8 +282,12 @@ class PoseNet {
             let poseBuilder = PoseBuilder(output: poseNetOutput,
                                           configuration: poseBuilderConfiguration,
                                           inputImage: cgImage!)
+            
+            poseArray = [poseBuilder.pose]
+            
+            degree = calcAngleBetweenJoints("left")
 
-            return show(poses: [poseBuilder.pose], on: cgImage!)
+            return show(poses: poseArray, on: cgImage!)
         } else {
             // TODO: error message
             print("Error.")
