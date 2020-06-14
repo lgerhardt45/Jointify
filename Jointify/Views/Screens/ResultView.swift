@@ -17,6 +17,7 @@ struct ResultView: View {
     @State private var homeButtonPressed: Bool = false
 
     // MARK: Stored Instance Properties
+    // TODO: change to Measurement
     let minValue: Int = -55
     let maxValue: Int = 90
     let previousMinValue: Int = -45
@@ -28,24 +29,24 @@ struct ResultView: View {
             NavigationLink(destination: WelcomeView(), isActive: $homeButtonPressed) {
                 EmptyView()
             }
-            Text("Das Video wurde analysiert:")
+            Text("The video was analysed:")
                 .multilineTextAlignment(.center)
                 .font(.largeTitle)
             
             Spacer().frame(height: 50)
             
             VStack(spacing: 8.0) {
-                Text("Deine Werte:").font(.title)
+                Text("Your measurements:").font(.title)
                 
                 VStack {
                     HStack(spacing: 16.0) {
-                        Text("Max-Wert: \(maxValue)°")
-                        Text("Min-Wert: \(minValue)°")
+                        Text("Max value: \(maxValue)°")
+                        Text("Min value: \(minValue)°")
                     }
                     HStack(spacing: 16.0) {
-                        Text("vorher: \(previousMaxValue)°")
+                        Text("previous: \(previousMaxValue)°")
                             .foregroundColor(Color.gray)
-                        Text("vorher: \(previousMinValue)°")
+                        Text("previous: \(previousMinValue)°")
                             .foregroundColor(Color.gray)
                     }
                 }

@@ -13,17 +13,18 @@ import SwiftUI
 struct PastRecords: View {
     
     // MARK: Stored Instance Properties
-    let records: [Record] = []
+    let records: [Measurement] = []
     
     // MARK: Body
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Deine vorherigen Messungen:")
+            Text("Your Records:")
                 .font(.headline)        .padding(.horizontal)
             
             // change to records when mock data added
             List(1..<6) { row in
                 RoundedRectangle(cornerRadius: 5)
+                    .padding(.vertical, 4.0)
                     .frame(height: 50.0, alignment: .leading)
                     .foregroundColor(/*@START_MENU_TOKEN@*/.gray/*@END_MENU_TOKEN@*/)
                     .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)

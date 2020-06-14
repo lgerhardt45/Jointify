@@ -28,9 +28,14 @@ struct WelcomeView: View {
                 // Spacing from top
                 Spacer().frame(height: 100)
                 
-                VStack {
-                    Text("Hallo Patient")
+                VStack(spacing: 16.0) {
+                    Text("Hello!")
                         .font(.largeTitle)
+                    
+                    Text("Start your remote joint measurement journey.")
+                        .font(.subheadline)
+                        .padding(.horizontal, 64.0)
+                    
                     Spacer()
                         .frame(height: 50)
                     
@@ -42,7 +47,9 @@ struct WelcomeView: View {
                                 self.newRecordButtonPressed.toggle()
                                 self.isNavigationBarHidden = false
                             }) {
-                                Text("Neue Aufnahme")
+                                Text("Start")
+                                .frame(width: 150)
+
                             }
                     }
                 }

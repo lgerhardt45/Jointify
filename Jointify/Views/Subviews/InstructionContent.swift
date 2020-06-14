@@ -12,9 +12,6 @@ import SwiftUI
 // MARK: - InstructionContent
 struct InstructionContent: View {
     
-    // MARK: Binding Instance Properties
-    @Binding var showVideoPickerSheet: Bool
-    
     // MARK: Body
     var body: some View {
         VStack {
@@ -26,15 +23,6 @@ struct InstructionContent: View {
             // Mocking with "llorem ipsum"
             InstructionBulletPoint(number: 1)
             InstructionBulletPoint(number: 2)
-            
-            Spacer().frame(height: 50)
-            
-            DefaultButton(action: {
-                // on pressing button, the sheet (see below) opens
-                self.showVideoPickerSheet = true
-            }) {
-                Text("Confirm")
-            }
         }
         
     }
