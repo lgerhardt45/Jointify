@@ -31,6 +31,8 @@
 		80FB49DD2496A80C001C3DAE /* MeasurementFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */; };
 		80FB49DE2496A81D001C3DAE /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFDB7124924DF00021124C /* ResultView.swift */; };
 		80FB49DF2496A828001C3DAE /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F1D4DA2491994B00ACCEC2 /* DefaultButton.swift */; };
+		80FB49E02496A953001C3DAE /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F1D4D7249198B600ACCEC2 /* WelcomeView.swift */; };
+		80FB49E12496A959001C3DAE /* ProcessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFDB6E24924A450021124C /* ProcessingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -373,6 +375,8 @@
 				80FB49DE2496A81D001C3DAE /* ResultView.swift in Sources */,
 				80FB49DD2496A80C001C3DAE /* MeasurementFrame.swift in Sources */,
 				80FB49D924967F84001C3DAE /* Measurement.swift in Sources */,
+				80FB49E02496A953001C3DAE /* WelcomeView.swift in Sources */,
+				80FB49E12496A959001C3DAE /* ProcessingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
