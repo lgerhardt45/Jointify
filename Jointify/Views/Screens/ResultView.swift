@@ -26,9 +26,7 @@ struct ResultView: View {
     // MARK: Body
     var body: some View {
         VStack {
-            NavigationLink(destination: WelcomeView(), isActive: $homeButtonPressed) {
-                EmptyView()
-            }
+
             Text("The video was analysed:")
                 .multilineTextAlignment(.center)
                 .font(.largeTitle)
