@@ -6,6 +6,11 @@ Implementation details of a facade to interact with the PoseNet model, includes 
  preprocessing and calling the model's prediction function.
 */
 
+/* Sources:
+https://www.youtube.com/watch?v=6i7RD1laExA
+http://wiki.hawkguide.com/wiki/Swift:_Convert_between_CGImage,_CIImage_and_UIImage
+*/
+
 import CoreML
 import Vision
 import SwiftUI
@@ -35,9 +40,10 @@ class PoseNet {
     /// PoseNet models are available from the Model Gallery.
     let outputStride = 8
     
-    let model = PoseNetMobileNet100S8FP16().model
     
-    //var algorithm: Algorithm = .multiple
+    // The Core ML model that the PoseNet model uses to generate estimates for the poses.
+    /// - Note: Other variants of the PoseNet model are available from the Model Gallery.
+    let model = PoseNetMobileNet100S8FP16().model
 
     /// The set of parameters passed to the pose builder when detecting poses.
     var poseBuilderConfiguration = PoseBuilderConfiguration()
@@ -49,25 +55,22 @@ class PoseNet {
     }
 
     /// An array of joint-pairs that define the lines of a pose's wireframe drawing.
-    // IMPORTANT MAYBE NEED TO ADD static before let!!!!
-    /// TODO: validate
-    //
     let jointSegments = [
         // The connected joints that are on the left side of the body.
-        JointSegment(jointA: .leftHip, jointB: .leftShoulder),
-        JointSegment(jointA: .leftShoulder, jointB: .leftElbow),
-        JointSegment(jointA: .leftElbow, jointB: .leftWrist),
+        //JointSegment(jointA: .leftHip, jointB: .leftShoulder),
+        //JointSegment(jointA: .leftShoulder, jointB: .leftElbow),
+        //JointSegment(jointA: .leftElbow, jointB: .leftWrist),
         JointSegment(jointA: .leftHip, jointB: .leftKnee),
         JointSegment(jointA: .leftKnee, jointB: .leftAnkle),
         // The connected joints that are on the right side of the body.
-        JointSegment(jointA: .rightHip, jointB: .rightShoulder),
-        JointSegment(jointA: .rightShoulder, jointB: .rightElbow),
-        JointSegment(jointA: .rightElbow, jointB: .rightWrist),
+        //JointSegment(jointA: .rightHip, jointB: .rightShoulder),
+        //JointSegment(jointA: .rightShoulder, jointB: .rightElbow),
+        //JointSegment(jointA: .rightElbow, jointB: .rightWrist),
         JointSegment(jointA: .rightHip, jointB: .rightKnee),
-        JointSegment(jointA: .rightKnee, jointB: .rightAnkle),
+        JointSegment(jointA: .rightKnee, jointB: .rightAnkle)//,
         // The connected joints that cross over the body.
-        JointSegment(jointA: .leftShoulder, jointB: .rightShoulder),
-        JointSegment(jointA: .leftHip, jointB: .rightHip)
+        //JointSegment(jointA: .leftShoulder, jointB: .rightShoulder),
+        //JointSegment(jointA: .leftHip, jointB: .rightHip)
     ]
 
     /// The width of the line connecting two joints.
@@ -79,35 +82,6 @@ class PoseNet {
     /// The color of the circles drawn for each joint.
     var jointColor: UIColor = UIColor.systemPink
 
-    /// The Core ML model that the PoseNet model uses to generate estimates for the poses.
-    ///
-    /// - Note: Other variants of the PoseNet model are available from the Model Gallery.
-    //private let poseNetMLModel = PoseNetMobileNet075S16FP16().model
-
-    /// Calls the `prediction` method of the PoseNet model and returns the outputs to the assigned
-    /// `delegate`.
-    ///
-    /// - parameters:
-    ///     - image: Image passed by the PoseNet model.
-    /*func predict(_ image: CGImage) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            // Wrap the image in an instance of PoseNetInput to have it resized
-            // before being passed to the PoseNet model.
-            let input = PoseNetInput(image: image, size: self.modelInputSize)
-
-            guard let prediction = try? self.poseNetMLModel.prediction(from: input) else {
-                return
-            }
-
-            let poseNetOutput = PoseNetOutput(prediction: prediction,
-                                              modelInputSize: self.modelInputSize,
-                                              modelOutputStride: self.outputStride)
-
-            DispatchQueue.main.async {
-                self.delegate?.poseNet(self, didPredict: poseNetOutput)
-            }
-        }
-    }*/
     
     /// Returns an image showing the detected poses.
     ///
