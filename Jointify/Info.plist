@@ -2,8 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>By giving microphone access, you can give feedback to the doctor during the video</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need camera access to analyse your measurement</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Give me the cam pls</string>
+	<string>Camera access is one of the fundamentals of this app</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
