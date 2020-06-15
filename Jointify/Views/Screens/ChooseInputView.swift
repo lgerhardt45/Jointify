@@ -51,12 +51,15 @@ struct ChooseInputView: View {
                 
                 VStack(spacing: 8) { // Buttons
                     
+                    // don't show Record button in simulator to avoid accidental crashes
+                    #if !targetEnvironment(simulator)
                     DefaultButton(action: {
                         self.sourceType = UIImagePickerController.SourceType.camera
                         self.videoPickerSheetIsPresented.toggle()
                     }) {
                         Text("Record").frame(width: 100)
                     }
+                    #endif
                     
                     DefaultButton(action: {
                         self.sourceType = UIImagePickerController.SourceType.photoLibrary
