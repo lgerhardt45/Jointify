@@ -18,12 +18,11 @@ struct ProcessingView: View {
     
     // MARK: State Instance Propoerties
     @State private var finishedProcessing: Bool = false
-    @State private var timeRemaining = 3.0 // TODO: remove when done
-    @State private var progressDots = ""   // TODO: remove when done
+    @State private var progressDots = ""
     @State private var measurement: Measurement?
     
     // MARK: Stored Instance Properties
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // TODO: remove when done
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     // MARK: Body
     var body: some View {
@@ -37,30 +36,34 @@ struct ProcessingView: View {
                 Text("Dein Bild wird analysiert")
                 Text(progressDots)
             }
-            .onAppear(perform: {
-                guard let videoUrl = self.videoUrl else {
-                    return
-                }
-                
-                let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
-                
-                let measurementFrames: [MeasurementFrame] = self.analyseVideo(frames: videoAsImageArray)
-                
-                self.measurement = Measurement(date: Date(), videoUrl: videoUrl, frames: measurementFrames)
-                
-                // when finished processing: ONLY TOGGLE WHEN
-                // MEASUREMENT IS DONE, because force unwrapping when sending it
-                // TODO fix the force unwrapping
-                // self.finishedProcessing.toggle()
-            })
+                // start the analysis when screen is loaded
+                .onAppear(perform: {
+                    guard let videoUrl = self.videoUrl else {
+                        print("videoUrl could not be retrieved")
+                        return
+                    }
+                    
+                    let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
+                                        
+                    self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
+                        
+                        // set the measurement property when done
+                        self.measurement = Measurement(
+                            date: Date(),
+                            videoUrl: videoUrl,
+                            frames: drawnFrames
+                        )
+                        
+                        // trigger navigation to VideoResultView
+                        self.finishedProcessing.toggle()
+                    }
+                })
             
         }.onReceive(timer) { _ in
-            if self.timeRemaining >= 0 {
-                self.timeRemaining -= 1
-                self.incrementProgressDot()
-            } else {
-                self.finishedProcessing.toggle()
+            if self.finishedProcessing {
                 self.timer.upstream.connect().cancel()
+            } else {
+                self.incrementProgressDot()
             }
         }
         
@@ -70,18 +73,16 @@ struct ProcessingView: View {
     /// From https://stackoverflow.com/questions/42665271/swift-get-all-frames-from-video
     /// takes the NSURL of a video and converts it to an UIImage array by taking frame by frame (one per second)
     private func transformVideoToImageArray(videoUrl: NSURL) -> [UIImage] {
+        print("Getting frames from \(videoUrl)")
         
-        var frames: [UIImage]
-        guard let videoUrl = self.videoUrl else {
-            return []
-        }
-        
+        var frames: [UIImage] = []
+
         let asset: AVAsset = AVAsset(url: videoUrl as URL)
         let duration: Float64 = CMTimeGetSeconds(asset.duration)
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
         
-        frames = []
+        // change frequency of frame creation here by making it a float
         for index: Int in 0 ..< Int(duration) {
             let time: CMTime = CMTimeMakeWithSeconds(Float64(index), preferredTimescale: 600)
             let image: CGImage
@@ -89,35 +90,43 @@ struct ProcessingView: View {
                 try image = generator.copyCGImage(at: time, actualTime: nil)
                 frames.append(UIImage(cgImage: image))
             } catch {
+                print("Failed to retrieve frames from \(videoUrl)")
                 return []
             }
         }
         
+        print("\(frames.count) frames created")
         return frames
     }
     
     /// runs the machine learning model on an array of UIImages and returns an array of MeasurementFrame instances
-    private func analyseVideo(frames: [UIImage]) -> [MeasurementFrame] {
-        let chosenSide = "right" // Niki go ahead and just use the left only
+    private func analyseVideo(frames: [UIImage], completion: @escaping ([MeasurementFrame]) -> Void) {
         
-        // Model
+        // TODO: Lukas: use Side enum here, too
+        let chosenSide = "left"
+        
+        // instantiate PoseNet model
         let poseNet = PoseNet(side: .right)
         
-        var returnMeasurementFrames: [MeasurementFrame] = []
-        
-        for frame in frames {
+        // let model run asnyc
+        let queue = DispatchQueue(label: "ml-queue", qos: .utility)
+        queue.async {
+            print("Starting PoseNet analysis")
             
-            let drawnImage = poseNet.predict(frame)
-            
-            returnMeasurementFrames.append(
-                MeasurementFrame(
-                    degree: poseNet.calcAngleBetweenJoints(chosenSide),
-                    image: drawnImage)
-            )
+            var returnMeasurementFrames: [MeasurementFrame] = []
+            for frame in frames {
+                let drawnImage = poseNet.predict(frame)
+                returnMeasurementFrames.append(
+                    MeasurementFrame(
+                        degree: poseNet.calcAngleBetweenJoints(chosenSide),
+                        image: drawnImage
+                    )
+                )
+            }
+            print("Done with PoseNet analysis")
+            // send when done
+            completion(returnMeasurementFrames)
         }
-        
-        // for image in frames -> run -> returnMeasurementFrames.append(...)
-        return returnMeasurementFrames
     }
     
     /// animates a loading text through 3 dots
