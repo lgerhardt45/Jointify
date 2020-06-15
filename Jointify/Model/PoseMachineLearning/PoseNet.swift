@@ -11,19 +11,32 @@ https://www.youtube.com/watch?v=6i7RD1laExA
 http://wiki.hawkguide.com/wiki/Swift:_Convert_between_CGImage,_CIImage_and_UIImage
 */
 
+// MARK: Imports
 import CoreML
 import Vision
 import SwiftUI
 
-
+// MARK: - PoseNetDelegate
 protocol PoseNetDelegate: AnyObject {
     func poseNet(_ poseNet: PoseNet, didPredict predictions: PoseNetOutput)
 }
 
+// MARK: - PoseNet
 class PoseNet {
+    
+    // MARK: Joint Segment
+    // TODO: Lukas: If other classes use this struct move it to own file
+    /// A data structure used to describe a visual connection between two joints.
+    private struct JointSegment {
+        let jointA: Joint.Name
+        let jointB: Joint.Name
+    }
+    
+    // TODO: Lukas: Delete dead code
     /// The delegate to receive the PoseNet model's outputs.
     //weak var delegate: PoseNetDelegate?
 
+    // MARK: Stored Instance Properties
     /// The PoseNet model's input size.
     ///
     /// All PoseNet models available from the Model Gallery support the input sizes 257x257, 353x353, and 513x513.
@@ -31,6 +44,11 @@ class PoseNet {
     /// on the context of use and target devices, typically discovered through trial and error.
     let modelInputSize = CGSize(width: 513, height: 513)
 
+    // TODO: Lukas: If this is a constant move it into a constant enum within this class like
+    // // MARK: Constants
+    // private enum Constants {
+    //  static let outputStride = 8
+    //}
     /// The PoseNet model's output stride.
     ///
     /// Valid strides are 16 and 8 and define the resolution of the grid output by the model. Smaller strides
@@ -40,29 +58,31 @@ class PoseNet {
     /// - Note: The output stride is dependent on the chosen model and specified in the metadata. Other variants of the
     /// PoseNet models are available from the Model Gallery.
     let outputStride = 8
-    
+    let side: Side
+    let jointSegments: [JointSegment]
     var degree: Float = 0.0
     
-    // TODO: ENUM
+    // TODO: Lukas: Move outside class
     enum Side: String {
         case left
         case right
     }
     
-    let side: Side
-    
-    let jointSegments: [JointSegment]
-    
+    // MARK: Initializers
     init(side: Side) {
         self.side = side
         
         switch side {
         case .left:
-                jointSegments = [JointSegment(jointA: .leftHip, jointB: .leftKnee),
-                JointSegment(jointA: .leftKnee, jointB: .leftAnkle)]
+            jointSegments = [
+                JointSegment(jointA: .leftHip, jointB: .leftKnee),
+                JointSegment(jointA: .leftKnee, jointB: .leftAnkle)
+            ]
         case .right:
-                jointSegments = [JointSegment(jointA: .rightHip, jointB: .rightKnee),
-                JointSegment(jointA: .rightKnee, jointB: .rightAnkle)]
+            jointSegments = [
+                JointSegment(jointA: .rightHip, jointB: .rightKnee),
+                JointSegment(jointA: .rightKnee, jointB: .rightAnkle)
+            ]
         }
     }
     
@@ -76,14 +96,8 @@ class PoseNet {
     
     /// Array of poses that is outputted from the model
     var poseArray: [Pose] = []
-    
-    /// A data structure used to describe a visual connection between two joints.
-    struct JointSegment {
-        let jointA: Joint.Name
-        let jointB: Joint.Name
-    }
  
-
+    // TODO: Lukas: also constants? Or rather static variable?
     /// The width of the line connecting two joints.
     var segmentLineWidth: CGFloat = 2
     /// The color of the line connecting two joints.
@@ -94,6 +108,8 @@ class PoseNet {
     var jointColor: UIColor = UIColor.systemPink
 
     
+    // MARK: Instance Methods
+    // TODO: Lukas: Consider which methods can be private and add docstrings where missing (müssen nicht so aufwendig sein :))
     /// Returns an image showing the detected poses.
     ///
     /// - parameters:
@@ -126,6 +142,7 @@ class PoseNet {
                              in: rendererContext.cgContext)
                 }
                 
+                // TODO: Lukas: Remove dead code
                 /*
                 switch side {
                 case .left:
@@ -291,5 +308,3 @@ class PoseNet {
         }
     }
 }
-
-
