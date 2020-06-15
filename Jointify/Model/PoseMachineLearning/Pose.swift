@@ -1,14 +1,18 @@
 /*
 See LICENSE folder for this sample’s licensing information.
-
+// TODO: Lukas: When there's a file saying check the LICENSE it's crucial to add that information to the LICENSE file in the repo. The code is currently public and you reference code you didn't write without crediting the creator.
+ 
 Abstract:
 Implementation details of a structure used to describe a pose.
 */
 
+// MARK: Imports
 import CoreGraphics
 
+// MARK: - Pose
 struct Pose {
 
+    // MARK: Stored Type Properties
     /// An array of edges used to define the connections between the joints.
     ///
     /// The index relates to the index used to access the associated value within the displacement maps
@@ -31,7 +35,9 @@ struct Pose {
         Edge(from: .rightHip, to: .rightKnee, index: 14),
         Edge(from: .rightKnee, to: .rightAnkle, index: 15)
     ]
-
+    
+    // MARK: Stored Instance Properties
+    // TODO: Lukas: Explain why you need a dict that has a key-value pair that somewhat references to itself
     /// The joints that make up a pose.
     private(set) var joints: [Joint.Name: Joint] = [
         .nose: Joint(name: .nose),
@@ -52,21 +58,11 @@ struct Pose {
         .rightKnee: Joint(name: .rightKnee),
         .rightAnkle: Joint(name: .rightAnkle)
     ]
-
+    
     /// The confidence score associated with this pose.
     var confidence: Double = 0.0
-
-    /// Accesses the joint with the specified name.
-    subscript(jointName: Joint.Name) -> Joint {
-        get {
-            assert(joints[jointName] != nil)
-            return joints[jointName]!
-        }
-        set {
-            joints[jointName] = newValue
-        }
-    }
-
+    
+    // MARK: Type Methods
     /// Returns all edges that link **from** or **to** the specified joint.
     ///
     /// - parameters:
@@ -86,5 +82,19 @@ struct Pose {
     /// - returns: All edges that connect to or from `jointName`.
     static func edge(from parentJointName: Joint.Name, to childJointName: Joint.Name) -> Edge? {
         return Pose.edges.first(where: { $0.parent == parentJointName && $0.child == childJointName })
+    }
+}
+
+// MARK: - Extension: subscript
+extension Pose {
+    /// Accesses the joint with the specified name.
+    subscript(jointName: Joint.Name) -> Joint {
+        get {
+            assert(joints[jointName] != nil)
+            return joints[jointName]!
+        }
+        set {
+            joints[jointName] = newValue
+        }
     }
 }
