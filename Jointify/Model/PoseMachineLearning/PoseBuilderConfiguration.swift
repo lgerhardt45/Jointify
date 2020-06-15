@@ -6,14 +6,19 @@ The implementation details of a structure that hold the parameters algorithms us
  estimating poses.
 */
 
+// MARK: Imports
 import CoreGraphics
 
+// MARK: - Algorithm
 enum Algorithm: Int {
     case single
     case multiple
 }
 
+// MARK: - PoseBuilderConfiguration
 struct PoseBuilderConfiguration {
+    
+    // MARK: Stored Instance Properties
     /// The minimum value for valid joints in a pose.
     var jointConfidenceThreshold = 0.1
 
