@@ -25,9 +25,9 @@ protocol PoseNetDelegate: AnyObject {
 class PoseNet {
     
     // MARK: Joint Segment
-    // TODO: Lukas: If other classes use this struct move it to own file
+    // TODO: Lukas: If other classes use this struct move it to own file, otherwise private
     /// A data structure used to describe a visual connection between two joints.
-    private struct JointSegment {
+    struct JointSegment {
         let jointA: Joint.Name
         let jointB: Joint.Name
     }
@@ -58,6 +58,7 @@ class PoseNet {
     /// - Note: The output stride is dependent on the chosen model and specified in the metadata. Other variants of the
     /// PoseNet models are available from the Model Gallery.
     let outputStride = 8
+    
     let side: Side
     let jointSegments: [JointSegment]
     var degree: Float = 0.0

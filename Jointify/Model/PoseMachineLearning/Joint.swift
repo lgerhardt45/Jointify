@@ -74,8 +74,8 @@ class Joint {
     }
     
     // MARK: Private Instance Methods
-    // TODO: refactoring with dictionary (Lukas: use `CustomStringConvertible` protocol on Name https://stackoverflow.com/a/24707744 and then probably use it like String(Joint.name))
-    private func nameToString() -> String {
+    // TODO: Lukas: use `CustomStringConvertible` protocol on Name https://stackoverflow.com/a/24707744 and then probably use it like String(Joint.name)
+    func nameToString() -> String {
         switch name.rawValue {
         case 0: return("nose")
         case 1: return ("leftEye")

@@ -1,6 +1,8 @@
 /*
 See LICENSE folder for this sample’s licensing information.
-// TODO: Lukas: When there's a file saying check the LICENSE it's crucial to add that information to the LICENSE file in the repo. The code is currently public and you reference code you didn't write without crediting the creator.
+// TODO: Lukas: When there's a file saying check the LICENSE it's crucial
+// to add that information to the LICENSE file in the repo.
+ // The code is currently public and you reference code you didn't write without crediting the creator.
  
 Abstract:
 Implementation details of a structure used to describe a pose.
