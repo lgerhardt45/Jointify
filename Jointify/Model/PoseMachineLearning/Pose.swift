@@ -9,19 +9,6 @@ import CoreGraphics
 
 struct Pose {
 
-    /// A structure used to describe a parent-child relationship between two joints.
-    struct Edge {
-        let index: Int
-        let parent: Joint.Name
-        let child: Joint.Name
-
-        init(from parent: Joint.Name, to child: Joint.Name, index: Int) {
-            self.index = index
-            self.parent = parent
-            self.child = child
-        }
-    }
-
     /// An array of edges used to define the connections between the joints.
     ///
     /// The index relates to the index used to access the associated value within the displacement maps
