@@ -8,30 +8,31 @@ Implementation details of a structure used to describe a joint.
 // MARK: Imports
 import CoreGraphics
 
-// MARK: - Name
-enum Name: Int, CaseIterable {
-    case nose
-    case leftEye
-    case rightEye
-    case leftEar
-    case rightEar
-    case leftShoulder
-    case rightShoulder
-    case leftElbow
-    case rightElbow
-    case leftWrist
-    case rightWrist
-    case leftHip
-    case rightHip
-    case leftKnee
-    case rightKnee
-    case leftAnkle
-    case rightAnkle
-}
-
 // MARK: - Joint
 class Joint {
-
+    
+    // MARK: - Name
+    // TODO: Lukas: An enum like this doesn't belong in this class because you also reference to it from other files. Pull it out and call it JointName
+    enum Name: Int, CaseIterable {
+        case nose
+        case leftEye
+        case rightEye
+        case leftEar
+        case rightEar
+        case leftShoulder
+        case rightShoulder
+        case leftElbow
+        case rightElbow
+        case leftWrist
+        case rightWrist
+        case leftHip
+        case rightHip
+        case leftKnee
+        case rightKnee
+        case leftAnkle
+        case rightAnkle
+    }
+    
     // MARK: Stored Type Properties
     /// The total number of joints available.
     static var numberOfJoints: Int {
