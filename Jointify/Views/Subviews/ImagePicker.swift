@@ -26,12 +26,8 @@ struct MediaPicker: UIViewControllerRepresentable {
         // create media picker
         let imagePicker = UIImagePickerController()
         
-        imagePicker.mediaTypes = [kUTTypeMovie as String]
-        imagePicker.allowsEditing = true
-        
-        imagePicker.sourceType = sourceType
-        
-        imagePicker.delegate = context.coordinator
+        // setup
+        setup(this: imagePicker, context)
         
         return imagePicker
     }
@@ -45,6 +41,16 @@ struct MediaPicker: UIViewControllerRepresentable {
         NavigationControllerCoordinator(videoPickerSheetIsPresented: $videoPickerSheetIsPresented,
                     videoURL: $videoURL,
                     sourceType: $sourceType)
+    }
+    
+    fileprivate func setup(this imagePicker: UIImagePickerController, _ context: MediaPicker.Context) {
+        
+        // use video media and video mode in camera as default in respective source type
+        imagePicker.sourceType = sourceType
+        imagePicker.mediaTypes = [kUTTypeMovie as String]
+        
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = context.coordinator
     }
 }
 
