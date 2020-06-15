@@ -6,26 +6,19 @@ The implementation details of some mathematical operations that extend the CGPoi
  structure.
 */
 
+// MARK: Imports
 import CoreGraphics
 
+// MARK: - CGPoint extension
+// TODO: Lukas: reconsider file name: what does this extension do?
 extension CGPoint {
+    
+    // MARK: Initializers
     init(_ cell: PoseNetOutput.Cell) {
         self.init(x: CGFloat(cell.xIndex), y: CGFloat(cell.yIndex))
     }
-
-    /// Calculates and returns the squared distance between this point and another.
-    func squaredDistance(to other: CGPoint) -> CGFloat {
-        let diffX = other.x - x
-        let diffY = other.y - y
-
-        return diffX * diffX + diffY * diffY
-    }
-
-    /// Calculates and returns the distance between this point and another.
-    func distance(to other: CGPoint) -> Double {
-        return Double(squaredDistance(to: other).squareRoot())
-    }
-
+    
+    // MARK: Type Methods
     /// Calculates and returns the result of an element-wise addition.
     static func + (_ lhs: CGPoint, _ rhs: CGVector) -> CGPoint {
         return CGPoint(x: lhs.x + rhs.dx, y: lhs.y + rhs.dy)
@@ -45,5 +38,19 @@ extension CGPoint {
     /// Calculates and returns the result of an element-wise multiplication.
     static func * (_ lhs: CGPoint, _ rhs: CGSize) -> CGPoint {
         return CGPoint(x: lhs.x * rhs.width, y: lhs.y * rhs.height)
+    }
+    
+    // MARK: Instance Methods
+    /// Calculates and returns the squared distance between this point and another.
+    func squaredDistance(to other: CGPoint) -> CGFloat {
+        let diffX = other.x - x
+        let diffY = other.y - y
+
+        return diffX * diffX + diffY * diffY
+    }
+
+    /// Calculates and returns the distance between this point and another.
+    func distance(to other: CGPoint) -> Double {
+        return Double(squaredDistance(to: other).squareRoot())
     }
 }

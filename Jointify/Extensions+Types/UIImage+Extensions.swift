@@ -6,13 +6,16 @@
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
+// MARK: Imports
 import Foundation
 import UIKit
 
-// This is needed to convert the UIImage to a CVPixelBuffer object with the correct size as input for the ML model
-
+// MARK: UIImage extension
+// TODO: Lukas: reconsider file name. UIImage + CVPixelBufferConvertion?
+/// Needed to convert the UIImage to a CVPixelBuffer object with the correct size as input for the ML model
 extension UIImage {
     
+    // MARK: Stored Instance Methods
     // resize the image to the correct input size
     func resizeTo(size: CGSize) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
@@ -28,8 +31,15 @@ extension UIImage {
         let attrs = [kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue,
                      kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue] as CFDictionary
         var pixelBuffer: CVPixelBuffer?
-        let status = CVPixelBufferCreate(kCFAllocatorDefault, Int(self.size.width), Int(self.size.height), kCVPixelFormatType_32ARGB, attrs, &pixelBuffer)
-        guard (status == kCVReturnSuccess) else {
+        let status = CVPixelBufferCreate(
+            kCFAllocatorDefault,
+            Int(self.size.width),
+            Int(self.size.height),
+            kCVPixelFormatType_32ARGB,
+            attrs,
+            &pixelBuffer
+        )
+        guard status == kCVReturnSuccess else {
             return nil
         }
         

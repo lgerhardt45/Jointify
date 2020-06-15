@@ -6,9 +6,14 @@ The implementation of a single-person pose estimation algorithm, based on the Te
  project "Pose Detection in the Browser."
 */
 
+// MARK: Imports
 import CoreGraphics
 
+// MARK: - PoseBuilder extension
+// TODO: Lukas: Reconsider the file name and whether this needs to be an extension in an extra file
 extension PoseBuilder {
+    
+    // MARK: Stored Instance Properties
     /// Returns a pose constructed using the outputs from the PoseNet model.
     var pose: Pose {
         var pose = Pose()
@@ -32,6 +37,7 @@ extension PoseBuilder {
         return pose
     }
 
+    // MARK: Private Instance Methods
     /// Sets the joint's properties using the associated cell with the greatest confidence.
     ///
     /// The confidence is obtained from the `heatmap` array output by the PoseNet model.
@@ -62,4 +68,3 @@ extension PoseBuilder {
         joint.isValid = joint.confidence >= configuration.jointConfidenceThreshold
     }
 }
-
