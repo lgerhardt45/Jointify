@@ -50,7 +50,9 @@ struct MediaPicker: UIViewControllerRepresentable {
         imagePicker.mediaTypes = [kUTTypeMovie as String]
         
         // front camera as default
-        imagePicker.cameraDevice = .front
+        if sourceType == .camera {
+            imagePicker.cameraDevice = .front
+        }
         
         imagePicker.allowsEditing = true
         imagePicker.delegate = context.coordinator
