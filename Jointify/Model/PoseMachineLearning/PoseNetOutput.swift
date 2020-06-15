@@ -5,36 +5,48 @@ Abstract:
 Implementation details of a structure to hold the PoseNet model's outputs.
 */
 
+// MARK: Imports
 import CoreML
 import Vision
 
+// MARK: - PoseNetOuput
 /// - Tag: PoseNetOutput
 struct PoseNetOutput {
+    
+    // MARK: Feature
+    // TODO: Lukas: when an enum is used outside the class (and can't be private) consider moving it outside the class
     enum Feature: String {
         case heatmap = "heatmap"
         case offsets = "offsets"
         case backwardDisplacementMap = "displacementBwd"
         case forwardDisplacementMap = "displacementFwd"
     }
-
+    
+    // MARK: Cell
+    // TODO: Lukas: same here, should this be in here?
     /// A structure that defines the coordinates of an index used to query the PoseNet model outputs.
     ///
     /// The PoseNet outputs are arranged in grid. Each cell in the grid corresponds
     /// to a square region of pixels where each side is `outputStride` pixels of the input image.
     struct Cell {
+        
+        // MARK: Stored Type Properties
+        static var zero: Cell {
+            return Cell(0, 0)
+        }
+        
+        // MARK: Stored Instance Properties
         let yIndex: Int
         let xIndex: Int
-
+        
+        // MARK: Initializers
         init(_ yIndex: Int, _ xIndex: Int) {
             self.yIndex = yIndex
             self.xIndex = xIndex
         }
-
-        static var zero: Cell {
-            return Cell(0, 0)
-        }
     }
-
+    
+    // MARK: Stored Instance Properties
     /// A multidimensional array that stores the confidence for each joint.
     ///
     /// The layout of the array is `[joint][y][x]`, where `joint` is the index of the associated
@@ -89,7 +101,8 @@ struct PoseNetOutput {
     var width: Int {
         return heatmap.shape[2].intValue
     }
-
+    
+    // MARK: Initializers
     init(prediction: MLFeatureProvider, modelInputSize: CGSize, modelOutputStride: Int) {
         guard let heatmap = prediction.multiArrayValue(for: .heatmap) else {
             fatalError("Failed to get the heatmap MLMultiArray")
