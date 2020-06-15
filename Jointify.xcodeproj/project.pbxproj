@@ -150,7 +150,7 @@
 			path = PoseMachineLearning;
 			sourceTree = "<group>";
 		};
-		21CFEA832497EA2F00421B80 /* Extensions+Types */ = {
+		21CFEA832497EA2F00421B80 /* TypeExtensions */ = {
 			isa = PBXGroup;
 			children = (
 				21CFEA712497E9F500421B80 /* PoseBuilder+Single.swift */,
@@ -158,7 +158,7 @@
 				21CFEA852497EA2F00421B80 /* CGPoint+Extension.swift */,
 				21CFEA862497EA2F00421B80 /* CGImage+Extension.swift */,
 			);
-			path = "Extensions+Types";
+			path = TypeExtensions;
 			sourceTree = "<group>";
 		};
 		80094B59247F0F60002A1A27 = {
@@ -186,7 +186,7 @@
 			children = (
 				80FB49D424967F19001C3DAE /* Views */,
 				2141754324866B48005CB6E5 /* Model */,
-				21CFEA832497EA2F00421B80 /* Extensions+Types */,
+				21CFEA832497EA2F00421B80 /* TypeExtensions */,
 				80094B67247F0F60002A1A27 /* SceneDelegate.swift */,
 				80094B65247F0F60002A1A27 /* AppDelegate.swift */,
 				80094B6B247F0F6B002A1A27 /* Assets.xcassets */,
