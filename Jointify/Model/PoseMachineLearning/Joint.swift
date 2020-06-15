@@ -5,34 +5,40 @@ Abstract:
 Implementation details of a structure used to describe a joint.
 */
 
+// MARK: Imports
 import CoreGraphics
 
-class Joint {
-    enum Name: Int, CaseIterable {
-        case nose
-        case leftEye
-        case rightEye
-        case leftEar
-        case rightEar
-        case leftShoulder
-        case rightShoulder
-        case leftElbow
-        case rightElbow
-        case leftWrist
-        case rightWrist
-        case leftHip
-        case rightHip
-        case leftKnee
-        case rightKnee
-        case leftAnkle
-        case rightAnkle
-    }
+// MARK: - Name
+enum Name: Int, CaseIterable {
+    case nose
+    case leftEye
+    case rightEye
+    case leftEar
+    case rightEar
+    case leftShoulder
+    case rightShoulder
+    case leftElbow
+    case rightElbow
+    case leftWrist
+    case rightWrist
+    case leftHip
+    case rightHip
+    case leftKnee
+    case rightKnee
+    case leftAnkle
+    case rightAnkle
+}
 
+// MARK: - Joint
+class Joint {
+
+    // MARK: Stored Type Properties
     /// The total number of joints available.
     static var numberOfJoints: Int {
         return Name.allCases.count
     }
-
+    
+    // MARK: Stored Instance Properties
     /// The name used to identify the joint.
     let name: Name
 
@@ -53,6 +59,7 @@ class Joint {
     /// A boolean value that indicates if the joint satisfies the joint threshold defined in the configuration.
     var isValid: Bool
 
+    // MARK: Initializers
     init(name: Name,
          cell: PoseNetOutput.Cell = .zero,
          position: CGPoint = .zero,
@@ -65,8 +72,9 @@ class Joint {
         self.isValid = isValid
     }
     
-    // TODO: refactoring with dictionary
-    func nameToString() -> String {
+    // MARK: Private Instance Methods
+    // TODO: refactoring with dictionary (Lukas: use `CustomStringConvertible` protocol on Name https://stackoverflow.com/a/24707744 and then probably use it like String(Joint.name))
+    private func nameToString() -> String {
         switch name.rawValue {
         case 0: return("nose")
         case 1: return ("leftEye")
