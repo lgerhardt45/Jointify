@@ -25,6 +25,8 @@ struct ProcessingView: View {
     // MARK: Stored Instance Properties
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // TODO: remove when done
     
+    
+    
     // MARK: Body
     var body: some View {
         VStack {
@@ -98,18 +100,21 @@ struct ProcessingView: View {
     
     /// runs the machine learning model on an array of UIImages and returns an array of MeasurementFrame instances
     private func analyseVideo(frames: [UIImage]) -> [MeasurementFrame] {
-        let side = "left" // Niki go ahead and just use the left only
+        let chosenSide = "right" // Niki go ahead and just use the left only
+        
+        // Model
+        let poseNet = PoseNet(side: .right)
         
         var returnMeasurementFrames: [MeasurementFrame] = []
         
         for frame in frames {
             
-            // Do your stuff here
-            // let model = PoseNet()
-            // let drawnImage = poseNet. ...?
+            let drawnImage = poseNet.predict(frame)
             
             returnMeasurementFrames.append(
-                MeasurementFrame(degree: 0, image: frame)
+                MeasurementFrame(
+                    degree: poseNet.calcAngleBetweenJoints(chosenSide),
+                    image: drawnImage)
             )
         }
         
@@ -134,3 +139,5 @@ struct ProcessingView_Previews: PreviewProvider {
         ProcessingView(videoUrl: .constant(nil))
     }
 }
+
+
