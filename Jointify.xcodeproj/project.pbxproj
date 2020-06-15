@@ -126,29 +126,30 @@
 			children = (
 				80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */,
 				80FB49D724967F84001C3DAE /* Measurement.swift */,
-				21CFEA7E2497EA2600421B80 /* PoseNet.swift */,
-				21CFEA7B2497EA2600421B80 /* PoseNetInput.swift */,
-				21CFEA7C2497EA2600421B80 /* PoseNetMobileNet100S8FP16.mlmodel */,
-				21CFEA7D2497EA2600421B80 /* PoseNetOutput.swift */,
+				21CFEA702497E9F500421B80 /* PoseMachineLearning */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		21CFEA702497E9F500421B80 /* Pose */ = {
+		21CFEA702497E9F500421B80 /* PoseMachineLearning */ = {
 			isa = PBXGroup;
 			children = (
-				21CFEA712497E9F500421B80 /* PoseBuilder+Single.swift */,
 				21CFEA792497EA0300421B80 /* Joint.swift */,
 				21CFEA722497E9F500421B80 /* Pose.swift */,
+				21CFEA7E2497EA2600421B80 /* PoseNet.swift */,
+				21CFEA7D2497EA2600421B80 /* PoseNetOutput.swift */,
+				21CFEA7B2497EA2600421B80 /* PoseNetInput.swift */,
 				21CFEA732497E9F500421B80 /* PoseBuilder.swift */,
 				21CFEA742497E9F500421B80 /* PoseBuilderConfiguration.swift */,
+				21CFEA7C2497EA2600421B80 /* PoseNetMobileNet100S8FP16.mlmodel */,
 			);
-			path = Pose;
+			path = PoseMachineLearning;
 			sourceTree = "<group>";
 		};
 		21CFEA832497EA2F00421B80 /* Extensions+Types */ = {
 			isa = PBXGroup;
 			children = (
+				21CFEA712497E9F500421B80 /* PoseBuilder+Single.swift */,
 				21CFEA842497EA2F00421B80 /* UIImage+Extensions.swift */,
 				21CFEA852497EA2F00421B80 /* CGPoint+Extension.swift */,
 				21CFEA862497EA2F00421B80 /* CGImage+Extension.swift */,
@@ -181,10 +182,9 @@
 			children = (
 				80FB49D424967F19001C3DAE /* Views */,
 				2141754324866B48005CB6E5 /* Model */,
-				80094B65247F0F60002A1A27 /* AppDelegate.swift */,
 				21CFEA832497EA2F00421B80 /* Extensions+Types */,
 				80094B67247F0F60002A1A27 /* SceneDelegate.swift */,
-				21CFEA702497E9F500421B80 /* Pose */,
+				80094B65247F0F60002A1A27 /* AppDelegate.swift */,
 				80094B6B247F0F6B002A1A27 /* Assets.xcassets */,
 				80094B70247F0F6B002A1A27 /* LaunchScreen.storyboard */,
 				80094B73247F0F6B002A1A27 /* Info.plist */,
