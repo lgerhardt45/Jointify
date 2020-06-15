@@ -25,8 +25,6 @@ struct ProcessingView: View {
     // MARK: Stored Instance Properties
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // TODO: remove when done
     
-    
-    
     // MARK: Body
     var body: some View {
         VStack {
@@ -139,5 +137,3 @@ struct ProcessingView_Previews: PreviewProvider {
         ProcessingView(videoUrl: .constant(nil))
     }
 }
-
-
