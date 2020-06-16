@@ -197,7 +197,9 @@ class PoseNet {
             }
         }
         
-        // TODO: Lukas: NO FORCE UNWRAPPING. There's also the error here, that the prediction (poseNet.predict(frames)) has had to be run before this can work. By unwrapping an optional you make sure that it is actually there. The app just crashes if the force unwrapping fails
+        // TODO: Lukas: NO FORCE UNWRAPPING. There's also the error here, that the prediction
+        // (poseNet.predict(frames)) has had to be run before this can work. By unwrapping an optional you make sure that
+        // it is actually there. The app just crashes if the force unwrapping fails
         /// Create vectors leading from ankle and hip towards knee
         let vectorKneeHip: [String: Float] = ["X": jointPositions[side + "HipX"]! - jointPositions[side + "KneeX"]!,
                                               "Y": jointPositions[side + "HipY"]! - jointPositions[side + "KneeY"]!]
