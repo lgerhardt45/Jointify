@@ -14,13 +14,11 @@ struct ProgressBar: View {
     
     // MARK: Binding Instance Properties
     @Binding var currentProgress: Int
-        
-    // MARK: Stored Instance Properties
-    let total: Int
+    @Binding var total: Int
     
     // MARK: Computed Properties
     private var fractionDone: Double {
-        return Double(currentProgress) / Double(total)
+        return total == 0 ? 0 : Double(currentProgress) / Double(total)
     }
     
     private var barProgress: CGFloat {
@@ -59,6 +57,6 @@ struct ProgressBar: View {
 
 struct ProgressBar_Previews: PreviewProvider {
     static var previews: some View {
-        ProgressBar(currentProgress: .constant(9), total: 10, maxWidth: 150, height: 20)
+        ProgressBar(currentProgress: .constant(9), total: .constant(10), maxWidth: 150, height: 20)
     }
 }
