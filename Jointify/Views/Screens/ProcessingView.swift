@@ -63,14 +63,7 @@ struct ProcessingView: View {
                     }
                 })
             
-        }.onReceive(timer) { _ in
-            if self.finishedProcessing {
-                self.timer.upstream.connect().cancel()
-            } else {
-                self.incrementProgressDot()
-            }
         }
-        
     }
     
     // MARK: Private Instance Methods
