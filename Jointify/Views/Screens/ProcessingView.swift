@@ -99,6 +99,8 @@ struct ProcessingView: View {
     /// runs the machine learning model on an array of UIImages and returns an array of MeasurementFrame instances
     private func analyseVideo(frames: [UIImage], completion: @escaping ([MeasurementFrame]) -> Void) {
         
+        self.total = frames.count
+
         // TODO: Lukas: use Side enum here, too
         let chosenSide = "left"
         
@@ -108,20 +110,29 @@ struct ProcessingView: View {
         // let model run asnyc
         let queue = DispatchQueue(label: "ml-queue", qos: .utility)
         queue.async {
-            print("Starting PoseNet analysis")
             
+            print("Starting PoseNet analysis")
+
             var returnMeasurementFrames: [MeasurementFrame] = []
-            for frame in frames {
+            
+            for (frameCount, frame) in frames.enumerated() {
+                
+                print("Analysing frame \(frameCount)/\(frames.count)")
+                
                 let drawnImage = poseNet.predict(frame)
+
                 returnMeasurementFrames.append(
                     MeasurementFrame(
                         degree: poseNet.calcAngleBetweenJoints(chosenSide),
                         image: drawnImage
                     )
                 )
+                self.progress += 1
+
             }
-            print("Done with PoseNet analysis")
+            
             // send when done
+            print("Done with PoseNet analysis")
             completion(returnMeasurementFrames)
         }
     }
