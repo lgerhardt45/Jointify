@@ -17,6 +17,8 @@ struct ProcessingView: View {
     @Binding var videoUrl: NSURL?
     
     // MARK: State Instance Propoerties
+    @State private var progress: Int = 0
+    @State private var total: Int = 0
     @State private var finishedProcessing: Bool = false
     @State private var measurement: Measurement?
     
@@ -31,6 +33,12 @@ struct ProcessingView: View {
                                isActive: self.$finishedProcessing) { EmptyView() }
                 Text("Dein Bild wird analysiert")
                 Text(progressDots)
+                
+                ProgressBar(
+                    currentProgress: self.$progress,
+                    total: self.$total,
+                    maxWidth: 150,
+                    height: 20)
             }
                 // start the analysis when screen is loaded
                 .onAppear(perform: {
