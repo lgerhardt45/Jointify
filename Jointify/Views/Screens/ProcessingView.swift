@@ -31,8 +31,7 @@ struct ProcessingView: View {
                 NavigationLink(destination:
                     VideoResultView(measurement: measurement),
                                isActive: self.$finishedProcessing) { EmptyView() }
-                Text("Dein Bild wird analysiert")
-                Text(progressDots)
+                Text("Your image is being analysed")
                 
                 ProgressBar(
                     currentProgress: self.$progress,
