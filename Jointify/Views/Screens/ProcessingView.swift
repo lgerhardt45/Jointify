@@ -18,11 +18,7 @@ struct ProcessingView: View {
     
     // MARK: State Instance Propoerties
     @State private var finishedProcessing: Bool = false
-    @State private var progressDots = ""
     @State private var measurement: Measurement?
-    
-    // MARK: Stored Instance Properties
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     // MARK: Body
     var body: some View {
@@ -126,16 +122,6 @@ struct ProcessingView: View {
             print("Done with PoseNet analysis")
             // send when done
             completion(returnMeasurementFrames)
-        }
-    }
-    
-    /// animates a loading text through 3 dots
-    private func incrementProgressDot() {
-        // TODO: Remove when done with analysis
-        if progressDots.count >= 3 {
-            progressDots = "."
-        } else {
-            progressDots.append(".")
         }
     }
 }
