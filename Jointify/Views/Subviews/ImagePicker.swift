@@ -68,8 +68,8 @@ class NavigationControllerCoordinator: NSObject, UINavigationControllerDelegate,
     // MARK: Private Instance Methods
     /// supplies the selected media in `info`
     internal func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        
+                                        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+    
         guard let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL else {
             return
         }

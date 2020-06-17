@@ -14,7 +14,7 @@ import CoreGraphics
 extension CGPoint {
     
     // MARK: Initializers
-    init(_ cell: PoseNetOutput.Cell) {
+    init(_ cell: Cell) {
         self.init(x: CGFloat(cell.xIndex), y: CGFloat(cell.yIndex))
     }
     

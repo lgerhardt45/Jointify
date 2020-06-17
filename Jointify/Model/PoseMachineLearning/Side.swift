@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+enum Side: String {
+    case left
+    case right
+}

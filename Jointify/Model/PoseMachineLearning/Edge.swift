@@ -14,15 +14,8 @@ import Foundation
 struct Edge {
     
     // MARK: Stored Instance Properties
+    let from: Joint.Name
+    let to: Joint.Name
     let index: Int
-    let parent: Joint.Name
-    let child: Joint.Name
     
-    // MARK: Initializers
-    // TODO: Lukas: structs don't need initializers (when nothing happens in them)
-    init(from parent: Joint.Name, to child: Joint.Name, index: Int) {
-        self.index = index
-        self.parent = parent
-        self.child = child
-    }
 }

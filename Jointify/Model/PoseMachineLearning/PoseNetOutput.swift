@@ -14,36 +14,12 @@ import Vision
 struct PoseNetOutput {
     
     // MARK: Feature
-    // TODO: Lukas: when an enum is used outside the class (and can't be private) consider moving it outside the class
+    // Features of the model output, is declared here on purpose, since these are constants of this struct
     enum Feature: String {
         case heatmap = "heatmap"
         case offsets = "offsets"
         case backwardDisplacementMap = "displacementBwd"
         case forwardDisplacementMap = "displacementFwd"
-    }
-    
-    // MARK: Cell
-    // TODO: Lukas: same here, should this be in here?
-    /// A structure that defines the coordinates of an index used to query the PoseNet model outputs.
-    ///
-    /// The PoseNet outputs are arranged in grid. Each cell in the grid corresponds
-    /// to a square region of pixels where each side is `outputStride` pixels of the input image.
-    struct Cell {
-        
-        // MARK: Stored Type Properties
-        static var zero: Cell {
-            return Cell(0, 0)
-        }
-        
-        // MARK: Stored Instance Properties
-        let yIndex: Int
-        let xIndex: Int
-        
-        // MARK: Initializers
-        init(_ yIndex: Int, _ xIndex: Int) {
-            self.yIndex = yIndex
-            self.xIndex = xIndex
-        }
     }
     
     // MARK: Stored Instance Properties

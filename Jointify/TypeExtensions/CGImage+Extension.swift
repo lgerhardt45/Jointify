@@ -10,6 +10,7 @@ import CoreGraphics
 
 // MARK: - CGImage extension
 // TODO: consider file name: what does this extension do?
+// Needed to get the size of the respective CGImage
 extension CGImage {
     var size: CGSize {
         return CGSize(width: width, height: height)

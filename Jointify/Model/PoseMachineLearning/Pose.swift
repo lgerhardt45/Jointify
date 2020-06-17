@@ -1,8 +1,6 @@
 /*
 See LICENSE folder for this sample’s licensing information.
-// TODO: Lukas: When there's a file saying check the LICENSE it's crucial
-// to add that information to the LICENSE file in the repo.
- // The code is currently public and you reference code you didn't write without crediting the creator.
+// TODO: Check license
  
 Abstract:
 Implementation details of a structure used to describe a pose.
@@ -39,7 +37,7 @@ struct Pose {
     ]
     
     // MARK: Stored Instance Properties
-    // TODO: Lukas: Explain why you need a dict that has a key-value pair that somewhat references to itself
+    // Needed to accesses the joint with the specified name.
     /// The joints that make up a pose.
     private(set) var joints: [Joint.Name: Joint] = [
         .nose: Joint(name: .nose),
@@ -72,7 +70,7 @@ struct Pose {
     /// - returns: All edges that connect to or from `jointName`.
     static func edges(for jointName: Joint.Name) -> [Edge] {
         return Pose.edges.filter {
-            $0.parent == jointName || $0.child == jointName
+            $0.from == jointName || $0.to == jointName
         }
     }
 
@@ -83,7 +81,7 @@ struct Pose {
     ///     - childJointName: Edge's child joint name.
     /// - returns: All edges that connect to or from `jointName`.
     static func edge(from parentJointName: Joint.Name, to childJointName: Joint.Name) -> Edge? {
-        return Pose.edges.first(where: { $0.parent == parentJointName && $0.child == childJointName })
+        return Pose.edges.first(where: { $0.from == parentJointName && $0.to == childJointName })
     }
 }
 

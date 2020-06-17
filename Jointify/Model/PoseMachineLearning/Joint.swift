@@ -12,8 +12,9 @@ import CoreGraphics
 class Joint {
     
     // MARK: - Name
-    // TODO: Lukas: An enum like this doesn't belong in this class because you also reference to it from other files. Pull it out and call it JointName
-    enum Name: Int, CaseIterable {
+    // TODO: Lukas: An enum like this doesn't belong in this class because you also reference to it from other files.
+    //Pull it out and call it JointName
+    enum Name: Int, CaseIterable, CustomStringConvertible {
         case nose
         case leftEye
         case rightEye
@@ -31,6 +32,28 @@ class Joint {
         case rightKnee
         case leftAnkle
         case rightAnkle
+        
+        var description: String {
+            switch self {
+            case .nose: return "nose"
+            case .leftEye: return "leftEye"
+            case .rightEye: return "rightEye"
+            case .leftEar: return "leftEar"
+            case .rightEar: return "rightEar"
+            case .leftShoulder: return "leftShoulder"
+            case .rightShoulder: return "rightShoulder"
+            case .leftElbow: return "leftElbow"
+            case .rightElbow: return "rightElbow"
+            case .leftWrist: return "leftWrist"
+            case .rightWrist: return "rightWrist"
+            case .leftHip: return "leftHip"
+            case .rightHip: return "rightHip"
+            case .leftKnee: return "leftKnee"
+            case .rightKnee: return "rightKnee"
+            case .leftAnkle: return "leftAnkle"
+            case .rightAnkle: return "rightAnkle"
+            }
+        }
     }
     
     // MARK: Stored Type Properties
@@ -50,7 +73,7 @@ class Joint {
     var position: CGPoint
 
     /// The joint's respective cell index into model's output grid.
-    var cell: PoseNetOutput.Cell
+    var cell: Cell
 
     /// The confidence score associated with this joint.
     ///
@@ -62,7 +85,7 @@ class Joint {
 
     // MARK: Initializers
     init(name: Name,
-         cell: PoseNetOutput.Cell = .zero,
+         cell: Cell = .zero,
          position: CGPoint = .zero,
          confidence: Double = 0,
          isValid: Bool = false) {
@@ -74,7 +97,9 @@ class Joint {
     }
     
     // MARK: Private Instance Methods
-    // TODO: Lukas: use `CustomStringConvertible` protocol on Name https://stackoverflow.com/a/24707744 and then probably use it like String(Joint.name)
+    // TODO: Lukas: use `CustomStringConvertible` protocol on Name https://stackoverflow.com/a/24707744
+    //and then probably use it like String(Joint.name)
+    
     func nameToString() -> String {
         switch name.rawValue {
         case 0: return("nose")
@@ -98,4 +123,5 @@ class Joint {
             return("Error: Joint not found.")
         }
     }
+ 
 }

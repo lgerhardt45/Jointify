@@ -98,8 +98,6 @@ struct ProcessingView: View {
     
     /// runs the machine learning model on an array of UIImages and returns an array of MeasurementFrame instances
     private func analyseVideo(frames: [UIImage]) -> [MeasurementFrame] {
-        let chosenSide = "right" // Niki go ahead and just use the left only
-        
         // Model
         let poseNet = PoseNet(side: .right)
         
@@ -111,7 +109,7 @@ struct ProcessingView: View {
             
             returnMeasurementFrames.append(
                 MeasurementFrame(
-                    degree: poseNet.calcAngleBetweenJoints(chosenSide),
+                    degree: poseNet.calcAngleBetweenJoints(),
                     image: drawnImage)
             )
         }
