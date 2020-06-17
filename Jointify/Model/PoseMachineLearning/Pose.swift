@@ -1,7 +1,5 @@
 /*
 See LICENSE folder for this sample’s licensing information.
-// TODO: Check license
- 
 Abstract:
 Implementation details of a structure used to describe a pose.
 */
@@ -39,7 +37,7 @@ struct Pose {
     // MARK: Stored Instance Properties
     // Needed to accesses the joint with the specified name.
     /// The joints that make up a pose.
-    private(set) var joints: [Joint.Name: Joint] = [
+    private(set) var joints: [JointName: Joint] = [
         .nose: Joint(name: .nose),
         .leftEye: Joint(name: .leftEye),
         .leftEar: Joint(name: .leftEar),
@@ -68,7 +66,7 @@ struct Pose {
     /// - parameters:
     ///     - jointName: Query joint name.
     /// - returns: All edges that connect to or from `jointName`.
-    static func edges(for jointName: Joint.Name) -> [Edge] {
+    static func edges(for jointName: JointName) -> [Edge] {
         return Pose.edges.filter {
             $0.from == jointName || $0.towards == jointName
         }
@@ -80,7 +78,7 @@ struct Pose {
     ///     - parentJointName: Edge's parent joint name.
     ///     - childJointName: Edge's child joint name.
     /// - returns: All edges that connect to or from `jointName`.
-    static func edge(from parentJointName: Joint.Name, to childJointName: Joint.Name) -> Edge? {
+    static func edge(from parentJointName: JointName, to childJointName: JointName) -> Edge? {
         return Pose.edges.first(where: { $0.from == parentJointName && $0.towards == childJointName })
     }
 }
@@ -88,7 +86,7 @@ struct Pose {
 // MARK: - Extension: subscript
 extension Pose {
     /// Accesses the joint with the specified name.
-    subscript(jointName: Joint.Name) -> Joint {
+    subscript(jointName: JointName) -> Joint {
         get {
             assert(joints[jointName] != nil)
             return joints[jointName]!

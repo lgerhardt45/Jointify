@@ -14,8 +14,8 @@ import Foundation
 struct Edge {
     
     // MARK: Stored Instance Properties
-    let from: Joint.Name
-    let towards: Joint.Name
+    let from: JointName
+    let towards: JointName
     let index: Int
     
 }

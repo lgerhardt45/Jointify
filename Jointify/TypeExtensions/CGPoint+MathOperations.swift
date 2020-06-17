@@ -10,7 +10,7 @@ The implementation details of some mathematical operations that extend the CGPoi
 import CoreGraphics
 
 // MARK: - CGPoint extension
-// TODO: Lukas: reconsider file name: what does this extension do?
+// Extension is needed for advanced math operations
 extension CGPoint {
     
     // MARK: Initializers

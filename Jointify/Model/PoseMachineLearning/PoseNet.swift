@@ -27,8 +27,8 @@ class PoseNet {
     // MARK: Joint Segment
     /// A data structure used to describe a visual connection between two joints.
     private struct JointSegment {
-        let jointA: Joint.Name
-        let jointB: Joint.Name
+        let jointA: JointName
+        let jointB: JointName
     }
 
     // // MARK: Constants
@@ -99,13 +99,17 @@ class PoseNet {
     /// - parameters:
     ///     - poses: An array of detected poses.
     ///     - frame: The image used to detect the poses and used as the background for the returned image.
-    private func show(pose: Pose, on frame: CGImage) -> UIImage {
+    private func show(on frame: CGImage) -> UIImage {
         let dstImageSize = CGSize(width: frame.width, height: frame.height)
         let dstImageFormat = UIGraphicsImageRendererFormat()
 
         dstImageFormat.scale = 1
         let renderer = UIGraphicsImageRenderer(size: dstImageSize,
                                                format: dstImageFormat)
+        
+        guard let pose = pose else {
+            return UIImage(systemName: "heart.fill")!
+        }
 
         let dstImage = renderer.image { rendererContext in
             // Draw the current frame as the background for the new image.
@@ -125,17 +129,25 @@ class PoseNet {
                          in: rendererContext.cgContext)
             }
                 
-            // TODO: Prevent force unwrapping
+            guard let leftKneeJoint = pose.joints[.leftKnee],
+                let leftHipJoint = pose.joints[.leftHip],
+                let leftAnkleJoint = pose.joints[.leftAnkle],
+                let rightKneeJoint = pose.joints[.rightKnee],
+                let rightHipJoint = pose.joints[.rightHip],
+                let rightAnkleJoint = pose.joints[.rightAnkle] else {
+                    return
+            }
+            
             // Draw joints on the correct side only.
             switch side {
             case .left:
-                drawJoints(circle: pose.joints[.leftKnee]!, in: rendererContext.cgContext)
-                drawJoints(circle: pose.joints[.leftHip]!, in: rendererContext.cgContext)
-                drawJoints(circle: pose.joints[.leftAnkle]!, in: rendererContext.cgContext)
+                drawJoints(circle: leftKneeJoint, in: rendererContext.cgContext)
+                drawJoints(circle: leftHipJoint, in: rendererContext.cgContext)
+                drawJoints(circle: leftAnkleJoint, in: rendererContext.cgContext)
             case .right:
-                drawJoints(circle: pose.joints[.rightKnee]!, in: rendererContext.cgContext)
-                drawJoints(circle: pose.joints[.rightHip]!, in: rendererContext.cgContext)
-                drawJoints(circle: pose.joints[.rightAnkle]!, in: rendererContext.cgContext)
+                drawJoints(circle: rightKneeJoint, in: rendererContext.cgContext)
+                drawJoints(circle: rightHipJoint, in: rendererContext.cgContext)
+                drawJoints(circle: rightAnkleJoint, in: rendererContext.cgContext)
             }
                  
         }
@@ -146,7 +158,7 @@ class PoseNet {
     // Returns a Float degree number.
     //
     func calcAngleBetweenJoints() -> Float {
-        var jointNames: [Joint.Name]
+        var jointNames: [JointName]
         var jointPositions = [String: Float]()
         var innerAngle: Float = 0.0
         
@@ -165,33 +177,31 @@ class PoseNet {
         // Get X and Y coordinates of joints and place them in the dictionary
         for joint in pose.joints.values.filter({ $0.isValid }) {
             if jointNames.contains(joint.name) {
-                //print("\(joint.name)X")
                 jointPositions["\(joint.name)X"] = Float(joint.position.x)
                 jointPositions["\(joint.name)Y"] = Float(joint.position.y)
             }
         }
         
-        /* TODO: Prevent force unwrapping and implement guard statement here
-        guard let jointPositions[side + "HipX"] = jointPositions[side + "HipX"],
-            jointPositions[side + "HipY"] = jointPositions[side + "HipY"],
-            jointPositions[side + "KneeX"] = jointPositions[side + "KneeX"],
-            jointPositions[side + "KneeY"] = jointPositions[side + "KneeY"],
-            jointPositions[side + "AnkleX"] = jointPositions[side + "AnkleX"],
-            jointPositions[side + "AnkleY"] = jointPositions[side + "AnkleY"]
+        guard let jointPositionsHipX = jointPositions["\(side)HipX"],
+            let jointPositionsHipY = jointPositions["\(side)HipY"],
+            let jointPositionsKneeX = jointPositions["\(side)KneeX"],
+            let jointPositionsKneeY = jointPositions["\(side)KneeY"],
+            let jointPositionsAnkleX = jointPositions["\(side)AnkleX"],
+            let jointPositionsAnkleY = jointPositions["\(side)AnkleY"]
         else {
             print("Error. At least one joint position could not be obtained.")
             return innerAngle
-        }*/
+        }
         
         // Create vectors leading from ankle and hip towards knee
-        let vectorKneeHip: [String: Float] = ["X": jointPositions["\(side)HipX"]! -
-                                                   jointPositions["\(side)KneeX"]!,
-                                              "Y": jointPositions["\(side)HipY"]! -
-                                                   jointPositions["\(side)KneeY"]!]
-        let vectorKneeAnkle: [String: Float] = ["X": jointPositions["\(side)AnkleX"]! -
-                                                     jointPositions["\(side)KneeX"]!,
-                                                "Y": jointPositions["\(side)AnkleY"]! -
-                                                     jointPositions["\(side)KneeY"]!]
+        let vectorKneeHip: [String: Float] = ["X": jointPositionsHipX -
+                                                   jointPositionsKneeX,
+                                              "Y": jointPositionsHipY -
+                                                   jointPositionsKneeY]
+        let vectorKneeAnkle: [String: Float] = ["X": jointPositionsAnkleX -
+                                                     jointPositionsKneeX,
+                                                "Y": jointPositionsAnkleY -
+                                                     jointPositionsKneeY]
         // Calculate inner angle of knee
         // TODO: prevent force unwrapping
         let scalarProduct = (vectorKneeHip["X"]! * vectorKneeAnkle["X"]! + vectorKneeHip["Y"]! * vectorKneeAnkle["Y"]!)
@@ -301,15 +311,10 @@ class PoseNet {
             pose = poseBuilder.pose
             // Calculate the angles between the joints
             degree = calcAngleBetweenJoints()
-
-            guard let pose = pose else {
-                print("Error. No pose could be detected.")
-                return UIImage(named: "placeholder")!
-            }
             
             // Add the joints and edges to the original image
             // TODO: prevent force unwrapping
-            return show(pose: pose, on: cgImage!)
+            return show(on: cgImage!)
         } else {
             print("Error. Prediction could not be found.")
             return UIImage(named: "placeholder")!
