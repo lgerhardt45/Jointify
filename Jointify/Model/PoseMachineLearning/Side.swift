@@ -8,14 +8,7 @@
 
 import Foundation
 
-enum Side: String, CustomStringConvertible {
+enum Side: String {
     case left
     case right
-    
-    var description: String {
-        switch self {
-        case .left: return "left"
-        case .right: return "right"
-        }
-    }
 }
