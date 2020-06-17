@@ -279,6 +279,11 @@ class PoseNet {
     //
     // - parameters:
     //     - image: The image to be analysed.
+    /// Draw a circle in the location of the given joint.
+    /// Returns an UIImage with the specified edges and joints drawn on it.
+    ///
+    /// - parameters:
+    ///     - image: The image to be analysed.
     func predict (_ image: UIImage) -> UIImage {
         // Convert UIImage into a CGImage, because this is what the model requires as input
         let resizedImage = image.resizeTo(size: Constants.modelInputSize)
