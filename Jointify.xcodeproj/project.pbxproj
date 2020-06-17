@@ -44,6 +44,9 @@
 		80E67BC5249AC63E00ECC047 /* PoseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA732497E9F500421B80 /* PoseBuilder.swift */; };
 		80E67BC6249AC64200ECC047 /* PoseBuilderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA742497E9F500421B80 /* PoseBuilderConfiguration.swift */; };
 		80E67BC7249AC64900ECC047 /* PoseNetMobileNet100S8FP16.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA7C2497EA2600421B80 /* PoseNetMobileNet100S8FP16.mlmodel */; };
+		80E67BC8249AC8F000ECC047 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA842497EA2F00421B80 /* UIImage+Extensions.swift */; };
+		80E67BC9249AC8F400ECC047 /* CGPoint+MathOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA852497EA2F00421B80 /* CGPoint+MathOperations.swift */; };
+		80E67BCA249AC8F800ECC047 /* CGImage+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA862497EA2F00421B80 /* CGImage+Size.swift */; };
 		80EF89BE2497F31100E345F0 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF89BD2497F31100E345F0 /* Edge.swift */; };
 		80EF89BF2497F31100E345F0 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF89BD2497F31100E345F0 /* Edge.swift */; };
 		80EF89C12498242100E345F0 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF89C02498242000E345F0 /* ProgressBar.swift */; };
@@ -479,8 +482,10 @@
 				80FB49DD2496A80C001C3DAE /* MeasurementFrame.swift in Sources */,
 				80FB49D924967F84001C3DAE /* Measurement.swift in Sources */,
 				80E67BC5249AC63E00ECC047 /* PoseBuilder.swift in Sources */,
+				80E67BC9249AC8F400ECC047 /* CGPoint+MathOperations.swift in Sources */,
 				80E67BBE249AC56900ECC047 /* Pose.swift in Sources */,
 				80E67BC3249AC63600ECC047 /* JointName.swift in Sources */,
+				80E67BCA249AC8F800ECC047 /* CGImage+Size.swift in Sources */,
 				80E67BC2249AC61100ECC047 /* Side.swift in Sources */,
 				80EF89BF2497F31100E345F0 /* Edge.swift in Sources */,
 				80E67BC6249AC64200ECC047 /* PoseBuilderConfiguration.swift in Sources */,
@@ -491,6 +496,7 @@
 				80EF89C22498242100E345F0 /* ProgressBar.swift in Sources */,
 				80E67BC1249AC57700ECC047 /* Cell.swift in Sources */,
 				80E67BC4249AC63900ECC047 /* PoseNetInput.swift in Sources */,
+				80E67BC8249AC8F000ECC047 /* UIImage+Extensions.swift in Sources */,
 				80FB49E12496A959001C3DAE /* ProcessingView.swift in Sources */,
 				80E67BC0249AC57300ECC047 /* PoseNetOutput.swift in Sources */,
 			);
