@@ -214,9 +214,7 @@ class PoseNet {
         } else {
             print("Error. At least one vector is of size 0")
         }
-        
-        // Subtract neutral null degrees from the measurement
-        //innerAngle -= Constants.neutralNullAngle
+
         return innerAngle
     }
 
