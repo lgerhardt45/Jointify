@@ -18,22 +18,22 @@ struct Pose {
     /// The index relates to the index used to access the associated value within the displacement maps
     /// output by the PoseNet model.
     static let edges = [
-        Edge(from: .nose, to: .leftEye, index: 0),
-        Edge(from: .leftEye, to: .leftEar, index: 1),
-        Edge(from: .nose, to: .rightEye, index: 2),
-        Edge(from: .rightEye, to: .rightEar, index: 3),
-        Edge(from: .nose, to: .leftShoulder, index: 4),
-        Edge(from: .leftShoulder, to: .leftElbow, index: 5),
-        Edge(from: .leftElbow, to: .leftWrist, index: 6),
-        Edge(from: .leftShoulder, to: .leftHip, index: 7),
-        Edge(from: .leftHip, to: .leftKnee, index: 8),
-        Edge(from: .leftKnee, to: .leftAnkle, index: 9),
-        Edge(from: .nose, to: .rightShoulder, index: 10),
-        Edge(from: .rightShoulder, to: .rightElbow, index: 11),
-        Edge(from: .rightElbow, to: .rightWrist, index: 12),
-        Edge(from: .rightShoulder, to: .rightHip, index: 13),
-        Edge(from: .rightHip, to: .rightKnee, index: 14),
-        Edge(from: .rightKnee, to: .rightAnkle, index: 15)
+        Edge(from: .nose, towards: .leftEye, index: 0),
+        Edge(from: .leftEye, towards: .leftEar, index: 1),
+        Edge(from: .nose, towards: .rightEye, index: 2),
+        Edge(from: .rightEye, towards: .rightEar, index: 3),
+        Edge(from: .nose, towards: .leftShoulder, index: 4),
+        Edge(from: .leftShoulder, towards: .leftElbow, index: 5),
+        Edge(from: .leftElbow, towards: .leftWrist, index: 6),
+        Edge(from: .leftShoulder, towards: .leftHip, index: 7),
+        Edge(from: .leftHip, towards: .leftKnee, index: 8),
+        Edge(from: .leftKnee, towards: .leftAnkle, index: 9),
+        Edge(from: .nose, towards: .rightShoulder, index: 10),
+        Edge(from: .rightShoulder, towards: .rightElbow, index: 11),
+        Edge(from: .rightElbow, towards: .rightWrist, index: 12),
+        Edge(from: .rightShoulder, towards: .rightHip, index: 13),
+        Edge(from: .rightHip, towards: .rightKnee, index: 14),
+        Edge(from: .rightKnee, towards: .rightAnkle, index: 15)
     ]
     
     // MARK: Stored Instance Properties
@@ -70,7 +70,7 @@ struct Pose {
     /// - returns: All edges that connect to or from `jointName`.
     static func edges(for jointName: Joint.Name) -> [Edge] {
         return Pose.edges.filter {
-            $0.from == jointName || $0.to == jointName
+            $0.from == jointName || $0.towards == jointName
         }
     }
 
@@ -81,7 +81,7 @@ struct Pose {
     ///     - childJointName: Edge's child joint name.
     /// - returns: All edges that connect to or from `jointName`.
     static func edge(from parentJointName: Joint.Name, to childJointName: Joint.Name) -> Edge? {
-        return Pose.edges.first(where: { $0.from == parentJointName && $0.to == childJointName })
+        return Pose.edges.first(where: { $0.from == parentJointName && $0.towards == childJointName })
     }
 }
 

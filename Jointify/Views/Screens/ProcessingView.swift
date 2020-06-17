@@ -105,6 +105,7 @@ struct ProcessingView: View {
         
         for frame in frames {
             
+            //TODO: resize image, so that it fits the squared input size (513 x 513) that is required for the model
             let drawnImage = poseNet.predict(frame)
             
             returnMeasurementFrames.append(

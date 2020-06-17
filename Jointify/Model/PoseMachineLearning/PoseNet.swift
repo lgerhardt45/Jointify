@@ -146,18 +146,15 @@ class PoseNet {
     // Returns a Float degree number.
     //
     func calcAngleBetweenJoints() -> Float {
-        var jointNames: [String]
+        var jointNames: [Joint.Name]
         var jointPositions = [String: Float]()
-        var chosenSide: String
         var innerAngle: Float = 0.0
         
         switch side {
         case .left:
-            jointNames = ["leftHip", "leftKnee", "leftAnkle"]
-            chosenSide = "left"
+            jointNames = [.leftHip, .leftKnee, .leftAnkle]
         case .right:
-            jointNames = ["rightHip", "rightKnee", "rightAnkle"]
-            chosenSide = "right"
+            jointNames = [.rightHip, .rightKnee, .rightAnkle]
         }
         
         guard let pose = pose else {
@@ -167,9 +164,10 @@ class PoseNet {
         
         // Get X and Y coordinates of joints and place them in the dictionary
         for joint in pose.joints.values.filter({ $0.isValid }) {
-            if jointNames.contains(joint.nameToString()) {
-                jointPositions[joint.nameToString() + "X"] = Float(joint.position.x)
-                jointPositions[joint.nameToString() + "Y"] = Float(joint.position.y)
+            if jointNames.contains(joint.name) {
+                //print("\(joint.name)X")
+                jointPositions["\(joint.name)X"] = Float(joint.position.x)
+                jointPositions["\(joint.name)Y"] = Float(joint.position.y)
             }
         }
         
@@ -186,16 +184,16 @@ class PoseNet {
         }*/
         
         // Create vectors leading from ankle and hip towards knee
-        let vectorKneeHip: [String: Float] = ["X": jointPositions[chosenSide + "HipX"]! -
-                                                   jointPositions[chosenSide + "KneeX"]!,
-                                              "Y": jointPositions[chosenSide + "HipY"]! -
-                                                   jointPositions[chosenSide + "KneeY"]!]
-        let vectorKneeAnkle: [String: Float] = ["X": jointPositions[chosenSide + "AnkleX"]! -
-                                                     jointPositions[chosenSide + "KneeX"]!,
-                                                "Y": jointPositions[chosenSide + "AnkleY"]! -
-                                                     jointPositions[chosenSide + "KneeY"]!]
+        let vectorKneeHip: [String: Float] = ["X": jointPositions["\(side)HipX"]! -
+                                                   jointPositions["\(side)KneeX"]!,
+                                              "Y": jointPositions["\(side)HipY"]! -
+                                                   jointPositions["\(side)KneeY"]!]
+        let vectorKneeAnkle: [String: Float] = ["X": jointPositions["\(side)AnkleX"]! -
+                                                     jointPositions["\(side)KneeX"]!,
+                                                "Y": jointPositions["\(side)AnkleY"]! -
+                                                     jointPositions["\(side)KneeY"]!]
         // Calculate inner angle of knee
-        // TODO: prevent force unqrapping
+        // TODO: prevent force unwrapping
         let scalarProduct = (vectorKneeHip["X"]! * vectorKneeAnkle["X"]! + vectorKneeHip["Y"]! * vectorKneeAnkle["Y"]!)
         let amountProduct = sqrt(pow(vectorKneeHip["X"]!, 2) + pow(vectorKneeHip["Y"]!, 2)) *
             sqrt(pow(vectorKneeAnkle["X"]!, 2) + pow(vectorKneeAnkle["Y"]!, 2))
@@ -259,6 +257,7 @@ class PoseNet {
         cgContext.drawPath(using: .fill)
     }
     
+    // TODO: prevent force unwrapping
     // Helper function to convert CIImage to CGImage
     private func convertCIImageToCGImage(inputImage: CIImage) -> CGImage! {
         let context = CIContext(options: nil)
@@ -294,6 +293,8 @@ class PoseNet {
             let poseNetOutput = PoseNetOutput(prediction: prediction,
                                               modelInputSize: Constants.modelInputSize,
                                               modelOutputStride: Constants.outputStride)
+            
+            // TODO: no force unwrapping
             let poseBuilder = PoseBuilder(output: poseNetOutput,
                                           configuration: poseBuilderConfiguration,
                                           inputImage: cgImage!)
@@ -307,6 +308,7 @@ class PoseNet {
             }
             
             // Add the joints and edges to the original image
+            // TODO: prevent force unwrapping
             return show(pose: pose, on: cgImage!)
         } else {
             print("Error. Prediction could not be found.")

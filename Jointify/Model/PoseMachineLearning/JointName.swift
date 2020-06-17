@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Name
-enum JointName: Int, CaseIterable {
+enum JointName: Int, CaseIterable, CustomStringConvertible {
     case nose
     case leftEye
     case rightEye
@@ -27,4 +27,26 @@ enum JointName: Int, CaseIterable {
     case rightKnee
     case leftAnkle
     case rightAnkle
+    
+    var description: String {
+        switch self {
+        case .nose: return "nose"
+        case .leftEye: return "leftEye"
+        case .rightEye: return "rightEye"
+        case .leftEar: return "leftEar"
+        case .rightEar: return "rightEar"
+        case .leftShoulder: return "leftShoulder"
+        case .rightShoulder: return "rightShoulder"
+        case .leftElbow: return "leftElbow"
+        case .rightElbow: return "rightElbow"
+        case .leftWrist: return "leftWrist"
+        case .rightWrist: return "rightWrist"
+        case .leftHip: return "leftHip"
+        case .rightHip: return "rightHip"
+        case .leftKnee: return "leftKnee"
+        case .rightKnee: return "rightKnee"
+        case .leftAnkle: return "leftAnkle"
+        case .rightAnkle: return "rightAnkle"
+        }
+    }
 }

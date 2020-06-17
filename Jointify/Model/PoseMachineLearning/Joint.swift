@@ -95,33 +95,5 @@ class Joint {
         self.confidence = confidence
         self.isValid = isValid
     }
-    
-    // MARK: Private Instance Methods
-    // TODO: Lukas: use `CustomStringConvertible` protocol on Name https://stackoverflow.com/a/24707744
-    //and then probably use it like String(Joint.name)
-    
-    func nameToString() -> String {
-        switch name.rawValue {
-        case 0: return("nose")
-        case 1: return ("leftEye")
-        case 2: return("rightEye")
-        case 3: return("leftEar")
-        case 4: return("rightEar")
-        case 5: return("leftShoulder")
-        case 6: return("rightShoulder")
-        case 7: return("leftElbow")
-        case 8: return("rightElbow")
-        case 9: return("leftWrist")
-        case 10: return("rightWrist")
-        case 11: return("leftHip")
-        case 12: return("rightHip")
-        case 13: return("leftKnee")
-        case 14: return("rightKnee")
-        case 15: return("leftAnkle")
-        case 16: return("rightAnkle")
-        default:
-            return("Error: Joint not found.")
-        }
-    }
  
 }
