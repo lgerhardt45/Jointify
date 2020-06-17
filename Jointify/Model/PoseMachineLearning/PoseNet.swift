@@ -108,6 +108,7 @@ class PoseNet {
                                                format: dstImageFormat)
         
         guard let pose = pose else {
+            print("Pose instance could not be retrieved")
             return UIImage(systemName: "heart.fill")!
         }
 
@@ -203,8 +204,12 @@ class PoseNet {
                                                 "Y": jointPositionsAnkleY -
                                                      jointPositionsKneeY]
         // Calculate inner angle of knee
-        // TODO: prevent force unwrapping
-        let scalarProduct = (vectorKneeHip["X"]! * vectorKneeAnkle["X"]! + vectorKneeHip["Y"]! * vectorKneeAnkle["Y"]!)
+        guard let vectorKneeHipX = vectorKneeHip["X"], let vectorKneeAnkleX = vectorKneeAnkle["X"],
+            let vectorKneeHipY = vectorKneeHip["Y"], let vectorKneeAnkleY = vectorKneeAnkle["Y"] else {
+                return innerAngle
+        }
+        
+        let scalarProduct = (vectorKneeHipX * vectorKneeAnkleX + vectorKneeHipY * vectorKneeAnkleY)
         let amountProduct = sqrt(pow(vectorKneeHip["X"]!, 2) + pow(vectorKneeHip["Y"]!, 2)) *
             sqrt(pow(vectorKneeAnkle["X"]!, 2) + pow(vectorKneeAnkle["Y"]!, 2))
         
@@ -265,41 +270,42 @@ class PoseNet {
         cgContext.drawPath(using: .fill)
     }
     
-    // TODO: prevent force unwrapping
     // Helper function to convert CIImage to CGImage
-    private func convertCIImageToCGImage(inputImage: CIImage) -> CGImage! {
+    private func convertCIImageToCGImage(inputImage: CIImage) -> CGImage? {
         let context = CIContext(options: nil)
         return context.createCGImage(inputImage, from: inputImage.extent)
     }
     
-    // Draw a circle in the location of the given joint.
-    // Returns an UIImage with the specified edges and joints drawn on it.
-    //
-    // - parameters:
-    //     - image: The image to be analysed.
     /// Draw a circle in the location of the given joint.
     /// Returns an UIImage with the specified edges and joints drawn on it.
     ///
     /// - parameters:
     ///     - image: The image to be analysed.
     func predict (_ image: UIImage) -> UIImage {
+        
+        // Add alternative image which is definitely shipped once
+        // swiftlint:disable force_unwrapping
+        let alternativeImage = UIImage(named: "placeholder")!
+        // swiftlint:enable force_unwrapping
+        
         // Convert UIImage into a CGImage, because this is what the model requires as input
-        let resizedImage = image.resizeTo(size: Constants.modelInputSize)
-        // TODO: no force unwrapping
-        /*guard let resizedImage = resizedImage else {
+        guard let resizedImage = image.resizeTo(size: Constants.modelInputSize) else {
             print("Error. Image could not be resized.")
-            return UIImage(named: "placeholder")!
-        }*/
-        let ciImage = CIImage(image: resizedImage!)
-         // TODO: no force unwrapping
-        /*guard let ciImage = ciImage else {
+            return alternativeImage
+        }
+        
+        guard let ciImage = CIImage(image: resizedImage) else {
             print("Error. CIImage could not be created.")
-            return UIImage(named: "placeholder")!
-        }*/
-        let cgImage = convertCIImageToCGImage(inputImage: ciImage!)
+            return alternativeImage
+        }
+        
+        guard let cgImage = convertCIImageToCGImage(inputImage: ciImage) else {
+            print("Error. CGImage could not be created")
+            return alternativeImage
+        }
         
         // Input the converted image into the model and let it run
-        let poseNetInput = PoseNetInput(image: cgImage!, size: Constants.modelInputSize)
+        let poseNetInput = PoseNetInput(image: cgImage, size: Constants.modelInputSize)
         let prediction = try? self.model.prediction(from: poseNetInput)
         if let prediction = prediction {
             // Obtain the results of the model and assign them
@@ -307,17 +313,17 @@ class PoseNet {
                                               modelInputSize: Constants.modelInputSize,
                                               modelOutputStride: Constants.outputStride)
             
-            // TODO: no force unwrapping
             let poseBuilder = PoseBuilder(output: poseNetOutput,
                                           configuration: poseBuilderConfiguration,
-                                          inputImage: cgImage!)
+                                          inputImage: cgImage)
+            
             pose = poseBuilder.pose
             // Calculate the angles between the joints
             degree = calcAngleBetweenJoints()
             
             // Add the joints and edges to the original image
-            // TODO: prevent force unwrapping
-            return show(on: cgImage!)
+            return show(on: cgImage)
+            
         } else {
             print("Error. Prediction could not be found.")
             return UIImage(named: "placeholder")!
