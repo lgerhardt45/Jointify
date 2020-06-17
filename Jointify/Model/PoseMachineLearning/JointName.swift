@@ -6,6 +6,7 @@
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
+// MARK: Import
 import Foundation
 
 // MARK: - Name
@@ -28,6 +29,7 @@ enum JointName: Int, CaseIterable, CustomStringConvertible {
     case leftAnkle
     case rightAnkle
     
+    // MARK: Computed Instance Properties
     var description: String {
         switch self {
         case .nose: return "nose"

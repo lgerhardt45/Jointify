@@ -6,9 +6,10 @@
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
+// MARK: Imports
 import Foundation
 
-// MARK: Cell
+// MARK: - Cell
 /// A structure that defines the coordinates of an index used to query the PoseNet model outputs.
 ///
 /// The PoseNet outputs are arranged in grid. Each cell in the grid corresponds
