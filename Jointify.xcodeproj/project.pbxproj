@@ -33,6 +33,17 @@
 		80DFDB7224924DF00021124C /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFDB7124924DF00021124C /* ResultView.swift */; };
 		80DFDB752492991C0021124C /* InstructionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFDB742492991B0021124C /* InstructionContent.swift */; };
 		80DFDB782492AAC20021124C /* PastRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFDB772492AAC20021124C /* PastRecords.swift */; };
+		80E67BBD249AC56600ECC047 /* Joint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA792497EA0300421B80 /* Joint.swift */; };
+		80E67BBE249AC56900ECC047 /* Pose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA722497E9F500421B80 /* Pose.swift */; };
+		80E67BBF249AC57000ECC047 /* PoseNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA7E2497EA2600421B80 /* PoseNet.swift */; };
+		80E67BC0249AC57300ECC047 /* PoseNetOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA7D2497EA2600421B80 /* PoseNetOutput.swift */; };
+		80E67BC1249AC57700ECC047 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ED3CFF249A0E250031199A /* Cell.swift */; };
+		80E67BC2249AC61100ECC047 /* Side.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ED3D01249A0F4E0031199A /* Side.swift */; };
+		80E67BC3249AC63600ECC047 /* JointName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ED3CFD249A06FD0031199A /* JointName.swift */; };
+		80E67BC4249AC63900ECC047 /* PoseNetInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA7B2497EA2600421B80 /* PoseNetInput.swift */; };
+		80E67BC5249AC63E00ECC047 /* PoseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA732497E9F500421B80 /* PoseBuilder.swift */; };
+		80E67BC6249AC64200ECC047 /* PoseBuilderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA742497E9F500421B80 /* PoseBuilderConfiguration.swift */; };
+		80E67BC7249AC64900ECC047 /* PoseNetMobileNet100S8FP16.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA7C2497EA2600421B80 /* PoseNetMobileNet100S8FP16.mlmodel */; };
 		80EF89BE2497F31100E345F0 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF89BD2497F31100E345F0 /* Edge.swift */; };
 		80EF89BF2497F31100E345F0 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF89BD2497F31100E345F0 /* Edge.swift */; };
 		80EF89C12498242100E345F0 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF89C02498242000E345F0 /* ProgressBar.swift */; };
@@ -459,18 +470,29 @@
 				80FB49E42496AD6D001C3DAE /* InstructionContent.swift in Sources */,
 				808297512483142600DB4A1C /* JointifyTests.swift in Sources */,
 				80FB49E32496ABCF001C3DAE /* InstructionsView.swift in Sources */,
+				80E67BC7249AC64900ECC047 /* PoseNetMobileNet100S8FP16.mlmodel in Sources */,
 				80FB49DF2496A828001C3DAE /* DefaultButton.swift in Sources */,
 				80FB49DC249689C0001C3DAE /* VideoResultView.swift in Sources */,
 				80FB49E62496AD8A001C3DAE /* ChooseInputView.swift in Sources */,
+				80E67BBF249AC57000ECC047 /* PoseNet.swift in Sources */,
 				80FB49DE2496A81D001C3DAE /* ResultView.swift in Sources */,
 				80FB49DD2496A80C001C3DAE /* MeasurementFrame.swift in Sources */,
 				80FB49D924967F84001C3DAE /* Measurement.swift in Sources */,
+				80E67BC5249AC63E00ECC047 /* PoseBuilder.swift in Sources */,
+				80E67BBE249AC56900ECC047 /* Pose.swift in Sources */,
+				80E67BC3249AC63600ECC047 /* JointName.swift in Sources */,
+				80E67BC2249AC61100ECC047 /* Side.swift in Sources */,
 				80EF89BF2497F31100E345F0 /* Edge.swift in Sources */,
+				80E67BC6249AC64200ECC047 /* PoseBuilderConfiguration.swift in Sources */,
+				80E67BBD249AC56600ECC047 /* Joint.swift in Sources */,
 				80FB49E22496ABC7001C3DAE /* PastRecords.swift in Sources */,
 				80FB49E52496AD78001C3DAE /* ImagePicker.swift in Sources */,
 				80FB49E02496A953001C3DAE /* WelcomeView.swift in Sources */,
 				80EF89C22498242100E345F0 /* ProgressBar.swift in Sources */,
+				80E67BC1249AC57700ECC047 /* Cell.swift in Sources */,
+				80E67BC4249AC63900ECC047 /* PoseNetInput.swift in Sources */,
 				80FB49E12496A959001C3DAE /* ProcessingView.swift in Sources */,
+				80E67BC0249AC57300ECC047 /* PoseNetOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,6 +642,7 @@
 				DEVELOPMENT_TEAM = 4SK5JS59G8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Jointify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -641,6 +664,7 @@
 				DEVELOPMENT_TEAM = 4SK5JS59G8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Jointify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
