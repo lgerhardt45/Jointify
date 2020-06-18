@@ -195,14 +195,10 @@ class PoseNet {
         }
         
         // Create vectors leading from ankle and hip towards knee
-        let vectorKneeHip: [String: Float] = ["X": jointPositionsHipX -
-                                                   jointPositionsKneeX,
-                                              "Y": jointPositionsHipY -
-                                                   jointPositionsKneeY]
-        let vectorKneeAnkle: [String: Float] = ["X": jointPositionsAnkleX -
-                                                     jointPositionsKneeX,
-                                                "Y": jointPositionsAnkleY -
-                                                     jointPositionsKneeY]
+        let vectorKneeHip: [String: Float] = ["X": jointPositionsHipX - jointPositionsKneeX,
+                                              "Y": jointPositionsHipY - jointPositionsKneeY]
+        let vectorKneeAnkle: [String: Float] = ["X": jointPositionsAnkleX - jointPositionsKneeX,
+                                                "Y": jointPositionsAnkleY - jointPositionsKneeY]
         // Calculate inner angle of knee
         guard let vectorKneeHipX = vectorKneeHip["X"], let vectorKneeAnkleX = vectorKneeAnkle["X"],
             let vectorKneeHipY = vectorKneeHip["Y"], let vectorKneeAnkleY = vectorKneeAnkle["Y"] else {
@@ -285,7 +281,7 @@ class PoseNet {
         
         // Add alternative image which is definitely shipped once
         // swiftlint:disable force_unwrapping
-        let alternativeImage = UIImage(named: "placeholder")!
+        let alternativeImage = UIImage(systemName: "bolt")!
         // swiftlint:enable force_unwrapping
         
         // Convert UIImage into a CGImage, because this is what the model requires as input
