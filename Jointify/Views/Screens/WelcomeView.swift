@@ -24,20 +24,23 @@ struct WelcomeView: View {
         // starts the navigation stack (screens are loaded "on top" of each other
         NavigationView {
             VStack {
-                
-                // Spacing from top
-                Spacer().frame(height: 100)
+                Logo()
+                Spacer().frame(height: 81
+                )
                 
                 VStack(spacing: 16.0) {
                     Text("Hello!")
                         .font(.largeTitle)
-                    
+                        .font(.system(size:48))
                     Text("Start your remote joint measurement journey.")
                         .font(.subheadline)
-                        .padding(.horizontal, 64.0)
+                        .fontWeight(.light)
+                        .multilineTextAlignment(.center)
+                        .font(.system(size:20))
+                        .frame(width: 220.0)
                     
                     Spacer()
-                        .frame(height: 50)
+                        .frame(height: 70)
                     
                     NavigationLink(
                         destination: InstructionsView(
@@ -54,11 +57,9 @@ struct WelcomeView: View {
                     }
                 }
                 
-                Spacer(minLength: 50)
-                
+                Spacer()
                 PastRecords()
                     .frame(height: 250) // size from bottom
-                
             }.onAppear(perform: {
                 // always hidden on this screen
                 self.isNavigationBarHidden = true
@@ -66,6 +67,7 @@ struct WelcomeView: View {
                 // hide the navigation bar
                 .navigationBarTitle("")
                 .navigationBarHidden(self.isNavigationBarHidden)
+                .padding(.all)
         }
     }
 }
