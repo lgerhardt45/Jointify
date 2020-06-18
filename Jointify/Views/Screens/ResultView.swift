@@ -77,7 +77,8 @@ struct ResultView: View {
                 }
                                 
                 // Report button
-                DefaultButton(action: {
+                DefaultButton(disabled: canSendMail ? false : true,
+                              action: {
                     print("Opening mail to send")
                     self.isShowingMailView.toggle()
                 }) {
