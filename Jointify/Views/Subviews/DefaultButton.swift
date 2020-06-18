@@ -33,6 +33,7 @@ struct DefaultButton<ConformsToView: View>: View {
                 .font(.system(size: 18, weight: .bold))
                 .allowsTightening(true)
                 .lineLimit(1)
+                .shadow(radius: 5, y: 4)
         
         })
         
