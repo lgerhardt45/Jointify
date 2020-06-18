@@ -195,14 +195,10 @@ class PoseNet {
         }
         
         // Create vectors leading from ankle and hip towards knee
-        let vectorKneeHip: [String: Float] = ["X": jointPositionsHipX -
-                                                   jointPositionsKneeX,
-                                              "Y": jointPositionsHipY -
-                                                   jointPositionsKneeY]
-        let vectorKneeAnkle: [String: Float] = ["X": jointPositionsAnkleX -
-                                                     jointPositionsKneeX,
-                                                "Y": jointPositionsAnkleY -
-                                                     jointPositionsKneeY]
+        let vectorKneeHip: [String: Float] = ["X": jointPositionsHipX - jointPositionsKneeX,
+                                              "Y": jointPositionsHipY - jointPositionsKneeY]
+        let vectorKneeAnkle: [String: Float] = ["X": jointPositionsAnkleX - jointPositionsKneeX,
+                                                "Y": jointPositionsAnkleY - jointPositionsKneeY]
         // Calculate inner angle of knee
         guard let vectorKneeHipX = vectorKneeHip["X"], let vectorKneeAnkleX = vectorKneeAnkle["X"],
             let vectorKneeHipY = vectorKneeHip["Y"], let vectorKneeAnkleY = vectorKneeAnkle["Y"] else {
