@@ -8,13 +8,17 @@
 
 // MARK: Imports
 import SwiftUI
+import MessageUI
 
 // MARK: - ResultView
 struct ResultView: View {
     
     // MARK: State Instance Properties
-    @State private var createReportButtonPressed: Bool = false
+    // Home button
     @State private var homeButtonPressed: Bool = false
+    // Report button
+    @State private var isShowingMailView: Bool = false
+    @State private var result: Result<MFMailComposeResult, Error>?
 
     // MARK: Stored Instance Properties
     // TODO: change to Measurement
@@ -22,6 +26,17 @@ struct ResultView: View {
     let maxValue: Int = 90
     let previousMinValue: Int = -45
     let previousMaxValue: Int = 80
+    
+    let canSendMail: Bool = MFMailComposeViewController.canSendMail()
+    
+    let possibleMailLabel = HStack {
+        Image(systemName: "envelope")
+        Text("Report")
+    }
+    let notPossibleMailLabel = HStack {
+        Image(systemName: "bolt")
+        Text("Can't send mail")
+    }
     
     // MARK: Body
     var body: some View {
@@ -53,21 +68,26 @@ struct ResultView: View {
             
             Spacer().frame(height: 50)
 
-            HStack {
+            VStack {
+                // Home button
                 DefaultButton(action: {
                     // back home
                 }) {
                     Text("Do it again")
                 }
-                Spacer(minLength: 16)
+                                
+                // Report button
                 DefaultButton(action: {
-                    // create PDF and open Mail-app here
+                    print("Opening mail to send")
+                    self.isShowingMailView.toggle()
                 }) {
-                    HStack {
-                        Image(systemName: "heart.fill")
-                        Text("Report")
-                    }
+                    self.canSendMail ? self.possibleMailLabel : self.notPossibleMailLabel
                 }
+                .disabled(!MFMailComposeViewController.canSendMail())
+                .sheet(isPresented: $isShowingMailView) {
+                    MailView(result: self.$result)
+                }
+                
             }.padding(.horizontal, 60)
         }
     }
