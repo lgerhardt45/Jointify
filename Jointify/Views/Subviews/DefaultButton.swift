@@ -34,8 +34,10 @@ struct DefaultButton<ConformsToView: View>: View {
                 .allowsTightening(true)
                 .lineLimit(1)
                 .shadow(radius: 5, y: 4)
+            
         
         })
+            .frame(width: 184.0, height: 52.0)
         
     }
 }
