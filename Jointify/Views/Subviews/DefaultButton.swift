@@ -13,11 +13,13 @@ import SwiftUI
 struct DefaultButton<ConformsToView: View>: View {
     
     // MARK: Stored Instance Properties
+    private let disabled: Bool
     private let action: () -> Void
     private let label: ConformsToView
     
     // MARK: Initializers
-    init(action: @escaping () -> Void, @ViewBuilder label: () -> ConformsToView) {
+    init(disabled: Bool = false, action: @escaping () -> Void, @ViewBuilder label: () -> ConformsToView) {
+        self.disabled = disabled
         self.action = action
         self.label = label()
     }
@@ -27,13 +29,13 @@ struct DefaultButton<ConformsToView: View>: View {
         Button(action: action, label: {
             self.label
                 .padding()
-                .background(Color.lightBlue)
+                .background(!disabled ? Color.lightBlue : Color.gray)
                 .foregroundColor(.white)
                 .cornerRadius(40)
                 .font(.system(size: 18, weight: .bold))
                 .allowsTightening(true)
                 .lineLimit(1)
-                .shadow(radius: 5, y: 4)
+                .shadow(radius: !disabled ? 5 : 0, y: !disabled ? 4 : 0)
         
         })
         
