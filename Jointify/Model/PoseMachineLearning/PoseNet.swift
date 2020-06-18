@@ -281,7 +281,7 @@ class PoseNet {
         
         // Add alternative image which is definitely shipped once
         // swiftlint:disable force_unwrapping
-        let alternativeImage = UIImage(named: "placeholder")!
+        let alternativeImage = UIImage(systemName: "bolt")!
         // swiftlint:enable force_unwrapping
         
         // Convert UIImage into a CGImage, because this is what the model requires as input
