@@ -27,11 +27,14 @@ struct DefaultButton<ConformsToView: View>: View {
         Button(action: action, label: {
             self.label
                 .padding()
-                .background(Color.blue)
+                .background(Color.lightBlue)
                 .foregroundColor(.white)
-                .cornerRadius(10)
+                .cornerRadius(40)
+                .font(.system(size: 18, weight: .bold))
                 .allowsTightening(true)
                 .lineLimit(1)
+                .shadow(radius: 5, y: 4)
+        
         })
         
     }
@@ -46,3 +49,10 @@ struct DefaultButton_Previews: PreviewProvider {
     }
     
 }
+
+// MARK: Extension Color
+/// add the default colour for the button
+extension Color {
+    static let lightBlue = Color("ButtonColor")
+}
+
