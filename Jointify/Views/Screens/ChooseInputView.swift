@@ -33,21 +33,26 @@ struct ChooseInputView: View {
                     EmptyView()
             }
             
-            VStack(spacing: 64) {
-                
+            VStack(spacing: 16) {
+                Logo()
+                Spacer().frame(height: 81
+                )
                 VStack(spacing: 16) {
                     Text("Measurement")
-                        .font(.largeTitle)
+                    .font(.largeTitle)
+                    .font(.system(size:48))
                     Text("Would you like to start a new recording or use an existing one?")
                         .font(.subheadline)
+                        .fontWeight(.light)
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal, 64)
+                        .font(.system(size:20))
+                        .frame(width: 220.0)
                 }
-                
-                Image(systemName: "camera")
+                Spacer()
+                /*Image(systemName: "camera")
                     .resizable()
                     .frame(width: 100, height: 100)
-                    .scaledToFit()
+                    .scaledToFit()*/
                 
                 VStack(spacing: 8) { // Buttons
                     
@@ -58,7 +63,7 @@ struct ChooseInputView: View {
                         self.videoPickerSheetIsPresented.toggle()
                     }) {
                         Text("Record").frame(width: 100)
-                    }
+                    }.padding(.all, 10)
                     #endif
                     
                     DefaultButton(action: {
@@ -67,6 +72,8 @@ struct ChooseInputView: View {
                     }) {
                         Text("Gallery").frame(width: 100)
                     }
+                    .frame(width: nil)
+                    .padding(.all, 10)
                     
                 }
                     

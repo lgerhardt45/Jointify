@@ -15,11 +15,6 @@ struct InstructionContent: View {
     // MARK: Body
     var body: some View {
         VStack {
-            Text("Instructions")
-                .font(.largeTitle)
-            
-            Spacer().frame(height: 20)
-            
             // Mocking with "llorem ipsum"
             InstructionBulletPoint(number: 1)
             InstructionBulletPoint(number: 2)
@@ -43,7 +38,12 @@ private struct InstructionBulletPoint: View {
     var body: some View {
         HStack(alignment: .top) {
             Text("\(number).")
+            .fontWeight(.light)
+            .font(.system(size:18))
             Text(Constants.lloremIpsum)
+            .fontWeight(.light)
+            .font(.system(size:18))
+            
         }
         .padding(.horizontal, 32.0)
     }

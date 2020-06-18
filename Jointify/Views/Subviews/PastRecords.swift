@@ -28,6 +28,7 @@ struct PastRecords: View {
                     .frame(height: 50.0, alignment: .leading)
                     .foregroundColor(/*@START_MENU_TOKEN@*/.gray/*@END_MENU_TOKEN@*/)
                     .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                    .cornerRadius(5)
                     // use overlay() for simple ZStack
                     .overlay(
                         Text("Record \(row)").padding(.horizontal),
@@ -36,6 +37,7 @@ struct PastRecords: View {
                 
             }
         }
+        .frame(height: 280.0)
     }
 }
 
