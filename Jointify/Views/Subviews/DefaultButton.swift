@@ -55,4 +55,3 @@ struct DefaultButton_Previews: PreviewProvider {
 extension Color {
     static let lightBlue = Color("ButtonColor")
 }
-
