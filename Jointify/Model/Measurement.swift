@@ -19,9 +19,10 @@ struct Measurement {
     
     // MARK: Computed Instance Properties
     var minROM: Float {
-        return 0 // search through `frames`
+        return frames.map({$0.degree}).min() ?? 0
     }
     var maxROM: Float {
-        return 0 // search through `frames`
+        return frames.map({$0.degree}).max() ?? 0
+    }
     }
 }
