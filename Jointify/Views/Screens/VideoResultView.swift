@@ -37,7 +37,7 @@ struct VideoResultView: View {
                 }
             }
             
-            NavigationLink(destination: ResultView(), isActive: self.$goToResultView) {
+            NavigationLink(destination: ResultView(measurement: measurement), isActive: self.$goToResultView) {
                 DefaultButton(action: {
                     self.goToResultView.toggle()
                 }) {
