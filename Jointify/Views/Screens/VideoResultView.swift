@@ -20,9 +20,18 @@ struct VideoResultView: View {
     
     // MARK: Body
     var body: some View {
-        VStack {
-            
-            Text("The frames (scroll):")
+        VStack(spacing: 16) {
+            Logo()
+            Spacer().frame(height: 86)
+            Text("Done!")
+            .font(.largeTitle)
+            .font(.system(size:48))
+            Text("Your video was anaylized succesfully.")
+            .font(.subheadline)
+            .fontWeight(.light)
+            .multilineTextAlignment(.center)
+            .font(.system(size:20))
+            .frame(width: 220.0)
             ScrollView {
                 VStack(spacing: 16) {
                         ForEach(measurement?.frames ?? [], id: \.self) { frame in

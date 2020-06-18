@@ -25,11 +25,12 @@ struct ResultView: View {
     
     // MARK: Body
     var body: some View {
-        VStack {
-
-            Text("The video was analysed:")
-                .multilineTextAlignment(.center)
+        VStack(spacing: 16) {
+            Logo()
+            Spacer().frame(height: 86)
+            Text("Your Results")
                 .font(.largeTitle)
+                .font(.system(size:48))
             
             Spacer().frame(height: 50)
             
@@ -69,7 +70,7 @@ struct ResultView: View {
                     }
                 }
             }.padding(.horizontal, 60)
-        }
+        }.padding(.all)
     }
 }
 

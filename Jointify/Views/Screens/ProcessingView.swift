@@ -24,15 +24,25 @@ struct ProcessingView: View {
     
     // MARK: Body
     var body: some View {
-        VStack {
+        VStack(spacing: 16.0) {
+            Logo()
+            Spacer().frame(height: 86)
             VStack {
                 
                 // pass analysed images further
                 NavigationLink(destination:
                     VideoResultView(measurement: measurement),
                                isActive: self.$finishedProcessing) { EmptyView() }
-                Text("Your image is being analysed")
-                
+                Text("Analyzing")
+                    .font(.largeTitle)
+                    .font(.system(size:48))
+                Text("Please wait...")
+                                       .font(.subheadline)
+                                       .fontWeight(.light)
+                                       .multilineTextAlignment(.center)
+                                       .font(.system(size:20))
+                                       .frame(width: 220.0)
+                Spacer().frame(height: 86)
                 ProgressBar(
                     currentProgress: self.$progress,
                     total: self.$total,
@@ -61,8 +71,8 @@ struct ProcessingView: View {
                         self.finishedProcessing.toggle()
                     }
                 })
-            
-        }
+            Spacer()
+        }.padding(.all)
     }
     
     // MARK: Private Instance Methods
