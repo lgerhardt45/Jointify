@@ -24,12 +24,13 @@ struct ProcessingView: View {
     
     // MARK: Body
     var body: some View {
+        
         VStack {
             VStack {
                 
                 // pass analysed images further
                 NavigationLink(destination:
-                    VideoResultView(measurement: measurement),
+                    VideoResultView(measurement: measurement ?? Measurement()),
                                isActive: self.$finishedProcessing) { EmptyView() }
                 Text("Your image is being analysed")
                 
