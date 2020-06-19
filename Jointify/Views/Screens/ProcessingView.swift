@@ -18,11 +18,13 @@ struct ProcessingView: View {
     
     // MARK: State Instance Propoerties
     @State private var progress: Int = 0
-    @State private var removedFramesCounter = 0
-    private let acceptedFramesThreshold: Double = 0.7
     @State private var total: Int = 0
     @State private var finishedProcessing: Bool = false
     @State private var measurement: Measurement?
+    @State private var acceptedFramesCounter = 0
+    
+    // MARK: Stored Instance Properties
+    private let acceptedFramesThreshold: Double = 0.7
     
     // MARK: Body
     var body: some View {
@@ -123,7 +125,7 @@ struct ProcessingView: View {
 
                 // Only append measurement frame if it fulfills quality criteria
                 if outputQualityAcceptable {
-                    self.removedFramesCounter += 1
+                    self.acceptedFramesCounter += 1
                     returnMeasurementFrames.append(
                         MeasurementFrame(
                             degree: poseNet.calcAngleBetweenJoints(),
@@ -136,10 +138,9 @@ struct ProcessingView: View {
 
             }
             
-            let acceptedFramesPercentage = Double(self.removedFramesCounter) / Double(self.progress)
+            let acceptedFramesPercentage = Double(self.acceptedFramesCounter) / Double(self.progress)
             
             if acceptedFramesPercentage < self.acceptedFramesThreshold {
-                // TODO: throw proper error message at user
                 print("Error. Please submit another video.")
             }
             

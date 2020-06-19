@@ -68,8 +68,8 @@ class PoseNet {
     private let selectedJointNames: [JointName]
     var degree: Float = 0.0
     // Dictionary for the coordinates of all joints
-    var jointPositions = [String: Float]()
-    
+    var jointPositions: [String: Float] = [:]
+
     // MARK: Initializers
     init(side: Side) {
         self.side = side
