@@ -9,17 +9,38 @@
 // MARK: Imports
 import SwiftUI
 
+// MARK: Button Mode
+enum ButtonMode {
+    case enabled, disabled, success
+}
+
 // MARK: - DefaultButton
 struct DefaultButton<ConformsToView: View>: View {
     
     // MARK: Stored Instance Properties
-    private let disabled: Bool
+    private let mode: ButtonMode // modify button style from the outside in a consistent style
     private let action: () -> Void
     private let label: ConformsToView
     
+    // MARK: Computed Instance Properties
+    var backgroundColorByMode: Color {
+        switch mode {
+        case .enabled: return Color.lightBlue
+        case .disabled: return Color.gray
+        case .success: return Color.green
+        }
+    }
+    
+    var enabled: Bool {
+        switch mode {
+        case .enabled: return true
+        default: return false
+        }
+    }
+    
     // MARK: Initializers
-    init(disabled: Bool = false, action: @escaping () -> Void, @ViewBuilder label: () -> ConformsToView) {
-        self.disabled = disabled
+    init(mode: ButtonMode = .enabled, action: @escaping () -> Void, @ViewBuilder label: () -> ConformsToView) {
+        self.mode = mode
         self.action = action
         self.label = label()
     }
@@ -29,16 +50,14 @@ struct DefaultButton<ConformsToView: View>: View {
         Button(action: action, label: {
             self.label
                 .padding()
-                .background(!disabled ? Color.lightBlue : Color.gray)
+                .background(backgroundColorByMode)
                 .foregroundColor(.white)
                 .cornerRadius(40)
                 .font(.system(size: 18, weight: .bold))
                 .allowsTightening(true)
                 .lineLimit(1)
-                .shadow(radius: !disabled ? 5 : 0, y: !disabled ? 4 : 0)
-        
+                .shadow(radius: enabled ? 5 : 0, y: enabled ? 4 : 0)
         })
-        
     }
 }
 
