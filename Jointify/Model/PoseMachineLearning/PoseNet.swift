@@ -59,11 +59,16 @@ class PoseNet {
         static let jointColor: UIColor = UIColor.systemPink
         // Degrees that will be subtraced from the measured angle
         static let neutralNullAngle: Float = 90.0
+        // Minimum confidence that each joint has to conform to
+        static let confidenceThreshold: Double = 0.70
     }
     
     let side: Side
     private let jointSegments: [JointSegment]
+    private let selectedJointNames: [JointName]
     var degree: Float = 0.0
+    // Dictionary for the coordinates of all joints
+    var jointPositions = [String: Float]()
     
     // MARK: Initializers
     init(side: Side) {
@@ -75,11 +80,13 @@ class PoseNet {
                 JointSegment(jointA: .leftHip, jointB: .leftKnee),
                 JointSegment(jointA: .leftKnee, jointB: .leftAnkle)
             ]
+            selectedJointNames = [.leftHip, .leftKnee, .leftAnkle]
         case .right:
             jointSegments = [
                 JointSegment(jointA: .rightHip, jointB: .rightKnee),
                 JointSegment(jointA: .rightKnee, jointB: .rightAnkle)
             ]
+            selectedJointNames = [.rightHip, .rightKnee, .rightAnkle]
         }
     }
     
@@ -155,33 +162,30 @@ class PoseNet {
         return dstImage
     }
     
+    // Get X and Y coordinates of joints and place them in the dictionary
+    // This function depends on pose, which only is created in the predict() function
+    // Thus, it can only be called once the prediction function is done
+    func fillJointCoordinatesDictionaries() {
+        guard let pose = pose else {
+            print("Error. No pose could be detected.")
+            return
+        }
+        
+        for joint in pose.joints.values.filter({ $0.isValid }) {
+                jointPositions["\(joint.name)X"] = Float(joint.position.x)
+                jointPositions["\(joint.name)Y"] = Float(joint.position.y)
+        }
+    }
+    
     // Calculate the angle between two joints
     // Returns a Float degree number.
     //
     func calcAngleBetweenJoints() -> Float {
-        var jointNames: [JointName]
-        var jointPositions = [String: Float]()
+        //var jointPositions = [String: Float]()
         var innerAngle: Float = 0.0
         
-        switch side {
-        case .left:
-            jointNames = [.leftHip, .leftKnee, .leftAnkle]
-        case .right:
-            jointNames = [.rightHip, .rightKnee, .rightAnkle]
-        }
-        
-        guard let pose = pose else {
-            print("Error. No pose could be detected.")
-            return innerAngle
-        }
-        
-        // Get X and Y coordinates of joints and place them in the dictionary
-        for joint in pose.joints.values.filter({ $0.isValid }) {
-            if jointNames.contains(joint.name) {
-                jointPositions["\(joint.name)X"] = Float(joint.position.x)
-                jointPositions["\(joint.name)Y"] = Float(joint.position.y)
-            }
-        }
+        // Place the joint coordinates in the global class dictionary jointPositions
+        fillJointCoordinatesDictionaries()
         
         guard let jointPositionsHipX = jointPositions["\(side)HipX"],
             let jointPositionsHipY = jointPositions["\(side)HipY"],
@@ -278,28 +282,23 @@ class PoseNet {
     /// - parameters:
     ///     - image: The image to be analysed.
     func predict (_ image: UIImage) -> UIImage {
-        
         // Add alternative image which is definitely shipped once
         // swiftlint:disable force_unwrapping
         let alternativeImage = UIImage(systemName: "bolt")!
         // swiftlint:enable force_unwrapping
-        
         // Convert UIImage into a CGImage, because this is what the model requires as input
         guard let resizedImage = image.resizeTo(size: Constants.modelInputSize) else {
             print("Error. Image could not be resized.")
             return alternativeImage
         }
-        
         guard let ciImage = CIImage(image: resizedImage) else {
             print("Error. CIImage could not be created.")
             return alternativeImage
         }
-        
         guard let cgImage = convertCIImageToCGImage(inputImage: ciImage) else {
             print("Error. CGImage could not be created")
             return alternativeImage
         }
-        
         // Input the converted image into the model and let it run
         let poseNetInput = PoseNetInput(image: cgImage, size: Constants.modelInputSize)
         let prediction = try? self.model.prediction(from: poseNetInput)
@@ -308,21 +307,91 @@ class PoseNet {
             let poseNetOutput = PoseNetOutput(prediction: prediction,
                                               modelInputSize: Constants.modelInputSize,
                                               modelOutputStride: Constants.outputStride)
-            
             let poseBuilder = PoseBuilder(output: poseNetOutput,
                                           configuration: poseBuilderConfiguration,
                                           inputImage: cgImage)
-            
             pose = poseBuilder.pose
             // Calculate the angles between the joints
             degree = calcAngleBetweenJoints()
-            
             // Add the joints and edges to the original image
             return show(on: cgImage)
-            
         } else {
             print("Error. Prediction could not be found.")
             return UIImage(named: "placeholder")!
+        }
+    }
+    
+    // TODO: documentation!
+    func assessOutputQuality() -> Bool {
+        guard let pose = pose else {
+            print("Pose instance could not be retrieved")
+            return false
+        }
+        
+        // Assess confidence value of model
+        // Iterate through the confidence value of the joints to find the lowest confidence value
+        var lowestConfidence: Double = 1.01
+        for (_, joint) in pose.joints {
+            if selectedJointNames.contains(joint.name) && joint.confidence < lowestConfidence {
+                lowestConfidence = joint.confidence
+            }
+        }
+        
+        if lowestConfidence < Constants.confidenceThreshold {
+            return false
+        }
+        
+        var otherSide: String
+        
+        // Assess coordinates of joints
+        switch side {
+        case .left:
+            otherSide = "right"
+        case .right:
+            otherSide = "left"
+        }
+        
+        var rationalCoordinates = true
+        
+        guard let jointPositionsHipXSide = jointPositions["\(side)HipX"],
+            //let jointPositionsHipYSide = jointPositions["\(side)HipY"],
+            let jointPositionsKneeXSide = jointPositions["\(side)KneeX"],
+            //let jointPositionsKneeYSide = jointPositions["\(side)KneeY"],
+            let jointPositionsAnkleXSide = jointPositions["\(side)AnkleX"],
+            //let jointPositionsAnkleYSide = jointPositions["\(side)AnkleY"],
+            let jointPositionsHipXOtherSide = jointPositions[otherSide + "HipX"],
+            //let jointPositionsHipYOtherSide = jointPositions[otherSide + "HipY"],
+            let jointPositionsKneeXOtherSide = jointPositions[otherSide + "KneeX"],
+            //let jointPositionsKneeYOtherSide = jointPositions[otherSide + "KneeY"],
+            let jointPositionsAnkleXOtherSide = jointPositions[otherSide + "AnkleX"]//,
+            //let jointPositionsAnkleYOtherSide = jointPositions[otherSide + "AnkleY"]
+        else {
+            print("Error. At least one joint position could not be obtained.")
+            return false
+        }
+        
+        // TODO: add more cases with Y coordinates
+        // Logic ankle always needs to be lower than hip; knee can be higher or lower than both
+        // really true? what if someone sits; sanity check also current logic
+        switch side {
+        case .right:
+            if jointPositionsHipXSide >= jointPositionsHipXOtherSide ||
+                jointPositionsKneeXSide >= jointPositionsKneeXOtherSide ||
+                jointPositionsAnkleXSide >= jointPositionsAnkleXOtherSide {
+                rationalCoordinates = false
+            }
+        case .left:
+            if jointPositionsHipXSide <= jointPositionsHipXOtherSide ||
+                jointPositionsKneeXSide <= jointPositionsKneeXOtherSide ||
+                jointPositionsAnkleXSide <= jointPositionsAnkleXOtherSide {
+                rationalCoordinates = false
+            }
+        }
+        
+        if !rationalCoordinates {
+            return false
+        } else {
+            return true
         }
     }
 }

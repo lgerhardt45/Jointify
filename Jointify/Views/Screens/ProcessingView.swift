@@ -116,13 +116,19 @@ struct ProcessingView: View {
                 print("Analysing frame \(frameCount)/\(frames.count)")
                 
                 let drawnImage = poseNet.predict(frame)
+                
+                let outputQualityAcceptable = poseNet.assessOutputQuality()
 
-                returnMeasurementFrames.append(
-                    MeasurementFrame(
-                        degree: poseNet.calcAngleBetweenJoints(),
-                        image: drawnImage
+                // Only append measurement frame if it fulfills quality criteria
+                if outputQualityAcceptable {
+                    returnMeasurementFrames.append(
+                        MeasurementFrame(
+                            degree: poseNet.calcAngleBetweenJoints(),
+                            image: drawnImage
+                        )
                     )
-                )
+                }
+                
                 self.progress += 1
 
             }
