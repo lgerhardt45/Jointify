@@ -16,7 +16,7 @@ struct VideoResultView: View {
     @State var goToResultView: Bool = false
     
     // MARK: Stored Instance Properties
-    let measurement: Measurement?
+    let measurement: Measurement
     
     // MARK: Body
     var body: some View {
@@ -25,7 +25,7 @@ struct VideoResultView: View {
             Text("The frames (scroll):")
             ScrollView {
                 VStack(spacing: 16) {
-                        ForEach(measurement?.frames ?? [], id: \.self) { frame in
+                    ForEach(measurement.frames, id: \.self) { frame in
                             VStack(spacing: 8) {
                                 Image(uiImage: frame.image)
                                     .resizable()
@@ -37,7 +37,7 @@ struct VideoResultView: View {
                 }
             }
             
-            NavigationLink(destination: ResultView(), isActive: self.$goToResultView) {
+            NavigationLink(destination: ResultView(measurement: measurement), isActive: self.$goToResultView) {
                 DefaultButton(action: {
                     self.goToResultView.toggle()
                 }) {

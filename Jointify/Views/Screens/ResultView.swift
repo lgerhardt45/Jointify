@@ -21,11 +21,9 @@ struct ResultView: View {
     @State private var result: Result<MFMailComposeResult, Error>?
 
     // MARK: Stored Instance Properties
-    // TODO: change to Measurement
-    let minValue: Int = -55
-    let maxValue: Int = 90
-    let previousMinValue: Int = -45
-    let previousMaxValue: Int = 80
+    let measurement: Measurement
+    let mockedPreviousMinValue: Int = -45
+    let mockedPreviousMaxValue: Int = 80
     
     let canSendMail: Bool = MFMailComposeViewController.canSendMail()
     
@@ -53,13 +51,13 @@ struct ResultView: View {
                 
                 VStack {
                     HStack(spacing: 16.0) {
-                        Text("Max value: \(maxValue)°")
-                        Text("Min value: \(minValue)°")
+                        Text("Max value: \(measurement.maxROM)°")
+                        Text("Min value: \(measurement.minROM)°")
                     }
                     HStack(spacing: 16.0) {
-                        Text("previous: \(previousMaxValue)°")
+                        Text("previous: \(mockedPreviousMaxValue)°")
                             .foregroundColor(Color.gray)
-                        Text("previous: \(previousMinValue)°")
+                        Text("previous: \(mockedPreviousMinValue)°")
                             .foregroundColor(Color.gray)
                     }
                 }
@@ -96,6 +94,13 @@ struct ResultView: View {
 
 struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
-        ResultView()
+        
+        ResultView(
+            measurement: Measurement(
+                date: Date(),
+                videoUrl: nil,
+                frames: []
+            )
+        )
     }
 }
