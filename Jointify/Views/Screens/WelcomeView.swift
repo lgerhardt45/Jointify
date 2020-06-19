@@ -24,8 +24,7 @@ struct WelcomeView: View {
         // starts the navigation stack (screens are loaded "on top" of each other
         NavigationView {
             VStack {
-                Logo()
-                Spacer().frame(height: 81
+                Spacer().frame(height: 150
                 )
                 
                 VStack(spacing: 16.0) {

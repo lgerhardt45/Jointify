@@ -51,6 +51,7 @@ struct InstructionsView: View {
                     self.understoodButtonPressed.toggle()
                 }) {
                     Text("I understand")
+                    .frame(width: 150)
                 } }
         }.navigationBarTitle(Text("Instructions"), displayMode: .inline)
             .navigationBarHidden(isNavigationBarHidden) // is turned to 'false' in WelcomeView

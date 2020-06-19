@@ -62,7 +62,7 @@ struct ChooseInputView: View {
                         self.sourceType = UIImagePickerController.SourceType.camera
                         self.videoPickerSheetIsPresented.toggle()
                     }) {
-                        Text("Record").frame(width: 100)
+                        Text("Record").frame(width: 150)
                     }.padding(.all, 10)
                     #endif
                     
@@ -70,7 +70,7 @@ struct ChooseInputView: View {
                         self.sourceType = UIImagePickerController.SourceType.photoLibrary
                         self.videoPickerSheetIsPresented.toggle()
                     }) {
-                        Text("Gallery").frame(width: 100)
+                        Text("Gallery").frame(width: 150)
                     }
                     .frame(width: nil)
                     .padding(.all, 10)

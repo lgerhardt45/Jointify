@@ -26,7 +26,7 @@ struct VideoResultView: View {
             Text("Done!")
             .font(.largeTitle)
             .font(.system(size:48))
-            Text("Your video was anaylized succesfully.")
+            Text("Your video was analyzed succesfully.")
             .font(.subheadline)
             .fontWeight(.light)
             .multilineTextAlignment(.center)
@@ -51,6 +51,7 @@ struct VideoResultView: View {
                     self.goToResultView.toggle()
                 }) {
                     Text("Done")
+                    .frame(width: 150)
                 }
             }
         }
