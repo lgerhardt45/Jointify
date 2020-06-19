@@ -286,11 +286,13 @@ class PoseNet {
         // swiftlint:disable force_unwrapping
         let alternativeImage = UIImage(systemName: "bolt")!
         // swiftlint:enable force_unwrapping
+        
         // Convert UIImage into a CGImage, because this is what the model requires as input
         guard let resizedImage = image.resizeTo(size: Constants.modelInputSize) else {
             print("Error. Image could not be resized.")
             return alternativeImage
         }
+        
         guard let ciImage = CIImage(image: resizedImage) else {
             print("Error. CIImage could not be created.")
             return alternativeImage
@@ -301,7 +303,9 @@ class PoseNet {
         }
         // Input the converted image into the model and let it run
         let poseNetInput = PoseNetInput(image: cgImage, size: Constants.modelInputSize)
+        
         let prediction = try? self.model.prediction(from: poseNetInput)
+        
         if let prediction = prediction {
             // Obtain the results of the model and assign them
             let poseNetOutput = PoseNetOutput(prediction: prediction,
@@ -321,7 +325,7 @@ class PoseNet {
         }
     }
     
-    // TODO: documentation!
+    // Asses the output quality of the model by checking the confidence values and the X coordinates of the joints
     func assessOutputQuality() -> Bool {
         guard let pose = pose else {
             print("Pose instance could not be retrieved")
@@ -329,7 +333,7 @@ class PoseNet {
         }
         
         // Assess confidence value of model
-        // Iterate through the confidence value of the joints to find the lowest confidence value
+        // Iterate through the confidence values of the joints to find the lowest confidence value
         var lowestConfidence: Double = 1.01
         for (_, joint) in pose.joints {
             if selectedJointNames.contains(joint.name) && joint.confidence < lowestConfidence {
@@ -337,13 +341,15 @@ class PoseNet {
             }
         }
         
+        // If the lowest confidence value is under the threshold, the model output should not be used
         if lowestConfidence < Constants.confidenceThreshold {
             return false
         }
         
+        // Assess X coordinates of joints
         var otherSide: String
+        var rationalCoordinates = true
         
-        // Assess coordinates of joints
         switch side {
         case .left:
             otherSide = "right"
@@ -351,28 +357,19 @@ class PoseNet {
             otherSide = "left"
         }
         
-        var rationalCoordinates = true
-        
         guard let jointPositionsHipXSide = jointPositions["\(side)HipX"],
-            //let jointPositionsHipYSide = jointPositions["\(side)HipY"],
             let jointPositionsKneeXSide = jointPositions["\(side)KneeX"],
-            //let jointPositionsKneeYSide = jointPositions["\(side)KneeY"],
             let jointPositionsAnkleXSide = jointPositions["\(side)AnkleX"],
-            //let jointPositionsAnkleYSide = jointPositions["\(side)AnkleY"],
             let jointPositionsHipXOtherSide = jointPositions[otherSide + "HipX"],
-            //let jointPositionsHipYOtherSide = jointPositions[otherSide + "HipY"],
             let jointPositionsKneeXOtherSide = jointPositions[otherSide + "KneeX"],
-            //let jointPositionsKneeYOtherSide = jointPositions[otherSide + "KneeY"],
-            let jointPositionsAnkleXOtherSide = jointPositions[otherSide + "AnkleX"]//,
-            //let jointPositionsAnkleYOtherSide = jointPositions[otherSide + "AnkleY"]
+            let jointPositionsAnkleXOtherSide = jointPositions[otherSide + "AnkleX"]
         else {
             print("Error. At least one joint position could not be obtained.")
             return false
         }
         
-        // TODO: add more cases with Y coordinates
-        // Logic ankle always needs to be lower than hip; knee can be higher or lower than both
-        // really true? what if someone sits; sanity check also current logic
+        // Check if X coordinates of right joint are larger than the X coordinates of the left joint and vice versa
+        // If this is the case, the model output is irrational
         switch side {
         case .right:
             if jointPositionsHipXSide >= jointPositionsHipXOtherSide ||
