@@ -12,6 +12,7 @@ import UIKit
 import MessageUI
 
 // MARK: - Coordinator
+/// from https://stackoverflow.com/a/58693164
 class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
     
     // MARK: Binding Instance Properties
@@ -52,9 +53,25 @@ struct MailView: UIViewControllerRepresentable {
     
     // MARK: Overridden/ Lifecycle Methods
     func makeUIViewController(context: UIViewControllerRepresentableContext<MailView>) -> MFMailComposeViewController {
-        let viewController = MFMailComposeViewController()
-        viewController.mailComposeDelegate = context.coordinator
-        return viewController
+        
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = context.coordinator
+        
+        var messageBody = "Dear Doc Pförringer,"
+        messageBody += "\n\nplease find attached the copy of my recent ROM measurement."
+        
+        // setup compose view
+        composeVC.setToRecipients(["lukas.gerhardt@onlinehome.de"])
+        composeVC.setMessageBody(messageBody, isHTML: false)
+        composeVC.setSubject("ROM measurement from today")
+        
+        if let image = UIImage(systemName: "doc.richtext"),
+            let imageData = image.pngData() {
+            
+            composeVC.addAttachmentData(imageData, mimeType: "image/png", fileName: "ROM measurement.png")
+        }
+
+        return composeVC
     }
 
     func updateUIViewController(_ uiViewController: MFMailComposeViewController,
@@ -62,7 +79,6 @@ struct MailView: UIViewControllerRepresentable {
 
     }
     
-    // MARK: Instance Methods
     func makeCoordinator() -> Coordinator {
         return Coordinator(presentation: presentation,
                            result: $result)
