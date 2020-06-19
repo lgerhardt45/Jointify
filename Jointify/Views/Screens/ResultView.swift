@@ -35,26 +35,55 @@ struct ResultView: View {
             Spacer().frame(height: 50)
             
             VStack(spacing: 8.0) {
-                Text("Your measurements:").font(.title)
-                
                 VStack {
                     HStack(spacing: 16.0) {
-                        Text("Max value: \(maxValue)°")
-                        Text("Min value: \(minValue)°")
+                        Text("Max value:")
+                            .font(.system(size: 18))
+                            .fontWeight(.light)
+                        Text("Min value:")
+                        .font(.system(size: 18))
+                        .fontWeight(.light)
                     }
                     HStack(spacing: 16.0) {
-                        Text("previous: \(previousMaxValue)°")
-                            .foregroundColor(Color.gray)
-                        Text("previous: \(previousMinValue)°")
-                            .foregroundColor(Color.gray)
+                        RoundedRectangle(cornerRadius: 5)
+                            .frame(width: 80.0, height: 30.0)
+                        .foregroundColor(.lightGray)
+                        .overlay(
+                            Text("\(maxValue)°").padding(.horizontal))
+                        RoundedRectangle(cornerRadius: 5)
+                            .frame(width: 80.0, height: 30.0)
+                        .foregroundColor(.lightGray)
+                        .overlay(
+                            Text("\(minValue)°").padding(.horizontal))
+                    }
+                    Text("Last Measurement (DD/MM/YY)")
+                    .font(.system(size: 18))
+                    .fontWeight(.light)
+                    HStack(spacing: 16.0) {
+                        RoundedRectangle(cornerRadius: 5)
+                            .frame(width: 80.0, height: 30.0)
+                        .foregroundColor(.lightGray)
+                        .overlay(
+                            Text("\(previousMaxValue)°").padding(.horizontal))
+                        RoundedRectangle(cornerRadius: 5)
+                            .frame(width: 80.0, height: 30.0)
+                        .foregroundColor(.lightGray)
+                        .overlay(
+                            Text("\(previousMinValue)°").padding(.horizontal))
                     }
                 }
                 
             }
             
             Spacer().frame(height: 50)
+            DefaultButton(action: {
+                // create PDF and open Mail-app here
+            }) {
+                    Text("Send Mail").frame(width: 150)
+            }
 
-            HStack {
+            /* Back Button not supposed to be on this screen
+             HStack {
                 DefaultButton(action: {
                     // back home
                 }) {
@@ -69,7 +98,8 @@ struct ResultView: View {
                         Text("Report")
                     }
                 }
-            }.padding(.horizontal, 60)
+            }.padding(.horizontal, 60)*/
+            Spacer()
         }.padding(.all)
     }
 }
