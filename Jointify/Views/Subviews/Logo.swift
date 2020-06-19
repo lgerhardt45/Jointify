@@ -10,9 +10,10 @@ import SwiftUI
 
 struct Logo: View {
     var body: some View {
-          Image("LogoMitText")    .resizable()
-                  .aspectRatio(contentMode: .fill)
-                  .frame(width: 192, height: 64)
+        Image("LogoMitText")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 192, height: 64)
     }
 }
 
