@@ -19,7 +19,9 @@ struct PastRecords: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Your Records:")
-                .font(.headline)        .padding(.horizontal)
+                .font(.system(size: 18))
+                .fontWeight(.light)
+            .padding(.horizontal)
             
             // change to records when mock data added
             List(1..<6) { row in

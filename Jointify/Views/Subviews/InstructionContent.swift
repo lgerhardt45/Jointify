@@ -40,11 +40,19 @@ private struct InstructionBulletPoint: View {
             Text("\(number).")
             .fontWeight(.light)
             .font(.system(size:18))
+                .fontWeight(.light)
             Text(Constants.lloremIpsum)
             .fontWeight(.light)
             .font(.system(size:18))
+                .fontWeight(.light)
             
         }
         .padding(.horizontal, 32.0)
+    }
+}
+
+struct InstructionContent_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
     }
 }
