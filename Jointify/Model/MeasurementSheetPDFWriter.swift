@@ -161,8 +161,20 @@ class MeasurementSheetPDFWriter {
     }
     
     /// converts UIImage to a PDF
+    /// from https://stackoverflow.com/a/45001576
     func exportToPDF(imageToConvert: UIImage) -> Data? {
-        
-        return nil
+        // Create an empty PDF document
+        let pdfDocument = PDFDocument()
+
+        // Create a PDF page instance from your image
+        guard let pdfPage = PDFPage(image: imageToConvert) else {
+            return nil
+        }
+
+        // Insert the PDF page into your document
+        pdfDocument.insert(pdfPage, at: 0)
+
+        // Get the raw data of your PDF document
+        return pdfDocument.dataRepresentation()
     }
 }
