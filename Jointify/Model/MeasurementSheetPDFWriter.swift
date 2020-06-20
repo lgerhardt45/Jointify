@@ -21,10 +21,11 @@ class MeasurementSheetPDFWriter {
     
     // MARK: Constants
     enum Constants {
-        static let leftElbowPosition = CGPoint() // add fixed on values on respective canvas
-        static let rightElbowPosition = CGPoint()
-        static let leftKneePosition = CGPoint()
-        static let rightKneePosition = CGPoint()
+        // add fixed on values on respective canvas
+        static let leftElbowPosition = CGPoint(x: 533, y: 673)
+        static let rightElbowPosition = CGPoint(x: 533, y: 493)
+        static let leftKneePosition = CGPoint(x: 552, y: 660)
+        static let rightKneePosition = CGPoint(x: 552, y: 495)
     }
 
     // MARK: Stored Instance Properties
