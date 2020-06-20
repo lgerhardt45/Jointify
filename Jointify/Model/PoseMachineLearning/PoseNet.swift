@@ -167,9 +167,9 @@ class PoseNet {
         return dstImage
     }
     
-    // Get X and Y coordinates of joints and place them in the dictionary
-    // This function depends on pose, which only is created in the predict() function
-    // Thus, it can only be called once the prediction function is done
+    /// Get X and Y coordinates of joints and place them in the dictionary
+    /// This function depends on pose, which only is created in the predict() function
+    /// Thus, it can only be called once the prediction function is done
     func fillJointCoordinatesDictionaries() {
         guard let pose = pose else {
             print("Error. No pose could be detected.")
