@@ -57,6 +57,7 @@ struct VideoResultView: View {
                     }
                 }
             }.padding(.bottom, 32)
+                .padding(.horizontal)
         }
     }
 }
