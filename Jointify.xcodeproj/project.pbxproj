@@ -159,13 +159,13 @@
 			isa = PBXGroup;
 			children = (
 				21CFEA792497EA0300421B80 /* Joint.swift */,
+				21ED3CFD249A06FD0031199A /* JointName.swift */,
 				21CFEA722497E9F500421B80 /* Pose.swift */,
 				80EF89BD2497F31100E345F0 /* Edge.swift */,
-				21CFEA7E2497EA2600421B80 /* PoseNet.swift */,
-				21CFEA7D2497EA2600421B80 /* PoseNetOutput.swift */,
 				21ED3CFF249A0E250031199A /* Cell.swift */,
 				21ED3D01249A0F4E0031199A /* Side.swift */,
-				21ED3CFD249A06FD0031199A /* JointName.swift */,
+				21CFEA7E2497EA2600421B80 /* PoseNet.swift */,
+				21CFEA7D2497EA2600421B80 /* PoseNetOutput.swift */,
 				21CFEA7B2497EA2600421B80 /* PoseNetInput.swift */,
 				21CFEA732497E9F500421B80 /* PoseBuilder.swift */,
 				21CFEA742497E9F500421B80 /* PoseBuilderConfiguration.swift */,
