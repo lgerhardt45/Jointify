@@ -140,27 +140,30 @@ class MeasurementSheetPDFWriter {
     /// writes measurement values in the right spot in the UIImage
     /// from https://stackoverflow.com/a/28907826
     func writeMeasurement(onto image: UIImage, at point: CGPoint) -> UIImage? {
-    
-            let text = "90.00"
-            let textColor = UIColor.red
-            let textFont = UIFont(name: "Helvetica Bold", size: 12)!
-
-            let scale = UIScreen.main.scale
-            UIGraphicsBeginImageContextWithOptions(image.size, false, scale)
-
-            let textFontAttributes =
-                [NSAttributedString.Key.font: textFont,
-                 NSAttributedString.Key.foregroundColor: textColor]
-                    as [NSAttributedString.Key: Any]
-            image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
-
-            let rect = CGRect(origin: point, size: image.size)
-            text.draw(in: rect, withAttributes: textFontAttributes)
-
-            let imageWithMeasurement = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-
-            return imageWithMeasurement
+        
+        //
+        let minRom = String(measurement.minROM)
+        let maxRom = String(measurement.maxROM)
+        let textColor = UIColor.red
+        let textFont = UIFont(name: "Helvetica Bold", size: 12)!
+        
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(image.size, false, scale)
+        
+        let textFontAttributes =
+            [NSAttributedString.Key.font: textFont,
+             NSAttributedString.Key.foregroundColor: textColor]
+                as [NSAttributedString.Key: Any]
+        image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
+        
+        let rect = CGRect(origin: point, size: image.size)
+        minRom.draw(in: rect, withAttributes: textFontAttributes)
+        maxRom.draw(in: rect, withAttributes: textFontAttributes)
+        
+        let imageWithMeasurement = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return imageWithMeasurement
         
     }
     
@@ -169,15 +172,15 @@ class MeasurementSheetPDFWriter {
     func exportToPDF(imageToConvert: UIImage) -> Data? {
         // Create an empty PDF document
         let pdfDocument = PDFDocument()
-
+        
         // Create a PDF page instance from your image
         guard let pdfPage = PDFPage(image: imageToConvert) else {
             return nil
         }
-
+        
         // Insert the PDF page into your document
         pdfDocument.insert(pdfPage, at: 0)
-
+        
         // Get the raw data of your PDF document
         return pdfDocument.dataRepresentation()
     }
