@@ -21,17 +21,17 @@ struct VideoResultView: View {
     // MARK: Body
     var body: some View {
         
-        //GeometryReader to allow for percentage alignments
+        // GeometryReader to allow for percentage alignments
         GeometryReader { geometry in
             
-            //Outer VStack
+            // Outer VStack
             VStack(spacing: 16) {
                 
                 // 20% for the Header
                 LogoAndHeadlineView(headline: "Done!", showLogo: true, height: geometry.size.height * 0.2)
                 
                 // subheadline
-                SubHeadline(subheadline: "Your video was analyzed succesfully.", width: geometry.size.width/2.0 )
+                SubHeadline(subheadline: "Your video was analyzed succesfully.", width: geometry.size.width / 2.0)
                
                 ScrollView {
                     VStack(spacing: 16) {
@@ -47,7 +47,7 @@ struct VideoResultView: View {
                     }
                 }
                 
-                //Button to next screen
+                // Button to next screen
                 NavigationLink(destination: ResultView(), isActive: self.$goToResultView) {
                     DefaultButton(action: {
                         self.goToResultView.toggle()
@@ -61,6 +61,7 @@ struct VideoResultView: View {
     }
 }
 
+// MARK: - Previes
 struct VideoResultView_Previews: PreviewProvider {
     static var previews: some View {
         VideoResultView(
