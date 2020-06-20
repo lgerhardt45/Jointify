@@ -41,7 +41,7 @@ struct ProgressBar: View {
                 
                 // progress bar
                 RoundedRectangle(cornerRadius: 5)
-                    .foregroundColor(barProgress < 0.9 * maxWidth ? .blue : .green)
+                    .foregroundColor(barProgress < 0.9 * maxWidth ? .lightBlue : .green)
                     .frame(
                         width: barProgress <= self.maxWidth ? barProgress : self.maxWidth,
                         height: self.height)
