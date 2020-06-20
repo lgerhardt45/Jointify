@@ -19,15 +19,18 @@ struct PastRecords: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Your Records:")
-                .font(.headline)        .padding(.horizontal)
+                .font(.system(size: 18))
+                .fontWeight(.light)
+            .padding(.horizontal)
             
             // change to records when mock data added
             List(1..<6) { row in
                 RoundedRectangle(cornerRadius: 5)
                     .padding(.vertical, 4.0)
                     .frame(height: 50.0, alignment: .leading)
-                    .foregroundColor(/*@START_MENU_TOKEN@*/.gray/*@END_MENU_TOKEN@*/)
+                    .foregroundColor(.lightGray)
                     .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                    .cornerRadius(5)
                     // use overlay() for simple ZStack
                     .overlay(
                         Text("Record \(row)").padding(.horizontal),
@@ -36,6 +39,7 @@ struct PastRecords: View {
                 
             }
         }
+        .frame(height: 280.0)
     }
 }
 
@@ -43,4 +47,10 @@ struct PastRecordsList_Previews: PreviewProvider {
     static var previews: some View {
         PastRecords()
     }
+}
+
+// MARK: Extension Color
+/// add the default colour for the grey fields
+extension Color {
+    static let lightGray = Color("LightGray")
 }

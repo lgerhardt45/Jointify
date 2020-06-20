@@ -12,6 +12,12 @@ import SwiftUI
 // MARK: - ImportView
 struct WelcomeView: View {
     
+    // MARK: Constants
+    enum Constants {
+        static let headerHeightPercentage: CGFloat = 0.2
+        static let subHeadlineWidthPercentage: CGFloat = 0.5
+    }
+    
     // MARK: State Instance Properties
     // used to hide the navigation bar
     @State private var isNavigationBarHidden: Bool = true
@@ -23,49 +29,57 @@ struct WelcomeView: View {
         
         // starts the navigation stack (screens are loaded "on top" of each other
         NavigationView {
-            VStack {
+            
+            //GeometryReader to allow for percentage alignments
+            GeometryReader { geometry in
                 
-                // Spacing from top
-                Spacer().frame(height: 100)
-                
+                // Outer VStack
                 VStack(spacing: 16.0) {
-                    Text("Hello!")
-                        .font(.largeTitle)
                     
-                    Text("Start your remote joint measurement journey.")
-                        .font(.subheadline)
-                        .padding(.horizontal, 64.0)
+                    // 20% for the Header
+                    LogoAndHeadlineView(
+                        headline: "Hello!",
+                        showLogo: false,
+                        height: geometry.size.height * Constants.headerHeightPercentage)
+                    
+                    // SubHeadline
+                    SubHeadline(
+                        subheadline: "Start your remote joint measurement journey.",
+                        width: geometry.size.width * Constants.subHeadlineWidthPercentage
+                    )
                     
                     Spacer()
-                        .frame(height: 50)
                     
-                    NavigationLink(
-                        destination: InstructionsView(
-                            isNavigationBarHidden: $isNavigationBarHidden),
-                        isActive: $newRecordButtonPressed) {
-                            DefaultButton(action: {
-                                self.newRecordButtonPressed.toggle()
-                                self.isNavigationBarHidden = false
-                            }) {
-                                Text("Start")
-                                .frame(width: 150)
-
-                            }
+                    // Navigation
+                    VStack(spacing: 16.0) {
+                        NavigationLink(
+                            destination: InstructionsView(
+                                isNavigationBarHidden: self.$isNavigationBarHidden),
+                            isActive: self.$newRecordButtonPressed) {
+                                DefaultButton(action: {
+                                    self.newRecordButtonPressed.toggle()
+                                    self.isNavigationBarHidden = false
+                                }) {
+                                    Text("Start")
+                                        .frame(width: geometry.size.width / 3.0)
+                                }
+                        }
                     }
-                }
-                
-                Spacer(minLength: 50)
-                
-                PastRecords()
-                    .frame(height: 250) // size from bottom
-                
-            }.onAppear(perform: {
-                // always hidden on this screen
-                self.isNavigationBarHidden = true
-            })
-                // hide the navigation bar
-                .navigationBarTitle("")
-                .navigationBarHidden(self.isNavigationBarHidden)
+                    
+                    Spacer()
+                    
+                    // Show past records
+                    PastRecords()
+                    
+                }.onAppear(perform: {
+                    // always hidden on this screen
+                    self.isNavigationBarHidden = true
+                })
+                    .padding(.bottom)
+                    // hide the navigation bar
+                    .navigationBarTitle("")
+                    .navigationBarHidden(self.isNavigationBarHidden)
+            }
         }
     }
 }

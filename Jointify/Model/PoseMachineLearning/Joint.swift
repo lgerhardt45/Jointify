@@ -50,5 +50,4 @@ class Joint {
         self.confidence = confidence
         self.isValid = isValid
     }
- 
 }

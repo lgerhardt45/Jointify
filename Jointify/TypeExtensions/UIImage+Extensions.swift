@@ -12,7 +12,6 @@ import UIKit
 
 // MARK: UIImage extension
 extension UIImage {
-    
     // MARK: Stored Instance Methods
     // resize the image to the correct input size
     func resizeTo(size: CGSize) -> UIImage? {
@@ -22,5 +21,4 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return resizedImage
     }
-    
 }

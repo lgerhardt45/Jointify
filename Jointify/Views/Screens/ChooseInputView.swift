@@ -25,68 +25,71 @@ struct ChooseInputView: View {
     // MARK: Body
     var body: some View {
         
-        VStack {
-            // when video was chosen, send to ProcessingView
-            NavigationLink(
-                destination: ProcessingView(videoUrl: self.$videoUrl),
-                isActive: self.$goToProcessingView) {
-                    EmptyView()
-            }
+        //GeometryReader to allow for percentage alignments
+        GeometryReader { geometry in
             
-            VStack(spacing: 64) {
+            VStack {
                 
+                // when video was chosen, send to ProcessingView
+                NavigationLink(
+                    destination: ProcessingView(videoUrl: self.$videoUrl),
+                    isActive: self.$goToProcessingView) {
+                        EmptyView()
+                }
+                
+                // Outer VStack
                 VStack(spacing: 16) {
-                    Text("Measurement")
-                        .font(.largeTitle)
-                    Text("Would you like to start a new recording or use an existing one?")
-                        .font(.subheadline)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 64)
-                }
-                
-                Image(systemName: "camera")
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .scaledToFit()
-                
-                VStack(spacing: 8) { // Buttons
                     
-                    // don't show Record button in simulator to avoid accidental crashes
-                    #if !targetEnvironment(simulator)
-                    DefaultButton(action: {
-                        self.sourceType = UIImagePickerController.SourceType.camera
-                        self.videoPickerSheetIsPresented.toggle()
+                    // 20% for the Header
+                    LogoAndHeadlineView(headline: "Measurement", showLogo: true, height: geometry.size.height * 0.20)
+                    
+                    // SubHeadline
+                    SubHeadline(
+                        subheadline: "Would you like to start a new recording or use an existing one?",
+                        width: geometry.size.width / 2.0
+                    )
+                    
+                    Spacer()
+                    
+                    VStack(spacing: 16) { // Buttons
+                        
+                        // don't show Record button in simulator to avoid accidental crashes
+                        #if !targetEnvironment(simulator)
+                        DefaultButton(action: {
+                            self.sourceType = UIImagePickerController.SourceType.camera
+                            self.videoPickerSheetIsPresented.toggle()
+                        }) {
+                            Text("Record").frame(width: geometry.size.width / 3.0)
+                        }
+                        #endif
+                        
+                        DefaultButton(action: {
+                            self.sourceType = UIImagePickerController.SourceType.photoLibrary
+                            self.videoPickerSheetIsPresented.toggle()
+                        }) {
+                            Text("Gallery").frame(width: geometry.size.width / 3.0)
+                        }
+                    }
+                        
+                    .sheet(isPresented: self.$videoPickerSheetIsPresented, onDismiss: {
+                        if self.videoUrl != nil {
+                            self.goToProcessingView.toggle()
+                        }
                     }) {
-                        Text("Record").frame(width: 100)
+                        MediaPicker(
+                            videoPickerSheetIsPresented: self.$videoPickerSheetIsPresented,
+                            sourceType: self.$sourceType,
+                            videoURL: self.$videoUrl)
                     }
-                    #endif
-                    
-                    DefaultButton(action: {
-                        self.sourceType = UIImagePickerController.SourceType.photoLibrary
-                        self.videoPickerSheetIsPresented.toggle()
-                    }) {
-                        Text("Gallery").frame(width: 100)
-                    }
-                    
-                }
-                    
-                .sheet(isPresented: $videoPickerSheetIsPresented, onDismiss: {
-                    if self.videoUrl != nil {
-                        self.goToProcessingView.toggle()
-                    }
-                }) {
-                    MediaPicker(
-                        videoPickerSheetIsPresented: self.$videoPickerSheetIsPresented,
-                        sourceType: self.$sourceType,
-                        videoURL: self.$videoUrl)
-                }
+                }.padding(.bottom, 32)
             }
-            .padding(.all)
         }
+        
     }
 }
 
-struct LukasChooseInputView_Previews: PreviewProvider {
+// MARK: - Previews
+struct ChooseInputView_Previews: PreviewProvider {
     static var previews: some View {
         ChooseInputView()
     }

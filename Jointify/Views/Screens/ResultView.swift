@@ -39,56 +39,44 @@ struct ResultView: View {
     
     // MARK: Body
     var body: some View {
-        VStack {
-
-            Text("The video was analysed:")
-                .multilineTextAlignment(.center)
-                .font(.largeTitle)
+        
+        // GeometryReader to allow for percentage alignments
+        GeometryReader { geometry in
             
-            Spacer().frame(height: 50)
-            
-            VStack(spacing: 8.0) {
-                Text("Your measurements:").font(.title)
+            // Outer VStack
+            VStack(spacing: 16) {
+                LogoAndHeadlineView(headline: "Your Results", showLogo: true, height: geometry.size.height * 0.2)
                 
-                VStack {
-                    HStack(spacing: 16.0) {
-                        Text("Max value: \(measurement.maxROM)°")
-                        Text("Min value: \(measurement.minROM)°")
-                    }
-                    HStack(spacing: 16.0) {
-                        Text("previous: \(mockedPreviousMaxValue)°")
-                            .foregroundColor(Color.gray)
-                        Text("previous: \(mockedPreviousMinValue)°")
-                            .foregroundColor(Color.gray)
-                    }
-                }
-         
-            }
-            
-            Spacer().frame(height: 50)
-            
-            VStack {
-                // Home button
-                DefaultButton(action: {
-                    // back home
-                }) {
-                    Text("Do it again")
-                }
+                Spacer()
                 
-                // Report button
-                DefaultButton(
-                    mode: canSendMail ? .enabled : .disabled,
-                    action: {
-                        self.isShowingMailView.toggle()
-                }) {
-                    self.canSendMail ? self.possibleMailLabel : self.notPossibleMailLabel
-                }
+                // Content: Result Values
+                VStack(spacing: 8.0) {
+                    VStack {
+                        
+                        HStack(spacing: 16.0) {
+                            ResultValues(valueType: "Max Value", value: Int(self.measurement.maxROM), showText: true)
+                            ResultValues(valueType: "Min Value", value: Int(self.measurement.minROM), showText: true)
+                        }
+                        Text("Last Measurement (DD/MM/YY)")
+                            .font(.system(size: 18))
+                            .fontWeight(.light)
+                        
+                        HStack(spacing: 16.0) {
+                            ResultValues(valueType: "Max Value", value: self.mockedPreviousMaxValue, showText: false)
+                            ResultValues(valueType: "Min Value", value: self.mockedPreviousMinValue, showText: false)
+                        }
+                    }
                     
-                .sheet(isPresented: $isShowingMailView) {
-                    MailView(result: self.$result)
                 }
                 
-            }.padding(.horizontal, 60)
+                Spacer()
+                
+                DefaultButton(action: {
+                    // create PDF and open Mail-app here
+                }) {
+                    Text("Send Mail").frame(width: geometry.size.width / 3.0)
+                }
+            }.padding(.bottom, 32)
         }
     }
 }

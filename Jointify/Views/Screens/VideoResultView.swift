@@ -20,35 +20,47 @@ struct VideoResultView: View {
     
     // MARK: Body
     var body: some View {
-        VStack {
-            
-            Text("The frames (scroll):")
-            ScrollView {
-                VStack(spacing: 16) {
-                    ForEach(measurement.frames, id: \.self) { frame in
+        
+        // GeometryReader to allow for percentage alignments
+        GeometryReader { geometry in
+            // Outer VStack
+            VStack(spacing: 16) {
+                
+                // 20% for the Header
+                LogoAndHeadlineView(headline: "Done!", showLogo: true, height: geometry.size.height * 0.2)
+                
+                // subheadline
+                SubHeadline(subheadline: "Your video was analyzed succesfully.", width: geometry.size.width / 2.0)
+                
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(self.measurement.frames, id: \.self) { frame in
                             VStack(spacing: 8) {
                                 Image(uiImage: frame.image)
                                     .resizable()
                                     .scaledToFit()
                                     .cornerRadius(5)
                                 Text("Degrees: \(frame.degree)")
+                            }
                         }
                     }
+                }  
+                // Button to next screen
+                NavigationLink(destination: ResultView(measurement: self.measurement), isActive: self.$goToResultView) {
+                    DefaultButton(action: {
+                        self.goToResultView.toggle()
+                    }) {
+                        Text("Done")
+                            .frame(width: geometry.size.width / 3.0)
+                    }
                 }
-            }
-            
-            NavigationLink(destination: ResultView(measurement: measurement), isActive: self.$goToResultView) {
-                DefaultButton(action: {
-                    self.goToResultView.toggle()
-                }) {
-                    Text("Done")
-                }
-            }
+            }.padding(.bottom, 32)
+                .padding(.horizontal)
         }
-        .padding(.all)
     }
 }
 
+// MARK: - Previews
 struct VideoResultView_Previews: PreviewProvider {
     static var previews: some View {
         VideoResultView(

@@ -22,31 +22,61 @@ struct InstructionsView: View {
     
     // MARK: Body
     var body: some View {
-        VStack(spacing: 32.0) {
+        
+        //GeometryReader to allow for percentage alignments
+        GeometryReader { geometry in
             
-            // pass the State variable to the other View which modifies it
-            InstructionContent()
-            
-            // Move video data to ProcessingView
-            NavigationLink(
-                destination: ChooseInputView(
-                ),
-                isActive: self.$understoodButtonPressed
-            ) {
-                DefaultButton(action: {
-                    // activate NavigationLink to ChooseInputView
-                    self.understoodButtonPressed.toggle()
-                }) {
-                    Text("Understood")
-                } }
-            
-        }.navigationBarTitle(Text("Instructions"), displayMode: .inline)
-            .navigationBarHidden(isNavigationBarHidden) // is turned to 'false' in WelcomeView
+            //Outer VStack
+            VStack(spacing: 16.0) {
+                
+                // 20% for the Header
+                LogoAndHeadlineView(headline: "Instructions", showLogo: true, height: geometry.size.height * 0.20)
+                
+                // SubHeadline
+                SubHeadline(
+                    subheadline: "How do I record a measurement?",
+                    width: geometry.size.width / 2.0
+                )
+                
+                // Content
+                InstructionContent().padding()
+                
+                Spacer()
+                
+                // Move video data to ProcessingView
+                VStack(spacing: 16.0) {
+                    NavigationLink(
+                        destination: ChooseInputView(
+                        ),
+                        isActive: self.$understoodButtonPressed
+                    ) {
+                        DefaultButton(action: {
+                            // activate NavigationLink to ChooseInputView
+                            self.understoodButtonPressed.toggle()
+                        }) {
+                            Text("I understand")
+                                .frame(width: geometry.size.width / 3.0)
+                        } }
+                }
+            }.padding(.bottom, 32)
+                .navigationBarTitle(Text("Instructions"), displayMode: .inline)
+                .navigationBarHidden(self.isNavigationBarHidden) // is turned to 'false' in WelcomeView
+        }
     }
 }
 
-struct InstructionsView_Previews: PreviewProvider {
+#if DEBUG
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        InstructionsView(isNavigationBarHidden: .constant(false))
+        Group {
+            InstructionsView(isNavigationBarHidden: .constant(false))
+                .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
+                .previewDisplayName("iPhone SE")
+            
+            InstructionsView(isNavigationBarHidden: .constant(false))
+                .previewDevice(PreviewDevice(rawValue: "iPhone XS Max"))
+                .previewDisplayName("iPhone XS Max")
+        }
     }
 }
+#endif
