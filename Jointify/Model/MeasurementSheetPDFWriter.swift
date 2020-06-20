@@ -129,10 +129,28 @@ class MeasurementSheetPDFWriter {
         }
     }
     
-    // writes measurement values in the right spot in the UIImage
+    /// writes measurement values in the right spot in the UIImage
+    /// from https://stackoverflow.com/a/28907826
     func writeMeasurement(onto image: UIImage, at point: CGPoint) -> UIImage? {
+    
+            let text = "90.00"
+            let textColor = UIColor.red
+            let textFont = UIFont(name: "Helvetica Bold", size: 12)!
+
+            let scale = UIScreen.main.scale
+            UIGraphicsBeginImageContextWithOptions(image.size, false, scale)
+
+            let textFontAttributes = [NSAttributedString.Key.font: textFont, NSAttributedString.Key.foregroundColor: textColor] as [NSAttributedString.Key : Any]
+            image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
+
+            let rect = CGRect(origin: point, size: image.size)
+            text.draw(in: rect, withAttributes: textFontAttributes)
+
+            let imageWithMeasurement = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            return imageWithMeasurement
         
-        return nil
     }
     
     /// converts UIImage to a PDF
