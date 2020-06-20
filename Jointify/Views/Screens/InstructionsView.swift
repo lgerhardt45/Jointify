@@ -38,7 +38,7 @@ struct InstructionsView: View {
                     width: geometry.size.width / 2.0
                 )
                 
-                //Content
+                // Content
                 InstructionContent().padding()
                 
                 Spacer()
@@ -62,12 +62,6 @@ struct InstructionsView: View {
                 .navigationBarTitle(Text("Instructions"), displayMode: .inline)
                 .navigationBarHidden(self.isNavigationBarHidden) // is turned to 'false' in WelcomeView
         }
-    }
-}
-
-struct InstructionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        InstructionsView(isNavigationBarHidden: .constant(false))
     }
 }
 

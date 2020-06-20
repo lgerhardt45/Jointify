@@ -67,6 +67,7 @@ struct ResultView: View {
     }
 }
 
+// MARK: - Previews
 struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
         ResultView()

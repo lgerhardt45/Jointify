@@ -43,7 +43,7 @@ struct ChooseInputView: View {
                     // 20% for the Header
                     LogoAndHeadlineView(headline: "Measurement", showLogo: true, height: geometry.size.height * 0.20)
                     
-                    //SubHeadline
+                    // SubHeadline
                     SubHeadline(
                         subheadline: "Would you like to start a new recording or use an existing one?",
                         width: geometry.size.width / 2.0
@@ -88,7 +88,8 @@ struct ChooseInputView: View {
     }
 }
 
-struct LukasChooseInputView_Previews: PreviewProvider {
+// MARK: - Previews
+struct ChooseInputView_Previews: PreviewProvider {
     static var previews: some View {
         ChooseInputView()
     }

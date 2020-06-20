@@ -32,7 +32,7 @@ struct VideoResultView: View {
                 
                 // subheadline
                 SubHeadline(subheadline: "Your video was analyzed succesfully.", width: geometry.size.width / 2.0)
-               
+                
                 ScrollView {
                     VStack(spacing: 16) {
                         ForEach(self.measurement?.frames ?? [], id: \.self) { frame in
@@ -53,7 +53,7 @@ struct VideoResultView: View {
                         self.goToResultView.toggle()
                     }) {
                         Text("Done")
-                           .frame(width: geometry.size.width / 3.0)
+                            .frame(width: geometry.size.width / 3.0)
                     }
                 }
             }.padding(.bottom, 32)
@@ -62,7 +62,7 @@ struct VideoResultView: View {
     }
 }
 
-// MARK: - Previes
+// MARK: - Previews
 struct VideoResultView_Previews: PreviewProvider {
     static var previews: some View {
         VideoResultView(

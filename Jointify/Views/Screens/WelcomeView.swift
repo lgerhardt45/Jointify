@@ -12,14 +12,18 @@ import SwiftUI
 // MARK: - ImportView
 struct WelcomeView: View {
     
+    // MARK: Constants
+    enum Constants {
+        static let headerHeightPercentage: CGFloat = 0.2
+        static let subHeadlineWidthPercentage: CGFloat = 0.5
+    }
+    
     // MARK: State Instance Properties
     // used to hide the navigation bar
     @State private var isNavigationBarHidden: Bool = true
     // used to activate the NavigationLink (next screen)
     @State private var newRecordButtonPressed: Bool = false
     
-    //
-    static let textFramePercentage = 0.1
     // MARK: Body
     var body: some View {
         
@@ -33,17 +37,20 @@ struct WelcomeView: View {
                 VStack(spacing: 16.0) {
                     
                     // 20% for the Header
-                    LogoAndHeadlineView(headline: "Hello!", showLogo: false, height: geometry.size.height * 0.20)
+                    LogoAndHeadlineView(
+                        headline: "Hello!",
+                        showLogo: false,
+                        height: geometry.size.height * Constants.headerHeightPercentage)
                     
                     // SubHeadline
                     SubHeadline(
                         subheadline: "Start your remote joint measurement journey.",
-                        width: geometry.size.width / 2.0
+                        width: geometry.size.width * Constants.subHeadlineWidthPercentage
                     )
                     
                     Spacer()
                     
-                    //Navigation
+                    // Navigation
                     VStack(spacing: 16.0) {
                         NavigationLink(
                             destination: InstructionsView(
@@ -55,7 +62,6 @@ struct WelcomeView: View {
                                 }) {
                                     Text("Start")
                                         .frame(width: geometry.size.width / 3.0)
-                                    
                                 }
                         }
                     }
@@ -84,9 +90,3 @@ struct WelcomeView_Previews: PreviewProvider {
         WelcomeView()
     }
 }
-//
-//extension View {
-//    let upperFramePercentage = 0.4
-//    let middleFramePercentage = 0.4
-//    let lowerFramePercentage = 0.2
-//}

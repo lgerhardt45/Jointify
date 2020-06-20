@@ -25,7 +25,7 @@ struct ProcessingView: View {
     // MARK: Body
     var body: some View {
         
-        //GeometryReader to allow for percentage alignments
+        // GeometryReader to allow for percentage alignments
         GeometryReader { geometry in
             
             // Outer VStack
@@ -42,7 +42,7 @@ struct ProcessingView: View {
                 // subheadline
                 SubHeadline(subheadline: "Please wait...", width: geometry.size.width / 2.0)
                 
-                //Placeholder
+                // Placeholder
                 Text("Insert fun facts and info stuff here")
                 
                 Spacer()
@@ -51,8 +51,9 @@ struct ProcessingView: View {
                     currentProgress: self.$progress,
                     total: self.$total,
                     maxWidth: 150,
-                    height: 20)
-            }
+                    height: 20
+                )
+            }.padding(.bottom, 32)
                 // start the analysis when screen is loaded
                 .onAppear(perform: {
                     guard let videoUrl = self.videoUrl else {
@@ -75,7 +76,7 @@ struct ProcessingView: View {
                         self.finishedProcessing.toggle()
                     }
                 })
-        }.padding(.bottom, 32)
+        }
     }
     
     // MARK: Private Instance Methods
@@ -147,7 +148,7 @@ struct ProcessingView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 struct ProcessingView_Previews: PreviewProvider {
     static var previews: some View {
         ProcessingView(videoUrl: .constant(nil))
