@@ -20,10 +20,14 @@ struct VideoResultView: View {
     
     // MARK: Body
     var body: some View {
+        
+        //GeometryReader to allow for percentage alignments
         GeometryReader { geometry in
+            
+            //Outer VStack
             VStack(spacing: 16) {
                 
-                // logo and headline
+                // 20% for the Header
                 LogoAndHeadlineView(headline: "Done!", showLogo: true, height: geometry.size.height * 0.2)
                 
                 // subheadline
@@ -43,6 +47,7 @@ struct VideoResultView: View {
                     }
                 }
                 
+                //Button to next screen
                 NavigationLink(destination: ResultView(), isActive: self.$goToResultView) {
                     DefaultButton(action: {
                         self.goToResultView.toggle()

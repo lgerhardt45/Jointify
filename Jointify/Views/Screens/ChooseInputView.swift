@@ -24,8 +24,12 @@ struct ChooseInputView: View {
     
     // MARK: Body
     var body: some View {
+        
+        //GeometryReader to allow for percentage alignments
         GeometryReader { geometry in
+            
             VStack {
+                
                 // when video was chosen, send to ProcessingView
                 NavigationLink(
                     destination: ProcessingView(videoUrl: self.$videoUrl),
@@ -33,7 +37,10 @@ struct ChooseInputView: View {
                         EmptyView()
                 }
                 
+                // Outer VStack
                 VStack(spacing: 16) {
+                    
+                    // 20% for the Header
                     LogoAndHeadlineView(headline: "Measurement", showLogo: true, height: geometry.size.height * 0.20)
                     
                     //SubHeadline

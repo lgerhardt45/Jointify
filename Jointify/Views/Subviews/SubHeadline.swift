@@ -9,10 +9,12 @@
 import SwiftUI
 
 struct SubHeadline: View {
+    
     // MARK: Stored Instance Properties
     let subheadline: String
     let width: CGFloat
     
+    // MARK: Body
     var body: some View {
         Text(subheadline)
             .font(.subheadline)
@@ -23,6 +25,7 @@ struct SubHeadline: View {
     }
 }
 
+// MARK: - Previews
 struct SubHeadline_Previews: PreviewProvider {
     static var previews: some View {
         SubHeadline(subheadline: "lorem ipsum", width: 220.0)

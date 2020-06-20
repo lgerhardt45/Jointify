@@ -25,12 +25,17 @@ struct ResultView: View {
     
     // MARK: Body
     var body: some View {
+        
+        // GeometryReader to allow for percentage alignments
         GeometryReader { geometry in
+            
+            // Outer VStack
             VStack(spacing: 16) {
                 LogoAndHeadlineView(headline: "Your Results", showLogo: true, height: geometry.size.height * 0.2)
                 
                 Spacer()
                 
+                // Content: Result Values
                 VStack(spacing: 8.0) {
                     VStack {
                         
@@ -51,6 +56,7 @@ struct ResultView: View {
                 }
                 
                 Spacer()
+                
                 DefaultButton(action: {
                     // create PDF and open Mail-app here
                 }) {

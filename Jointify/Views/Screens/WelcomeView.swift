@@ -25,7 +25,11 @@ struct WelcomeView: View {
         
         // starts the navigation stack (screens are loaded "on top" of each other
         NavigationView {
+            
+            //GeometryReader to allow for percentage alignments
             GeometryReader { geometry in
+                
+                // Outer VStack
                 VStack(spacing: 16.0) {
                     
                     // 20% for the Header
@@ -52,8 +56,12 @@ struct WelcomeView: View {
                                 }
                         }
                     }
+                    
                     Spacer()
+                    
+                    // Show past records
                     PastRecords()
+                    
                 }.onAppear(perform: {
                     // always hidden on this screen
                     self.isNavigationBarHidden = true

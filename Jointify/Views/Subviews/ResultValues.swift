@@ -9,11 +9,13 @@
 import SwiftUI
 
 struct ResultValues: View {
+    
     // MARK: Stored Instance Properties
     let valueType: String
     let value: Int
     let showText: Bool
     
+    // MARK: Body
     var body: some View {
         VStack(spacing: 16.0) {
             if showText {
@@ -30,6 +32,8 @@ struct ResultValues: View {
     }
 }
 
+
+// MARK: - Previews
 struct ResultValues_Previews: PreviewProvider {
     static var previews: some View {
         ResultValues(valueType: "Max Value", value: 10, showText: true)

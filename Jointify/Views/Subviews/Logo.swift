@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct Logo: View {
+    
+    // MARK: Body
     var body: some View {
         Image("LogoMitText")
             .resizable()
@@ -17,6 +19,7 @@ struct Logo: View {
     }
 }
 
+// MARK: - Previews
 struct Logo_Previews: PreviewProvider {
     static var previews: some View {
         Logo()

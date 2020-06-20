@@ -24,7 +24,11 @@ struct ProcessingView: View {
     
     // MARK: Body
     var body: some View {
+        
+        //GeometryReader to allow for percentage alignments
         GeometryReader { geometry in
+            
+            // Outer VStack
             VStack(spacing: 16.0) {
                 VStack(spacing: 16.0) {
                     
@@ -33,7 +37,7 @@ struct ProcessingView: View {
                         VideoResultView(measurement: self.measurement),
                                    isActive: self.$finishedProcessing) { EmptyView() }
                     
-                    // logo and headline
+                    // 20% for the headline
                     LogoAndHeadlineView(headline: "Analyzing", showLogo: true, height: geometry.size.height * 0.20)
                     
                     // subheadline

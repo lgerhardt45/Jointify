@@ -22,6 +22,7 @@ struct InstructionsView: View {
     
     // MARK: Body
     var body: some View {
+        
         //GeometryReader to allow for percentage alignments
         GeometryReader { geometry in
             
