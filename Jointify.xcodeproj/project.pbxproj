@@ -665,7 +665,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Jointify/Preview Content\"";
-				DEVELOPMENT_TEAM = NF978HQN8G;
+				DEVELOPMENT_TEAM = 4SK5JS59G8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Jointify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
@@ -673,7 +673,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = annalenafeixJointify;
+				PRODUCT_BUNDLE_IDENTIFIER = lukasgerhardt.Jointify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -687,7 +687,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Jointify/Preview Content\"";
-				DEVELOPMENT_TEAM = NF978HQN8G;
+				DEVELOPMENT_TEAM = 4SK5JS59G8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Jointify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
@@ -695,7 +695,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = annalenafeix.Jointify;
+				PRODUCT_BUNDLE_IDENTIFIER = lukasgerhardt.Jointify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
