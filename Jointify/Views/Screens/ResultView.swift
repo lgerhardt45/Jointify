@@ -25,6 +25,7 @@ struct ResultView: View {
     let mockedPreviousMinValue: Int = -45
     let mockedPreviousMaxValue: Int = 80
     
+    // MARK: Computed Instance Properties
     let canSendMail: Bool = MFMailComposeViewController.canSendMail()
     
     let possibleMailLabel = HStack {
@@ -92,6 +93,7 @@ struct ResultView: View {
     }
 }
 
+// MARK: - Previews
 struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
         
