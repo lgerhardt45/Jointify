@@ -81,7 +81,7 @@ struct ChooseInputView: View {
                             sourceType: self.$sourceType,
                             videoURL: self.$videoUrl)
                     }
-                }.padding(.vertical)
+                }.padding(.bottom, 32)
             }
         }
         

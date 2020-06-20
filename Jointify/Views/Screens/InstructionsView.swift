@@ -58,7 +58,7 @@ struct InstructionsView: View {
                                 .frame(width: geometry.size.width / 3.0)
                         } }
                 }
-            }.padding(.bottom)
+            }.padding(.bottom, 32)
                 .navigationBarTitle(Text("Instructions"), displayMode: .inline)
                 .navigationBarHidden(self.isNavigationBarHidden) // is turned to 'false' in WelcomeView
         }

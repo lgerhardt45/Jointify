@@ -75,7 +75,7 @@ struct ProcessingView: View {
                         self.finishedProcessing.toggle()
                     }
                 })
-        }.padding(.bottom)
+        }.padding(.bottom, 32)
     }
     
     // MARK: Private Instance Methods

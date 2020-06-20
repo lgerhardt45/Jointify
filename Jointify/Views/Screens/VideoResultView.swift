@@ -56,7 +56,7 @@ struct VideoResultView: View {
                            .frame(width: geometry.size.width / 3.0)
                     }
                 }
-            }.padding(.all)
+            }.padding(.bottom, 32)
         }
     }
 }

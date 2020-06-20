@@ -69,10 +69,10 @@ struct WelcomeView: View {
                     // always hidden on this screen
                     self.isNavigationBarHidden = true
                 })
+                    .padding(.bottom)
                     // hide the navigation bar
                     .navigationBarTitle("")
                     .navigationBarHidden(self.isNavigationBarHidden)
-                    .padding(.bottom)
             }
         }
     }
