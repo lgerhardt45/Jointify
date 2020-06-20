@@ -38,28 +38,28 @@ class MeasurementSheetPDFWriter {
     
     // MARK: Initializers
     init(measurement: Measurement) {
-        self.measurement = measurement // my measurement is the one I got from you
+        self.measurement = measurement
     }
     
     // MARK: Instance Methods
-    // methods that are available to others
+    //  = methods that are available to others
     
     /// creates the relevant PDF (upper and lower) with the measurements written onto it
     func createPDF() -> Data? {
         
-        //step 1: get template as UIImage
+        // step 1: get template as UIImage
         guard let template: UIImage = loadTemplate() else {
             print("Template could not be loaded.")
             return nil
         }
         
-        //step 2: locate writing position
+        // step 2: locate writing position
         guard let writingPosition: CGPoint = locateWritingPosition() else {
             print("Could not determine writing position on the template")
             return nil
         }
         
-        //step 3: write measurement on template
+        // step 3: write measurement on template
         guard let filledTemplate: UIImage = writeMeasurement(onto: template, at: writingPosition) else {
             print("Could not write on template.")
             return nil
@@ -74,7 +74,7 @@ class MeasurementSheetPDFWriter {
     }
     
     // MARK: Private Instance Methods
-    // helper methods
+    //  = helper methods
     /// loads the correct image template for the body half (upper or lower)
     func loadTemplate() -> UIImage? {
         
@@ -88,10 +88,10 @@ class MeasurementSheetPDFWriter {
         }
     }
     
-    // checks on where the measurements on the specific document have to be written
+    /// checks on where the measurements on the specific document have to be written
     func locateWritingPosition() -> CGPoint? {
         
-        //writing position depends on body half, joint, side
+        // writing position depends on body half, joint, side
         let supportedLowerJoints: [JointName] = [.leftKnee, .rightKnee]
         let supportedUpperJoints: [JointName] = [.leftElbow, .rightElbow]
         
@@ -141,13 +141,14 @@ class MeasurementSheetPDFWriter {
     /// from https://stackoverflow.com/a/28907826
     func writeMeasurement(onto image: UIImage, at point: CGPoint) -> UIImage? {
         
-        //
         let minRom = String(measurement.minROM)
         let maxRom = String(measurement.maxROM)
         let textColor = UIColor.red
         let textFont = UIFont(name: "Helvetica Bold", size: 12)!
         
         let scale = UIScreen.main.scale
+        
+        // start the drawing environment
         UIGraphicsBeginImageContextWithOptions(image.size, false, scale)
         
         let textFontAttributes =
@@ -156,15 +157,17 @@ class MeasurementSheetPDFWriter {
                 as [NSAttributedString.Key: Any]
         image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
         
+        // TODO: one GCRect per value (check String.draw method)
         let rect = CGRect(origin: point, size: image.size)
         minRom.draw(in: rect, withAttributes: textFontAttributes)
         maxRom.draw(in: rect, withAttributes: textFontAttributes)
         
+        // get final image from drawing environment
         let imageWithMeasurement = UIGraphicsGetImageFromCurrentImageContext()
+        // finish drawing environment
         UIGraphicsEndImageContext()
         
         return imageWithMeasurement
-        
     }
     
     /// converts UIImage to a PDF
