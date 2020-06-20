@@ -8,18 +8,34 @@
 
 // MARK: Imports
 import SwiftUI
+import MessageUI
 
 // MARK: - ResultView
 struct ResultView: View {
     
     // MARK: State Instance Properties
-    @State private var createReportButtonPressed: Bool = false
+    // Home button
     @State private var homeButtonPressed: Bool = false
-    
+    // Report button
+    @State private var isShowingMailView: Bool = false
+    @State private var result: Result<MFMailComposeResult, Error>?
+
     // MARK: Stored Instance Properties
     let measurement: Measurement
     let mockedPreviousMinValue: Int = -45
     let mockedPreviousMaxValue: Int = 80
+    
+    // MARK: Computed Instance Properties
+    let canSendMail: Bool = MFMailComposeViewController.canSendMail()
+    
+    let possibleMailLabel = HStack {
+        Image(systemName: "envelope")
+        Text("Report")
+    }
+    let notPossibleMailLabel = HStack {
+        Image(systemName: "bolt")
+        Text("Can't send mail")
+    }
     
     // MARK: Body
     var body: some View {
