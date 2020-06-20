@@ -61,11 +61,11 @@ struct ResultView: View {
                             .foregroundColor(Color.gray)
                     }
                 }
-                
+         
             }
             
             Spacer().frame(height: 50)
-
+            
             VStack {
                 // Home button
                 DefaultButton(action: {
@@ -73,16 +73,16 @@ struct ResultView: View {
                 }) {
                     Text("Do it again")
                 }
-                                
+                
                 // Report button
-                DefaultButton(disabled: canSendMail ? false : true,
-                              action: {
-                    print("Opening mail to send")
-                    self.isShowingMailView.toggle()
+                DefaultButton(
+                    mode: canSendMail ? .enabled : .disabled,
+                    action: {
+                        self.isShowingMailView.toggle()
                 }) {
                     self.canSendMail ? self.possibleMailLabel : self.notPossibleMailLabel
                 }
-                .disabled(!MFMailComposeViewController.canSendMail())
+                    
                 .sheet(isPresented: $isShowingMailView) {
                     MailView(result: self.$result)
                 }
