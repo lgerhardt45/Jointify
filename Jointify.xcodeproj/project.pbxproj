@@ -153,8 +153,8 @@
 			children = (
 				80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */,
 				80FB49D724967F84001C3DAE /* Measurement.swift */,
-				21CFEA702497E9F500421B80 /* PoseMachineLearning */,
 				C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */,
+				21CFEA702497E9F500421B80 /* PoseMachineLearning */,
 			);
 			path = Model;
 			sourceTree = "<group>";
