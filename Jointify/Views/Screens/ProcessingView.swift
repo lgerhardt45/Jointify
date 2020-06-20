@@ -33,7 +33,7 @@ struct ProcessingView: View {
                 
                 // pass analysed images further
                 NavigationLink(destination:
-                    VideoResultView(measurement: self.measurement),
+                    VideoResultView(measurement: self.measurement ?? Measurement()),
                                isActive: self.$finishedProcessing) { EmptyView() }
                 
                 // 20% for the headline

@@ -34,7 +34,7 @@ struct VideoResultView: View {
                 
                 ScrollView {
                     VStack(spacing: 16) {
-                        ForEach(self.measurement?.frames ?? [], id: \.self) { frame in
+                        ForEach(self.measurement.frames, id: \.self) { frame in
                             VStack(spacing: 8) {
                                 Image(uiImage: frame.image)
                                     .resizable()
@@ -46,7 +46,7 @@ struct VideoResultView: View {
                     }
                 }  
                 // Button to next screen
-                NavigationLink(destination: ResultView(), isActive: self.$goToResultView) {
+                NavigationLink(destination: ResultView(measurement: self.measurement), isActive: self.$goToResultView) {
                     DefaultButton(action: {
                         self.goToResultView.toggle()
                     }) {
