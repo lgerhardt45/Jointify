@@ -44,25 +44,32 @@ class MeasurementSheetPDFWriter {
     // methods that are available to others
     
     /// creates the relevant PDF (upper and lower) with the measurements written onto it
-    func createPDF() { // whats the right Type of a PDF to return?
+    func createPDF() -> Data? {
         
         //step 1: get template as UIImage
         guard let template: UIImage = loadTemplate() else {
             print("Template could not be loaded.")
-            return
+            return nil
         }
         
         //step 2: locate writing position
         guard let writingPosition: CGPoint = locateWritingPosition() else {
             print("Could not determine writing position on the template")
-            return
+            return nil
         }
         
         //step 3: write measurement on template
         guard let filledTemplate: UIImage = writeMeasurement(onto: template, at: writingPosition) else {
             print("Could not write on template.")
-            return
+            return nil
         }
+        
+        guard let pdf: Data = exportToPDF(imageToConvert: filledTemplate) else {
+            print("Could not create PDFPage from image")
+            return nil
+        }
+        
+        return pdf
     }
     
     // MARK: Private Instance Methods
