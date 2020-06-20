@@ -13,6 +13,14 @@ import PDFKit
 // MARK: - MeasurementSheetPDFWriter
 class MeasurementSheetPDFWriter {
     
+    // MARK: Constants
+    enum Constants {
+        static let leftElbowPosition = CGPoint() // add fixed on values on respective canvas
+        static let rightElbowPosition = CGPoint()
+        static let leftKneePosition = CGPoint()
+        static let rightKneePosition = CGPoint()
+    }
+
     // MARK: Stored Instance Properties
     let measurement: Measurement
     
