@@ -18,55 +18,52 @@ struct WelcomeView: View {
     // used to activate the NavigationLink (next screen)
     @State private var newRecordButtonPressed: Bool = false
     
+    //
+    static let textFramePercentage = 0.1
     // MARK: Body
     var body: some View {
         
         // starts the navigation stack (screens are loaded "on top" of each other
         NavigationView {
-            VStack {
-                Spacer().frame(height: 150
-                )
-                
+            GeometryReader { geometry in
                 VStack(spacing: 16.0) {
-                    Text("Hello!")
-                        .font(.largeTitle)
-                        .font(.system(size:48))
-                    Text("Start your remote joint measurement journey.")
-                        .font(.subheadline)
-                        .fontWeight(.light)
-                        .multilineTextAlignment(.center)
-                        .font(.system(size:20))
-                        .frame(width: 220.0)
+                    
+                    // 20% for the Header
+                    LogoAndHeadlineView(headline: "Hello!", showLogo: false, height: geometry.size.height * 0.20)
+                    
+                    // SubHeadline
+                    SubHeadline(subheadline: "Start your remote joint measurement journey.", width: geometry.size.width / 2.0)
                     
                     Spacer()
-                        .frame(height: 70)
                     
-                    NavigationLink(
-                        destination: InstructionsView(
-                            isNavigationBarHidden: $isNavigationBarHidden),
-                        isActive: $newRecordButtonPressed) {
-                            DefaultButton(action: {
-                                self.newRecordButtonPressed.toggle()
-                                self.isNavigationBarHidden = false
-                            }) {
-                                Text("Start")
-                                .frame(width: 150)
-
-                            }
+                    //Navigation
+                    VStack(spacing: 16.0) {
+                        NavigationLink(
+                            destination: InstructionsView(
+                                isNavigationBarHidden: self.$isNavigationBarHidden),
+                            isActive: self.$newRecordButtonPressed) {
+                                DefaultButton(action: {
+                                    self.newRecordButtonPressed.toggle()
+                                    self.isNavigationBarHidden = false
+                                }) {
+                                    Text("Start")
+                                        .frame(width: geometry.size.width / 3.0)
+                                    
+                                }
+                        }
                     }
-                }
+                    Spacer()
+                    PastRecords()
+                }.onAppear(perform: {
+                    // always hidden on this screen
+                    self.isNavigationBarHidden = true
+                })
+                    // hide the navigation bar
+                    .navigationBarTitle("")
+                    .navigationBarHidden(self.isNavigationBarHidden)
+                    .padding(.all)
                 
-                Spacer()
-                PastRecords()
-                    .frame(height: 250) // size from bottom
-            }.onAppear(perform: {
-                // always hidden on this screen
-                self.isNavigationBarHidden = true
-            })
-                // hide the navigation bar
-                .navigationBarTitle("")
-                .navigationBarHidden(self.isNavigationBarHidden)
-                .padding(.all)
+            }
         }
     }
 }
@@ -77,3 +74,9 @@ struct WelcomeView_Previews: PreviewProvider {
         WelcomeView()
     }
 }
+//
+//extension View {
+//    let upperFramePercentage = 0.4
+//    let middleFramePercentage = 0.4
+//    let lowerFramePercentage = 0.2
+//}

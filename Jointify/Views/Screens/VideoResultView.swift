@@ -20,42 +20,40 @@ struct VideoResultView: View {
     
     // MARK: Body
     var body: some View {
-        VStack(spacing: 16) {
-            Logo()
-            Spacer().frame(height: 86)
-            Text("Done!")
-            .font(.largeTitle)
-            .font(.system(size:48))
-            Text("Your video was analyzed succesfully.")
-            .font(.subheadline)
-            .fontWeight(.light)
-            .multilineTextAlignment(.center)
-            .font(.system(size:20))
-            .frame(width: 220.0)
-            ScrollView {
-                VStack(spacing: 16) {
-                        ForEach(measurement?.frames ?? [], id: \.self) { frame in
+        GeometryReader { geometry in
+            VStack(spacing: 16) {
+                
+                // logo and headline
+                LogoAndHeadlineView(headline: "Done!", showLogo: true, height: geometry.size.height * 0.2)
+                
+                // subheadline
+                SubHeadline(subheadline: "Your video was analyzed succesfully.", width: geometry.size.width/2.0 )
+               
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(self.measurement?.frames ?? [], id: \.self) { frame in
                             VStack(spacing: 8) {
                                 Image(uiImage: frame.image)
                                     .resizable()
                                     .scaledToFit()
                                     .cornerRadius(5)
                                 Text("Degrees: \(frame.degree)")
+                            }
                         }
                     }
                 }
-            }
-            
-            NavigationLink(destination: ResultView(), isActive: self.$goToResultView) {
-                DefaultButton(action: {
-                    self.goToResultView.toggle()
-                }) {
-                    Text("Done")
-                    .frame(width: 150)
+                
+                NavigationLink(destination: ResultView(), isActive: self.$goToResultView) {
+                    DefaultButton(action: {
+                        self.goToResultView.toggle()
+                    }) {
+                        Text("Done")
+                           .frame(width: geometry.size.width / 3.0)
+                    }
                 }
             }
+            .padding(.all)
         }
-        .padding(.all)
     }
 }
 

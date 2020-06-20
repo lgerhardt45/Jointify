@@ -24,55 +24,58 @@ struct ProcessingView: View {
     
     // MARK: Body
     var body: some View {
-        VStack(spacing: 16.0) {
-            Logo()
-            Spacer().frame(height: 86)
-            VStack {
-                
-                // pass analysed images further
-                NavigationLink(destination:
-                    VideoResultView(measurement: measurement),
-                               isActive: self.$finishedProcessing) { EmptyView() }
-                Text("Analyzing")
-                    .font(.largeTitle)
-                    .font(.system(size:48))
-                Text("Please wait...")
-                                       .font(.subheadline)
-                                       .fontWeight(.light)
-                                       .multilineTextAlignment(.center)
-                                       .font(.system(size:20))
-                                       .frame(width: 220.0)
-                Spacer().frame(height: 86)
-                ProgressBar(
-                    currentProgress: self.$progress,
-                    total: self.$total,
-                    maxWidth: 150,
-                    height: 20)
-            }
-                // start the analysis when screen is loaded
-                .onAppear(perform: {
-                    guard let videoUrl = self.videoUrl else {
-                        print("videoUrl could not be retrieved")
-                        return
-                    }
+        GeometryReader { geometry in
+            VStack(spacing: 16.0) {
+                VStack(spacing: 16.0) {
                     
-                    let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
-                                        
-                    self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
+                    // pass analysed images further
+                    NavigationLink(destination:
+                        VideoResultView(measurement: self.measurement),
+                                   isActive: self.$finishedProcessing) { EmptyView() }
+                    
+                    // logo and headline
+                    LogoAndHeadlineView(headline: "Analyzing", showLogo: true, height: geometry.size.height * 0.20)
+                    
+                    // subheadline
+                    SubHeadline(subheadline: "Please wait...", width: geometry.size.width / 2.0)
+                    
+                    //Placeholder
+                    Text("Insert fun facts and info stuff here")
+                    
+                    Spacer()
+                    
+                    ProgressBar(
+                        currentProgress: self.$progress,
+                        total: self.$total,
+                        maxWidth: 150,
+                        height: 20)
+                }
+                    // start the analysis when screen is loaded
+                    .onAppear(perform: {
+                        guard let videoUrl = self.videoUrl else {
+                            print("videoUrl could not be retrieved")
+                            return
+                        }
                         
-                        // set the measurement property when done
-                        self.measurement = Measurement(
-                            date: Date(),
-                            videoUrl: videoUrl,
-                            frames: drawnFrames
-                        )
+                        let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
                         
-                        // trigger navigation to VideoResultView
-                        self.finishedProcessing.toggle()
-                    }
-                })
-            Spacer()
-        }.padding(.all)
+                        self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
+                            
+                            // set the measurement property when done
+                            self.measurement = Measurement(
+                                date: Date(),
+                                videoUrl: videoUrl,
+                                frames: drawnFrames
+                            )
+                            
+                            // trigger navigation to VideoResultView
+                            self.finishedProcessing.toggle()
+                        }
+                    })
+                Spacer()
+            }
+            
+        }
     }
     
     // MARK: Private Instance Methods
@@ -82,7 +85,7 @@ struct ProcessingView: View {
         print("Getting frames from \(videoUrl)")
         
         var frames: [UIImage] = []
-
+        
         let asset: AVAsset = AVAsset(url: videoUrl as URL)
         let duration: Float64 = CMTimeGetSeconds(asset.duration)
         let generator = AVAssetImageGenerator(asset: asset)
@@ -118,7 +121,7 @@ struct ProcessingView: View {
         queue.async {
             
             print("Starting PoseNet analysis")
-
+            
             var returnMeasurementFrames: [MeasurementFrame] = []
             
             for (frameCount, frame) in frames.enumerated() {
@@ -126,7 +129,7 @@ struct ProcessingView: View {
                 print("Analysing frame \(frameCount)/\(frames.count)")
                 
                 let drawnImage = poseNet.predict(frame)
-
+                
                 returnMeasurementFrames.append(
                     MeasurementFrame(
                         degree: poseNet.calcAngleBetweenJoints(),
@@ -134,7 +137,7 @@ struct ProcessingView: View {
                     )
                 )
                 self.progress += 1
-
+                
             }
             
             // send when done

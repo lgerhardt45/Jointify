@@ -22,40 +22,42 @@ struct InstructionsView: View {
     
     // MARK: Body
     var body: some View {
-        VStack(spacing: 16.0) {
-            Logo()
-            Spacer().frame(height: 86)
-            // pass the State variable to the other View which modifies it
-            Text("Instructions")
-                .font(.largeTitle)
-                .font(.system(size:48))
-            Text("Would you like to start a new recording or use an existing one?")
-            .font(.subheadline)
-            .fontWeight(.light)
-            .multilineTextAlignment(.center)
-            .font(.system(size:20))
-            .frame(width: 220.0)
-                       
-            Spacer().frame(height: 20)
-            InstructionContent()
-            Spacer()
+        //GeometryReader to allow for percentage alignments
+        GeometryReader { geometry in
             
-            // Move video data to ProcessingView
-            NavigationLink(
-                destination: ChooseInputView(
-                ),
-                isActive: self.$understoodButtonPressed
-            ) {
-                DefaultButton(action: {
-                    // activate NavigationLink to ChooseInputView
-                    self.understoodButtonPressed.toggle()
-                }) {
-                    Text("I understand")
-                    .frame(width: 150)
-                } }
-        }.navigationBarTitle(Text("Instructions"), displayMode: .inline)
-            .navigationBarHidden(isNavigationBarHidden) // is turned to 'false' in WelcomeView
-            .padding(.all)
+            //Outer VStack
+            VStack(spacing: 16.0) {
+                
+                // 20% for the Header
+                LogoAndHeadlineView(headline: "Instructions", showLogo: true, height: geometry.size.height * 0.20)
+                
+                // SubHeadline
+                SubHeadline(subheadline: "Would you like to start a new recording or use an existing one?", width: geometry.size.width / 2.0)
+                
+                //Content
+                InstructionContent().padding()
+                
+                Spacer()
+                
+                // Move video data to ProcessingView
+                VStack(spacing: 16.0) {
+                    NavigationLink(
+                        destination: ChooseInputView(
+                        ),
+                        isActive: self.$understoodButtonPressed
+                    ) {
+                        DefaultButton(action: {
+                            // activate NavigationLink to ChooseInputView
+                            self.understoodButtonPressed.toggle()
+                        }) {
+                            Text("I understand")
+                                .frame(width: geometry.size.width / 3.0)
+                        } }
+                }
+            }.navigationBarTitle(Text("Instructions"), displayMode: .inline)
+                .navigationBarHidden(self.isNavigationBarHidden) // is turned to 'false' in WelcomeView
+                .padding(.all)
+        }
     }
 }
 
@@ -64,3 +66,19 @@ struct InstructionsView_Previews: PreviewProvider {
         InstructionsView(isNavigationBarHidden: .constant(false))
     }
 }
+
+#if DEBUG
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            InstructionsView(isNavigationBarHidden: .constant(false))
+                .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
+                .previewDisplayName("iPhone SE")
+            
+            InstructionsView(isNavigationBarHidden: .constant(false))
+                .previewDevice(PreviewDevice(rawValue: "iPhone XS Max"))
+                .previewDisplayName("iPhone XS Max")
+        }
+    }
+}
+#endif
