@@ -44,7 +44,10 @@ struct ChooseInputView: View {
                     LogoAndHeadlineView(headline: "Measurement", showLogo: true, height: geometry.size.height * 0.20)
                     
                     //SubHeadline
-                    SubHeadline(subheadline: "Would you like to start a new recording or use an existing one?", width: geometry.size.width / 2.0)
+                    SubHeadline(
+                        subheadline: "Would you like to start a new recording or use an existing one?",
+                        width: geometry.size.width / 2.0
+                    )
                     
                     Spacer()
                     
@@ -57,7 +60,7 @@ struct ChooseInputView: View {
                             self.videoPickerSheetIsPresented.toggle()
                         }) {
                             Text("Record").frame(width: geometry.size.width / 3.0)
-                        }.padding(.all, 10)
+                        }
                         #endif
                         
                         DefaultButton(action: {
@@ -66,9 +69,6 @@ struct ChooseInputView: View {
                         }) {
                             Text("Gallery").frame(width: geometry.size.width / 3.0)
                         }
-                        .frame(width: nil)
-                        .padding(.all, 10)
-                        
                     }
                         
                     .sheet(isPresented: self.$videoPickerSheetIsPresented, onDismiss: {
@@ -81,8 +81,7 @@ struct ChooseInputView: View {
                             sourceType: self.$sourceType,
                             videoURL: self.$videoUrl)
                     }
-                }
-                .padding(.all)
+                }.padding(.vertical)
             }
         }
         

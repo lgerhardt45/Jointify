@@ -36,7 +36,10 @@ struct WelcomeView: View {
                     LogoAndHeadlineView(headline: "Hello!", showLogo: false, height: geometry.size.height * 0.20)
                     
                     // SubHeadline
-                    SubHeadline(subheadline: "Start your remote joint measurement journey.", width: geometry.size.width / 2.0)
+                    SubHeadline(
+                        subheadline: "Start your remote joint measurement journey.",
+                        width: geometry.size.width / 2.0
+                    )
                     
                     Spacer()
                     
@@ -69,8 +72,7 @@ struct WelcomeView: View {
                     // hide the navigation bar
                     .navigationBarTitle("")
                     .navigationBarHidden(self.isNavigationBarHidden)
-                    .padding(.all)
-                
+                    .padding(.bottom)
             }
         }
     }

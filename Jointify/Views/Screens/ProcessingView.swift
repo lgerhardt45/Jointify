@@ -30,56 +30,52 @@ struct ProcessingView: View {
             
             // Outer VStack
             VStack(spacing: 16.0) {
-                VStack(spacing: 16.0) {
-                    
-                    // pass analysed images further
-                    NavigationLink(destination:
-                        VideoResultView(measurement: self.measurement),
-                                   isActive: self.$finishedProcessing) { EmptyView() }
-                    
-                    // 20% for the headline
-                    LogoAndHeadlineView(headline: "Analyzing", showLogo: true, height: geometry.size.height * 0.20)
-                    
-                    // subheadline
-                    SubHeadline(subheadline: "Please wait...", width: geometry.size.width / 2.0)
-                    
-                    //Placeholder
-                    Text("Insert fun facts and info stuff here")
-                    
-                    Spacer()
-                    
-                    ProgressBar(
-                        currentProgress: self.$progress,
-                        total: self.$total,
-                        maxWidth: 150,
-                        height: 20)
-                }
-                    // start the analysis when screen is loaded
-                    .onAppear(perform: {
-                        guard let videoUrl = self.videoUrl else {
-                            print("videoUrl could not be retrieved")
-                            return
-                        }
-                        
-                        let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
-                        
-                        self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
-                            
-                            // set the measurement property when done
-                            self.measurement = Measurement(
-                                date: Date(),
-                                videoUrl: videoUrl,
-                                frames: drawnFrames
-                            )
-                            
-                            // trigger navigation to VideoResultView
-                            self.finishedProcessing.toggle()
-                        }
-                    })
+                
+                // pass analysed images further
+                NavigationLink(destination:
+                    VideoResultView(measurement: self.measurement),
+                               isActive: self.$finishedProcessing) { EmptyView() }
+                
+                // 20% for the headline
+                LogoAndHeadlineView(headline: "Analyzing", showLogo: true, height: geometry.size.height * 0.20)
+                
+                // subheadline
+                SubHeadline(subheadline: "Please wait...", width: geometry.size.width / 2.0)
+                
+                //Placeholder
+                Text("Insert fun facts and info stuff here")
+                
                 Spacer()
+                
+                ProgressBar(
+                    currentProgress: self.$progress,
+                    total: self.$total,
+                    maxWidth: 150,
+                    height: 20)
             }
-            
-        }
+                // start the analysis when screen is loaded
+                .onAppear(perform: {
+                    guard let videoUrl = self.videoUrl else {
+                        print("videoUrl could not be retrieved")
+                        return
+                    }
+                    
+                    let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
+                    
+                    self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
+                        
+                        // set the measurement property when done
+                        self.measurement = Measurement(
+                            date: Date(),
+                            videoUrl: videoUrl,
+                            frames: drawnFrames
+                        )
+                        
+                        // trigger navigation to VideoResultView
+                        self.finishedProcessing.toggle()
+                    }
+                })
+        }.padding(.bottom)
     }
     
     // MARK: Private Instance Methods

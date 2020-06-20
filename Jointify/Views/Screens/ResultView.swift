@@ -62,7 +62,7 @@ struct ResultView: View {
                 }) {
                     Text("Send Mail").frame(width: geometry.size.width / 3.0)
                 }
-            }.padding(.all)
+            }.padding(.bottom)
         }
     }
 }

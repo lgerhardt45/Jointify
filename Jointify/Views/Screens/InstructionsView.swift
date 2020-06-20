@@ -33,7 +33,10 @@ struct InstructionsView: View {
                 LogoAndHeadlineView(headline: "Instructions", showLogo: true, height: geometry.size.height * 0.20)
                 
                 // SubHeadline
-                SubHeadline(subheadline: "Would you like to start a new recording or use an existing one?", width: geometry.size.width / 2.0)
+                SubHeadline(
+                    subheadline: "How do I record a measurement?",
+                    width: geometry.size.width / 2.0
+                )
                 
                 //Content
                 InstructionContent().padding()
@@ -55,9 +58,9 @@ struct InstructionsView: View {
                                 .frame(width: geometry.size.width / 3.0)
                         } }
                 }
-            }.navigationBarTitle(Text("Instructions"), displayMode: .inline)
+            }.padding(.bottom)
+                .navigationBarTitle(Text("Instructions"), displayMode: .inline)
                 .navigationBarHidden(self.isNavigationBarHidden) // is turned to 'false' in WelcomeView
-                .padding(.all)
         }
     }
 }

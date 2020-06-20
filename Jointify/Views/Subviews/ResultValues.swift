@@ -32,7 +32,6 @@ struct ResultValues: View {
     }
 }
 
-
 // MARK: - Previews
 struct ResultValues_Previews: PreviewProvider {
     static var previews: some View {
