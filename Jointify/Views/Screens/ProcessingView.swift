@@ -29,21 +29,35 @@ struct ProcessingView: View {
     // MARK: Body
     var body: some View {
         
-        VStack {
-            VStack {
+        // GeometryReader to allow for percentage alignments
+        GeometryReader { geometry in
+            
+            // Outer VStack
+            VStack(spacing: 16.0) {
                 
                 // pass analysed images further
                 NavigationLink(destination:
-                    VideoResultView(measurement: measurement ?? Measurement()),
+                    VideoResultView(measurement: self.measurement ?? Measurement()),
                                isActive: self.$finishedProcessing) { EmptyView() }
-                Text("Your image is being analysed")
+                
+                // 20% for the headline
+                LogoAndHeadlineView(headline: "Analyzing", showLogo: true, height: geometry.size.height * 0.20)
+                
+                // subheadline
+                SubHeadline(subheadline: "Please wait...", width: geometry.size.width / 2.0)
+                
+                // Placeholder
+                Text("Insert fun facts and info stuff here")
+                
+                Spacer()
                 
                 ProgressBar(
                     currentProgress: self.$progress,
                     total: self.$total,
                     maxWidth: 150,
-                    height: 20)
-            }
+                    height: 20
+                )
+            }.padding(.bottom, 32)
                 // start the analysis when screen is loaded
                 .onAppear(perform: {
                     guard let videoUrl = self.videoUrl else {
@@ -52,7 +66,7 @@ struct ProcessingView: View {
                     }
                     
                     let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
-                                        
+                    
                     self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
                         
                         // set the measurement property when done
@@ -66,7 +80,6 @@ struct ProcessingView: View {
                         self.finishedProcessing.toggle()
                     }
                 })
-            
         }
     }
     
@@ -77,7 +90,7 @@ struct ProcessingView: View {
         print("Getting frames from \(videoUrl)")
         
         var frames: [UIImage] = []
-
+        
         let asset: AVAsset = AVAsset(url: videoUrl as URL)
         let duration: Float64 = CMTimeGetSeconds(asset.duration)
         let generator = AVAssetImageGenerator(asset: asset)
@@ -113,7 +126,7 @@ struct ProcessingView: View {
         queue.async {
             
             print("Starting PoseNet analysis")
-
+            
             var returnMeasurementFrames: [MeasurementFrame] = []
             
             for (frameCount, frame) in frames.enumerated() {
@@ -136,7 +149,7 @@ struct ProcessingView: View {
                 }
                 
                 self.progress += 1
-
+                
             }
             
             let acceptedFramesPercentage = Double(self.acceptedFramesCounter) / Double(self.progress)
@@ -152,7 +165,7 @@ struct ProcessingView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 struct ProcessingView_Previews: PreviewProvider {
     static var previews: some View {
         ProcessingView(videoUrl: .constant(nil))
