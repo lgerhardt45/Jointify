@@ -17,6 +17,10 @@ struct Measurement {
     let videoUrl: NSURL?
     let frames: [MeasurementFrame]
     
+    let bodyHalf: BodyHalf = .lower
+    let jointName: JointName = .leftKnee
+    let side: Side = .left
+    
     // MARK: Computed Instance Properties
     var minROM: Float {
         return frames.map({$0.degree}).min() ?? 0

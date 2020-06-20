@@ -10,6 +10,12 @@
 import SwiftUI
 import PDFKit
 
+// MARK: - BodyHalf
+enum BodyHalf {
+    case upper
+    case lower
+}
+
 // MARK: - MeasurementSheetPDFWriter
 class MeasurementSheetPDFWriter {
     
