@@ -70,6 +70,8 @@
 		80FB49E42496AD6D001C3DAE /* InstructionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFDB742492991B0021124C /* InstructionContent.swift */; };
 		80FB49E52496AD78001C3DAE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754024865483005CB6E5 /* ImagePicker.swift */; };
 		80FB49E62496AD8A001C3DAE /* ChooseInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FB49D02492E698001C3DAE /* ChooseInputView.swift */; };
+		C190815C249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
+		C190815D249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +126,7 @@
 		80FB49D724967F84001C3DAE /* Measurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurement.swift; sourceTree = "<group>"; };
 		80FB49DA249689BF001C3DAE /* VideoResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoResultView.swift; sourceTree = "<group>"; };
 		9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.debug.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.debug.xcconfig"; sourceTree = "<group>"; };
+		C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementSheetPDFWriter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +154,7 @@
 				80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */,
 				80FB49D724967F84001C3DAE /* Measurement.swift */,
 				21CFEA702497E9F500421B80 /* PoseMachineLearning */,
+				C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -448,6 +452,7 @@
 				80FB49DB249689C0001C3DAE /* VideoResultView.swift in Sources */,
 				21CFEA7F2497EA2600421B80 /* PoseNetInput.swift in Sources */,
 				21CFEA772497E9F500421B80 /* PoseBuilder.swift in Sources */,
+				C190815C249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */,
 				80F1D4D8249198B600ACCEC2 /* WelcomeView.swift in Sources */,
 				2141754124865483005CB6E5 /* ImagePicker.swift in Sources */,
 				80DFDB782492AAC20021124C /* PastRecords.swift in Sources */,
@@ -486,6 +491,7 @@
 				80E67BBE249AC56900ECC047 /* Pose.swift in Sources */,
 				80E67BC3249AC63600ECC047 /* JointName.swift in Sources */,
 				80E67BCA249AC8F800ECC047 /* CGImage+Size.swift in Sources */,
+				C190815D249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */,
 				80E67BC2249AC61100ECC047 /* Side.swift in Sources */,
 				80EF89BF2497F31100E345F0 /* Edge.swift in Sources */,
 				80E67BC6249AC64200ECC047 /* PoseBuilderConfiguration.swift in Sources */,
