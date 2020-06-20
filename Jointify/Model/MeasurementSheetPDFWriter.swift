@@ -47,10 +47,13 @@ class MeasurementSheetPDFWriter {
         }
         
         //step 2: locate writing position
-        let writingPosition: CGPoint = locateWritingPosition()
+        guard let writingPosition: CGPoint = locateWritingPosition() else {
+            print("Could not determine writing position on the template")
+            return
+        }
         
         //step 3: write measurement on template
-        guard let filledTemplate: UIImage = writeMeasurement(onto: template, at: writingPosition) else{
+        guard let filledTemplate: UIImage = writeMeasurement(onto: template, at: writingPosition) else {
             print("Could not write on template.")
             return
         }
@@ -72,11 +75,52 @@ class MeasurementSheetPDFWriter {
     }
     
     // checks on where the measurements on the specific document have to be written
-    func locateWritingPosition() -> CGPoint {
-        //writing position depends on body half, joint, side
-        switch
+    func locateWritingPosition() -> CGPoint? {
         
-        return CGPoint()
+        //writing position depends on body half, joint, side
+        let supportedLowerJoints: [JointName] = [.leftKnee, .rightKnee]
+        let supportedUpperJoints: [JointName] = [.leftElbow, .rightElbow]
+        
+        switch measurement.bodyHalf {
+            
+        case .lower:
+            if !supportedLowerJoints.contains(measurement.jointName) {
+                print("Joint \(measurement.jointName) not supported")
+                return nil
+            } else {
+                switch measurement.jointName {
+                    
+                case .leftKnee:
+                    print("Getting CGPoint for left Knee")
+                    return Constants.leftKneePosition
+                case .rightKnee:
+                    print("Getting CGPoint for right Knee")
+                    return Constants.rightKneePosition
+                    
+                default: return nil // will not happen
+                    
+                }
+            }
+            
+        case .upper:
+            if !supportedUpperJoints.contains(measurement.jointName) {
+                print("Joint \(measurement.jointName) not supported")
+                return nil
+            } else {
+                switch measurement.jointName {
+                    
+                case .leftElbow:
+                    print("Getting CGPoint for left elbow")
+                    return Constants.leftElbowPosition
+                case .rightElbow:
+                    print("Getting CGPoint for right elbow")
+                    return Constants.rightElbowPosition
+                    
+                default: return nil // will not happen
+                    
+                }
+            }
+        }
     }
     
     // writes measurement values in the right spot in the UIImage
