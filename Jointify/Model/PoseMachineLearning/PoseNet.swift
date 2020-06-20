@@ -59,16 +59,21 @@ class PoseNet {
         static let jointColor: UIColor = UIColor.systemPink
         // Degrees that will be subtraced from the measured angle
         static let neutralNullAngle: Float = 90.0
-        // Minimum confidence that each joint has to conform to
+        /// Minimum confidence value that each drawn joint in each frame has to conform to
+        ///
+        /// E.g. if you analyse the right knee, the joints rightHip, rightKnee & rightAnkle
+        /// must have a confidence value above the specified threshold, if this is not fulfilled
+        /// the whole image is rejected
         static let confidenceThreshold: Double = 0.70
     }
     
-    let side: Side
+    // MARK: Stored Instance Properties
+    private var degree: Float = 0.0
+    private let side: Side
     private let jointSegments: [JointSegment]
     private let selectedJointNames: [JointName]
-    var degree: Float = 0.0
-    // Dictionary for the coordinates of all joints
-    var jointPositions: [String: Float] = [:]
+    // mapping the recognized Joints to their respective coordinates on the canvas
+    private var jointPositions: [String: Float] = [:]
 
     // MARK: Initializers
     init(side: Side) {
