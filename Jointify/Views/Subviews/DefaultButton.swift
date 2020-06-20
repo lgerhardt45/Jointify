@@ -34,9 +34,7 @@ struct DefaultButton<ConformsToView: View>: View {
                 .allowsTightening(true)
                 .lineLimit(1)
                 .shadow(radius: 5, y: 4)
-        
         })
-        
     }
 }
 
