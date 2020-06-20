@@ -16,14 +16,13 @@ struct VideoResultView: View {
     @State var goToResultView: Bool = false
     
     // MARK: Stored Instance Properties
-    let measurement: Measurement?
+    let measurement: Measurement
     
     // MARK: Body
     var body: some View {
         
         // GeometryReader to allow for percentage alignments
         GeometryReader { geometry in
-            
             // Outer VStack
             VStack(spacing: 16) {
                 
@@ -45,8 +44,7 @@ struct VideoResultView: View {
                             }
                         }
                     }
-                }
-                
+                }  
                 // Button to next screen
                 NavigationLink(destination: ResultView(), isActive: self.$goToResultView) {
                     DefaultButton(action: {

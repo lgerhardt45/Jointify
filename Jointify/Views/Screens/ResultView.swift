@@ -17,11 +17,9 @@ struct ResultView: View {
     @State private var homeButtonPressed: Bool = false
     
     // MARK: Stored Instance Properties
-    // TODO: change to Measurement
-    let minValue: Int = -55
-    let maxValue: Int = 90
-    let previousMinValue: Int = -45
-    let previousMaxValue: Int = 80
+    let measurement: Measurement
+    let mockedPreviousMinValue: Int = -45
+    let mockedPreviousMaxValue: Int = 80
     
     // MARK: Body
     var body: some View {
@@ -70,6 +68,13 @@ struct ResultView: View {
 // MARK: - Previews
 struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
-        ResultView()
+        
+        ResultView(
+            measurement: Measurement(
+                date: Date(),
+                videoUrl: nil,
+                frames: []
+            )
+        )
     }
 }

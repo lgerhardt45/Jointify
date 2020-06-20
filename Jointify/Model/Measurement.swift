@@ -19,9 +19,23 @@ struct Measurement {
     
     // MARK: Computed Instance Properties
     var minROM: Float {
-        return 0 // search through `frames`
+        return frames.map({$0.degree}).min() ?? 0
     }
     var maxROM: Float {
-        return 0 // search through `frames`
+        return frames.map({$0.degree}).max() ?? 0
+    }
+    
+    // MARK: Initializers
+    init(date: Date, videoUrl: NSURL?, frames: [MeasurementFrame]) {
+        self.date = date
+        self.videoUrl = videoUrl
+        self.frames = frames
+    }
+    
+    /// creates a mock instance
+    init() {
+        self.date = Date()
+        self.videoUrl = nil
+        self.frames = []
     }
 }
