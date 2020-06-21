@@ -57,7 +57,8 @@ struct InstructionsView: View {
                     }) {
                         Text("I understand")
                             .frame(width: geometry.size.width / 3.0)
-                    } }
+                    }
+                }
             }.padding(.bottom, 32)
         }
     }

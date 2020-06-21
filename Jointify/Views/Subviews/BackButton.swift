@@ -30,7 +30,7 @@ struct BackButton: View {
                 Image(systemName: "chevron.left").resizable()
                     .scaledToFit()
                     .foregroundColor(.blue)
-                    .frame(height: Logo.height * CGFloat(0.5))
+                    .frame(height: Logo.height * CGFloat(0.4))
             }.padding(.leading)
             
             // push button to the left
