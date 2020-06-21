@@ -43,21 +43,18 @@ struct InstructionsView: View {
                 
                 Spacer()
                 
-                // Move video data to ProcessingView
-                VStack(spacing: 16.0) {
-                    NavigationLink(
-                        destination: ChooseInputView(
-                        ),
-                        isActive: self.$understoodButtonPressed
-                    ) {
-                        DefaultButton(action: {
-                            // activate NavigationLink to ChooseInputView
-                            self.understoodButtonPressed.toggle()
-                        }) {
-                            Text("I understand")
-                                .frame(width: geometry.size.width / 3.0)
-                        } }
-                }
+                // "I understand" button to ChooseInputView
+                NavigationLink(
+                    destination: ChooseInputView(),
+                    isActive: self.$understoodButtonPressed
+                ) {
+                    DefaultButton(action: {
+                        // activate NavigationLink to ChooseInputView
+                        self.understoodButtonPressed.toggle()
+                    }) {
+                        Text("I understand")
+                            .frame(width: geometry.size.width / 3.0)
+                    } }
             }.padding(.bottom, 32)
                 .navigationBarTitle(Text("Instructions"), displayMode: .inline)
                 .navigationBarHidden(self.isNavigationBarHidden) // is turned to 'false' in WelcomeView
