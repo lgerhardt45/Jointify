@@ -12,7 +12,7 @@ import SwiftUI
 // MARK: - Logo
 struct Logo: View {
     
-    // MARK: Stored Type Properties
+    // MARK: Type Properties
     static let width: CGFloat = 192
     static let height: CGFloat = 64
     
