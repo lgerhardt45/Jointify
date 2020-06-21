@@ -30,7 +30,7 @@ struct WelcomeView: View {
         // starts the navigation stack (screens are loaded "on top" of each other
         NavigationView {
             
-            //GeometryReader to allow for percentage alignments
+            // GeometryReader to allow for percentage alignments
             GeometryReader { geometry in
                 
                 // Outer VStack
@@ -50,20 +50,18 @@ struct WelcomeView: View {
                     
                     Spacer()
                     
-                    // Navigation
-                    VStack(spacing: 16.0) {
-                        NavigationLink(
-                            destination: InstructionsView(
-                                isNavigationBarHidden: self.$isNavigationBarHidden),
-                            isActive: self.$newRecordButtonPressed) {
-                                DefaultButton(action: {
-                                    self.newRecordButtonPressed.toggle()
-                                    self.isNavigationBarHidden = false
-                                }) {
-                                    Text("Start")
-                                        .frame(width: geometry.size.width / 3.0)
-                                }
-                        }
+                    // "Start" button to InstructionsView
+                    NavigationLink(
+                        destination: InstructionsView(
+                            isNavigationBarHidden: self.$isNavigationBarHidden),
+                        isActive: self.$newRecordButtonPressed) {
+                            DefaultButton(action: {
+                                self.newRecordButtonPressed.toggle()
+                                self.isNavigationBarHidden = false
+                            }) {
+                                Text("Start")
+                                    .frame(width: geometry.size.width / 3.0)
+                            }
                     }
                     
                     Spacer()
