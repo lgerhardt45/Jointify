@@ -32,7 +32,10 @@ struct ChooseInputView: View {
                 
                 // when video was chosen, send to ProcessingView
                 NavigationLink(
-                    destination: ProcessingView(videoUrl: self.$videoUrl),
+                    destination: ProcessingView(videoUrl: self.$videoUrl)
+                        // hide the navigation bar on the ProcessingView, too
+                        .navigationBarTitle("")
+                        .navigationBarHidden(true),
                     isActive: self.$goToProcessingView) {
                         EmptyView()
                 }

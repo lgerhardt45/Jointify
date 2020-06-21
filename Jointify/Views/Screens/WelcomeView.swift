@@ -52,12 +52,13 @@ struct WelcomeView: View {
                     
                     // "Start" button to InstructionsView
                     NavigationLink(
-                        destination: InstructionsView(
-                            isNavigationBarHidden: self.$isNavigationBarHidden),
+                        destination: InstructionsView()
+                            // hide the navigation bar there, too
+                            .navigationBarTitle("")
+                            .navigationBarHidden(true),
                         isActive: self.$newRecordButtonPressed) {
                             DefaultButton(action: {
                                 self.newRecordButtonPressed.toggle()
-                                self.isNavigationBarHidden = false
                             }) {
                                 Text("Start")
                                     .frame(width: geometry.size.width / 3.0)
@@ -69,14 +70,11 @@ struct WelcomeView: View {
                     // Show past records
                     PastRecords()
                     
-                }.onAppear(perform: {
-                    // always hidden on this screen
-                    self.isNavigationBarHidden = true
-                })
-                    .padding(.bottom)
+                }.padding(.bottom)
+                    
                     // hide the navigation bar
                     .navigationBarTitle("")
-                    .navigationBarHidden(self.isNavigationBarHidden)
+                    .navigationBarHidden(true)
             }
         }
     }
