@@ -27,7 +27,12 @@ struct VideoResultView: View {
             VStack(spacing: 16) {
                 
                 // 20% for the Header
-                LogoAndHeadlineView(headline: "Done!", showLogo: true, height: geometry.size.height * 0.2)
+                LogoAndHeadlineView(
+                    headline: "Done!",
+                    showLogo: true,
+                    allowToPopView: false,
+                    height: geometry.size.height * 0.2
+                )
                 
                 // subheadline
                 SubHeadline(subheadline: "Your video was analyzed succesfully.", width: geometry.size.width / 2.0)

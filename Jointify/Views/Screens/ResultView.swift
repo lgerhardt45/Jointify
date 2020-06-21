@@ -45,7 +45,12 @@ struct ResultView: View {
             
             // Outer VStack
             VStack(spacing: 16) {
-                LogoAndHeadlineView(headline: "Your Results", showLogo: true, height: geometry.size.height * 0.2)
+                LogoAndHeadlineView(
+                    headline: "Your Results",
+                    showLogo: true,
+                    allowToPopView: true,
+                    height: geometry.size.height * 0.2
+                )
                 
                 Spacer()
                 

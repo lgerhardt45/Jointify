@@ -44,7 +44,12 @@ struct ChooseInputView: View {
                 VStack(spacing: 16) {
                     
                     // 20% for the Header
-                    LogoAndHeadlineView(headline: "Measurement", showLogo: true, height: geometry.size.height * 0.20)
+                    LogoAndHeadlineView(
+                        headline: "Measurement",
+                        showLogo: true,
+                        allowToPopView: true,
+                        height: geometry.size.height * 0.20
+                    )
                     
                     // SubHeadline
                     SubHeadline(

@@ -38,6 +38,7 @@ struct WelcomeView: View {
                     LogoAndHeadlineView(
                         headline: "Hello!",
                         showLogo: false,
+                        allowToPopView: false,
                         height: geometry.size.height * Constants.headerHeightPercentage)
                     
                     // SubHeadline

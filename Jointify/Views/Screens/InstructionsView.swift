@@ -11,7 +11,7 @@ import SwiftUI
 
 // MARK: - InstructionsView
 struct InstructionsView: View {
-    
+
     // MARK: State Instance Properties
     @State var understoodButtonPressed: Bool = false
     
@@ -25,7 +25,12 @@ struct InstructionsView: View {
             VStack(spacing: 16.0) {
                 
                 // 20% for the Header
-                LogoAndHeadlineView(headline: "Instructions", showLogo: true, height: geometry.size.height * 0.20)
+                LogoAndHeadlineView(
+                    headline: "Instructions",
+                    showLogo: true,
+                    allowToPopView: true,
+                    height: geometry.size.height * 0.20
+                )
                 
                 // SubHeadline
                 SubHeadline(
