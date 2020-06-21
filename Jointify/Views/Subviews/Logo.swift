@@ -6,8 +6,10 @@
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
+// MARK: Imports
 import SwiftUI
 
+// MARK: - Logo
 struct Logo: View {
     
     // MARK: Body

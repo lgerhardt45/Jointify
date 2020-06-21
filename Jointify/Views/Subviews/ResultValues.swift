@@ -6,8 +6,10 @@
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
+// MARK: Imports
 import SwiftUI
 
+// MARK: - ResultValues
 struct ResultValues: View {
     
     // MARK: Stored Instance Properties
