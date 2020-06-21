@@ -12,9 +12,6 @@ import SwiftUI
 // MARK: - LogoAndHeadlineView
 struct LogoAndHeadlineView: View {
     
-    // MARK: Environment Properties
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
     // MARK: Stored Instance Properties
     let headline: String
     let showLogo: Bool
@@ -32,20 +29,7 @@ struct LogoAndHeadlineView: View {
                 // put back button "on top" of logo
                 ZStack {
                     Logo().padding()
-                    HStack {
-                        // Back button
-                        Button(action: {
-                            self.presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Image(systemName: "chevron.left").resizable()
-                                .scaledToFit()
-                                .foregroundColor(.blue)
-                                .frame(height: Logo.height * CGFloat(0.5))
-                        }.padding(.leading)
-                        
-                        // push button to the left
-                        Spacer()
-                    }
+                    BackButton()
                 }
                     
             } else if showLogo {
