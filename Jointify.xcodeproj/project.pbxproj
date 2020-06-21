@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2141754124865483005CB6E5 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754024865483005CB6E5 /* ImagePicker.swift */; };
+		2141754124865483005CB6E5 /* MediaPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754024865483005CB6E5 /* MediaPicker.swift */; };
 		21CFEA762497E9F500421B80 /* Pose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA722497E9F500421B80 /* Pose.swift */; };
 		21CFEA772497E9F500421B80 /* PoseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA732497E9F500421B80 /* PoseBuilder.swift */; };
 		21CFEA782497E9F500421B80 /* PoseBuilderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA742497E9F500421B80 /* PoseBuilderConfiguration.swift */; };
@@ -78,7 +78,7 @@
 		80FB49E22496ABC7001C3DAE /* PastRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFDB772492AAC20021124C /* PastRecords.swift */; };
 		80FB49E32496ABCF001C3DAE /* InstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F1D4DD24919CE200ACCEC2 /* InstructionsView.swift */; };
 		80FB49E42496AD6D001C3DAE /* InstructionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFDB742492991B0021124C /* InstructionContent.swift */; };
-		80FB49E52496AD78001C3DAE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754024865483005CB6E5 /* ImagePicker.swift */; };
+		80FB49E52496AD78001C3DAE /* MediaPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754024865483005CB6E5 /* MediaPicker.swift */; };
 		80FB49E62496AD8A001C3DAE /* ChooseInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FB49D02492E698001C3DAE /* ChooseInputView.swift */; };
 /* End PBXBuildFile section */
 
@@ -93,7 +93,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2141754024865483005CB6E5 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		2141754024865483005CB6E5 /* MediaPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPicker.swift; sourceTree = "<group>"; };
 		21CFEA722497E9F500421B80 /* Pose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pose.swift; sourceTree = "<group>"; };
 		21CFEA732497E9F500421B80 /* PoseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoseBuilder.swift; sourceTree = "<group>"; };
 		21CFEA742497E9F500421B80 /* PoseBuilderConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoseBuilderConfiguration.swift; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 				80F1D4DA2491994B00ACCEC2 /* DefaultButton.swift */,
 				80DFDB742492991B0021124C /* InstructionContent.swift */,
 				80DFDB772492AAC20021124C /* PastRecords.swift */,
-				2141754024865483005CB6E5 /* ImagePicker.swift */,
+				2141754024865483005CB6E5 /* MediaPicker.swift */,
 				80EF89C02498242000E345F0 /* ProgressBar.swift */,
 				8088FB05249C155E00E156DE /* MailView.swift */,
 				6EC86731249C0A740012C30B /* Logo.swift */,
@@ -474,7 +474,7 @@
 				6EC86732249C0A740012C30B /* Logo.swift in Sources */,
 				6ED11547249E30BA0020E13F /* SubHeadline.swift in Sources */,
 				80F1D4D8249198B600ACCEC2 /* WelcomeView.swift in Sources */,
-				2141754124865483005CB6E5 /* ImagePicker.swift in Sources */,
+				2141754124865483005CB6E5 /* MediaPicker.swift in Sources */,
 				80DFDB782492AAC20021124C /* PastRecords.swift in Sources */,
 				21CFEA872497EA2F00421B80 /* UIImage+Extensions.swift in Sources */,
 				80EF89BE2497F31100E345F0 /* Edge.swift in Sources */,
@@ -521,7 +521,7 @@
 				8088FB07249C155E00E156DE /* MailView.swift in Sources */,
 				80E67BBD249AC56600ECC047 /* Joint.swift in Sources */,
 				80FB49E22496ABC7001C3DAE /* PastRecords.swift in Sources */,
-				80FB49E52496AD78001C3DAE /* ImagePicker.swift in Sources */,
+				80FB49E52496AD78001C3DAE /* MediaPicker.swift in Sources */,
 				80FB49E02496A953001C3DAE /* WelcomeView.swift in Sources */,
 				80EF89C22498242100E345F0 /* ProgressBar.swift in Sources */,
 				80E67BC1249AC57700ECC047 /* Cell.swift in Sources */,
