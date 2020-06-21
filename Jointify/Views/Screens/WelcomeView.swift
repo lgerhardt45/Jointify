@@ -19,8 +19,6 @@ struct WelcomeView: View {
     }
     
     // MARK: State Instance Properties
-    // used to hide the navigation bar
-    @State private var isNavigationBarHidden: Bool = true
     // used to activate the NavigationLink (next screen)
     @State private var newRecordButtonPressed: Bool = false
     
