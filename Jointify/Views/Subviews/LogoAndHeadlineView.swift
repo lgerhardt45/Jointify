@@ -12,17 +12,46 @@ import SwiftUI
 // MARK: - LogoAndHeadlineView
 struct LogoAndHeadlineView: View {
     
+    // MARK: Environment Properties
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     // MARK: Stored Instance Properties
     let headline: String
     let showLogo: Bool
+    let allowToPopView: Bool
     let height: CGFloat
     
     // MARK: Body
     var body: some View {
+        
+        // Outer VStack
         VStack {
-            if showLogo {
+            
+            if showLogo && allowToPopView {
+                
+                // put back button "on top" of logo
+                ZStack {
+                    Logo().padding()
+                    HStack {
+                        // Back button
+                        Button(action: {
+                            self.presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "chevron.left").resizable()
+                                .scaledToFit()
+                                .foregroundColor(.blue)
+                                .frame(height: Logo.height * CGFloat(0.5))
+                        }.padding(.leading)
+                        
+                        // push button to the left
+                        Spacer()
+                    }
+                }
+                    
+            } else if showLogo {
                 Logo().padding()
             }
+            
             Spacer()
             Text(headline)
                 .font(.largeTitle)
@@ -34,6 +63,6 @@ struct LogoAndHeadlineView: View {
 // MARK: - Previews
 struct LogoAndHeadlineView_Previews: PreviewProvider {
     static var previews: some View {
-        LogoAndHeadlineView(headline: "test", showLogo: true, height: 200)
+        LogoAndHeadlineView(headline: "My Headline", showLogo: false, allowToPopView: true, height: 200)
     }
 }
