@@ -71,10 +71,19 @@ struct ResultView: View {
                 
                 Spacer()
                 
-                DefaultButton(action: {
-                    // create PDF and open Mail-app here
+                // Report button
+                DefaultButton(
+                    mode: self.canSendMail ? .enabled : .disabled,
+                    action: {
+                        self.isShowingMailView.toggle()
                 }) {
-                    Text("Send Mail").frame(width: geometry.size.width / 3.0)
+                    self.canSendMail ?
+                        self.possibleMailLabel.frame(width: geometry.size.width / 3.0) :
+                        self.notPossibleMailLabel.frame(width: geometry.size.width / 3.0)
+                }
+                    
+                .sheet(isPresented: self.$isShowingMailView) {
+                    MailView(result: self.$result)
                 }
             }.padding(.bottom, 32)
         }
