@@ -10,7 +10,7 @@
 import Foundation
 
 // MARK: - Measurement
-struct Measurement: Codable {
+struct Measurement: Codable, Identifiable {
     
     // MARK: Stored Instance Properties
     let date: Date
@@ -20,6 +20,8 @@ struct Measurement: Codable {
     let jointName: JointName = .leftKnee
     let side: Side = .left
     
+    var id: UUID = UUID()
+
     // MARK: Computed Instance Properties
     var minROM: Float {
         return frames.map({$0.degree}).min() ?? 0
