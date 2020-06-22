@@ -11,7 +11,7 @@ import Foundation
 
 // MARK: - Name
 /// Conformance to Int is necessary for access of the model output
-enum JointName: Int, CaseIterable, CustomStringConvertible {
+enum JointName: Int, CaseIterable, CustomStringConvertible, Codable {
     case nose
     case leftEye
     case rightEye

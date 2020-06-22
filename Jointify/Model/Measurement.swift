@@ -10,11 +10,10 @@
 import Foundation
 
 // MARK: - Measurement
-struct Measurement {
+struct Measurement: Codable {
     
     // MARK: Stored Instance Properties
     let date: Date
-    let videoUrl: NSURL?
     let frames: [MeasurementFrame]
     
     let bodyHalf: BodyHalf = .lower
@@ -30,16 +29,14 @@ struct Measurement {
     }
     
     // MARK: Initializers
-    init(date: Date, videoUrl: NSURL?, frames: [MeasurementFrame]) {
+    init(date: Date, frames: [MeasurementFrame]) {
         self.date = date
-        self.videoUrl = videoUrl
         self.frames = frames
     }
     
     /// creates a mock instance
     init() {
         self.date = Date()
-        self.videoUrl = nil
         self.frames = []
     }
 }
