@@ -24,7 +24,7 @@ struct ProcessingView: View {
     @State private var acceptedFramesCounter = 0
     
     // MARK: Stored Instance Properties
-    private let acceptedFramesThreshold: Double = 0.7
+    private let acceptedFramesThreshold: Double = 0.3
     
     // MARK: Body
     var body: some View {
@@ -105,7 +105,7 @@ struct ProcessingView: View {
         generator.appliesPreferredTrackTransform = true
         
         // change frequency of frame creation here by making it a float
-        for index: Int in 0 ..< Int(duration) {
+        for index in stride(from: 0.0, to: duration, by: 0.25) {
             let time: CMTime = CMTimeMakeWithSeconds(Float64(index), preferredTimescale: 600)
             let image: CGImage
             do {
@@ -139,7 +139,7 @@ struct ProcessingView: View {
             
             for (frameCount, frame) in frames.enumerated() {
                 
-                print("Analysing frame \(frameCount)/\(frames.count)")
+                print("Analysing frame \(frameCount+1)/\(frames.count)")
                 
                 let drawnImage = poseNet.predict(frame)
                 
