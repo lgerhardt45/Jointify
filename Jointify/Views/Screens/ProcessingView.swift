@@ -139,7 +139,7 @@ struct ProcessingView: View {
             
             for (frameCount, frame) in frames.enumerated() {
                 
-                print("Analysing frame \(frameCount)/\(frames.count)")
+                print("Analysing frame \(frameCount+1)/\(frames.count)")
                 
                 let drawnImage = poseNet.predict(frame)
                 
