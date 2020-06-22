@@ -44,7 +44,8 @@ struct VideoResultView: View {
                         } else {
                             ForEach(self.measurement.frames, id: \.self) { frame in
                                 VStack(spacing: 8) {
-                                    Image(uiImage: frame.image)
+                                    // sorry for the force unwrap
+                                    Image(uiImage: UIImage(data: frame.image) ?? UIImage(systemName: "heart.fill")!)
                                         .resizable()
                                         .scaledToFit()
                                         .cornerRadius(5)
@@ -81,7 +82,6 @@ struct VideoResultView_Previews: PreviewProvider {
         VideoResultView(
             measurement: Measurement(
                 date: Date(),
-                videoUrl: nil,
                 frames: [
                     MeasurementFrame(degree: 0, image: UIImage(named: "placeholder")!),
                     MeasurementFrame(degree: 0, image: UIImage(named: "placeholder")!),

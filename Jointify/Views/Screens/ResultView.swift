@@ -102,7 +102,6 @@ struct ResultView_Previews: PreviewProvider {
         ResultView(
             measurement: Measurement(
                 date: Date(),
-                videoUrl: nil,
                 frames: []
             )
         )

@@ -80,9 +80,10 @@ struct ProcessingView: View {
                         // set the measurement property when done
                         self.measurement = Measurement(
                             date: Date(),
-                            videoUrl: videoUrl,
                             frames: drawnFrames
                         )
+                        
+                        // save to DataHandler
                         
                         // trigger navigation to VideoResultView
                         self.finishedProcessing.toggle()
