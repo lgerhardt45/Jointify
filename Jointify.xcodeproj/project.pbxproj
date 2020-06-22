@@ -82,10 +82,10 @@
 		80FB49E42496AD6D001C3DAE /* InstructionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFDB742492991B0021124C /* InstructionContent.swift */; };
 		80FB49E52496AD78001C3DAE /* MediaPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754024865483005CB6E5 /* MediaPicker.swift */; };
 		80FB49E62496AD8A001C3DAE /* ChooseInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FB49D02492E698001C3DAE /* ChooseInputView.swift */; };
-		80FD2FA924A135D200418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FA824A135D200418DEB /* DataHandler.swift */; };
-		80FD2FAA24A135D200418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FA824A135D200418DEB /* DataHandler.swift */; };
 		80FD2FAC24A1385900418DEB /* BodyHalf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FAB24A1385900418DEB /* BodyHalf.swift */; };
 		80FD2FAD24A1385900418DEB /* BodyHalf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FAB24A1385900418DEB /* BodyHalf.swift */; };
+		80FD2FB524A151AB00418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB424A151AB00418DEB /* DataHandler.swift */; };
+		80FD2FB624A151AB00418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB424A151AB00418DEB /* DataHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,8 +145,8 @@
 		80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementFrame.swift; sourceTree = "<group>"; };
 		80FB49D724967F84001C3DAE /* Measurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurement.swift; sourceTree = "<group>"; };
 		80FB49DA249689BF001C3DAE /* VideoResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoResultView.swift; sourceTree = "<group>"; };
-		80FD2FA824A135D200418DEB /* DataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataHandler.swift; path = ../../../../Downloads/DataHandler.swift; sourceTree = "<group>"; };
 		80FD2FAB24A1385900418DEB /* BodyHalf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyHalf.swift; sourceTree = "<group>"; };
+		80FD2FB424A151AB00418DEB /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.debug.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,11 +172,11 @@
 		2141754324866B48005CB6E5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				80FD2FA824A135D200418DEB /* DataHandler.swift */,
 				80FB49D724967F84001C3DAE /* Measurement.swift */,
 				80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */,
 				80FD2FAB24A1385900418DEB /* BodyHalf.swift */,
 				21CFEA702497E9F500421B80 /* PoseMachineLearning */,
+				80FD2FB424A151AB00418DEB /* DataHandler.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -491,6 +491,7 @@
 				80DFDB782492AAC20021124C /* PastRecords.swift in Sources */,
 				21CFEA872497EA2F00421B80 /* UIImage+Extensions.swift in Sources */,
 				80EF89BE2497F31100E345F0 /* Edge.swift in Sources */,
+				80FD2FB524A151AB00418DEB /* DataHandler.swift in Sources */,
 				80F1D4DB2491994B00ACCEC2 /* DefaultButton.swift in Sources */,
 				80DFDB6F24924A450021124C /* ProcessingView.swift in Sources */,
 				21CFEA882497EA2F00421B80 /* CGPoint+MathOperations.swift in Sources */,
@@ -500,7 +501,6 @@
 				80FB49D32492E6E3001C3DAE /* MeasurementFrame.swift in Sources */,
 				8088FB09249FE30500E156DE /* BackButton.swift in Sources */,
 				21CFEA892497EA2F00421B80 /* CGImage+Size.swift in Sources */,
-				80FD2FA924A135D200418DEB /* DataHandler.swift in Sources */,
 				80FB49D12492E698001C3DAE /* ChooseInputView.swift in Sources */,
 				21CFEA812497EA2600421B80 /* PoseNetOutput.swift in Sources */,
 			);
@@ -514,7 +514,6 @@
 				808297512483142600DB4A1C /* JointifyTests.swift in Sources */,
 				80FB49E32496ABCF001C3DAE /* InstructionsView.swift in Sources */,
 				80E67BC7249AC64900ECC047 /* PoseNetMobileNet100S8FP16.mlmodel in Sources */,
-				80FD2FAA24A135D200418DEB /* DataHandler.swift in Sources */,
 				6E874DC3249E568A006E4491 /* Logo.swift in Sources */,
 				80FB49DF2496A828001C3DAE /* DefaultButton.swift in Sources */,
 				80FB49DC249689C0001C3DAE /* VideoResultView.swift in Sources */,
@@ -545,6 +544,7 @@
 				80E67BC1249AC57700ECC047 /* Cell.swift in Sources */,
 				80E67BC4249AC63900ECC047 /* PoseNetInput.swift in Sources */,
 				80E67BC8249AC8F000ECC047 /* UIImage+Extensions.swift in Sources */,
+				80FD2FB624A151AB00418DEB /* DataHandler.swift in Sources */,
 				80FB49E12496A959001C3DAE /* ProcessingView.swift in Sources */,
 				80E67BC0249AC57300ECC047 /* PoseNetOutput.swift in Sources */,
 			);
