@@ -175,6 +175,7 @@
 				80FD2FA824A135D200418DEB /* DataHandler.swift */,
 				80FB49D724967F84001C3DAE /* Measurement.swift */,
 				80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */,
+				80FD2FAB24A1385900418DEB /* BodyHalf.swift */,
 				21CFEA702497E9F500421B80 /* PoseMachineLearning */,
 			);
 			path = Model;
@@ -186,7 +187,6 @@
 				21CFEA792497EA0300421B80 /* Joint.swift */,
 				21ED3CFD249A06FD0031199A /* JointName.swift */,
 				21CFEA722497E9F500421B80 /* Pose.swift */,
-				80FD2FAB24A1385900418DEB /* BodyHalf.swift */,
 				80EF89BD2497F31100E345F0 /* Edge.swift */,
 				21ED3CFF249A0E250031199A /* Cell.swift */,
 				21ED3D01249A0F4E0031199A /* Side.swift */,

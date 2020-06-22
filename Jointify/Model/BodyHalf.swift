@@ -10,7 +10,7 @@
 import Foundation
 
 // MARK: - BodyHalf
-enum BodyHalf {
+enum BodyHalf: String, Codable {
     case upper
     case lower
 }
