@@ -19,8 +19,6 @@ struct WelcomeView: View {
     }
     
     // MARK: State Instance Properties
-    // used to hide the navigation bar
-    @State private var isNavigationBarHidden: Bool = true
     // used to activate the NavigationLink (next screen)
     @State private var newRecordButtonPressed: Bool = false
     
@@ -40,6 +38,7 @@ struct WelcomeView: View {
                     LogoAndHeadlineView(
                         headline: "Hello!",
                         showLogo: false,
+                        allowToPopView: false,
                         height: geometry.size.height * Constants.headerHeightPercentage)
                     
                     // SubHeadline
@@ -52,12 +51,13 @@ struct WelcomeView: View {
                     
                     // "Start" button to InstructionsView
                     NavigationLink(
-                        destination: InstructionsView(
-                            isNavigationBarHidden: self.$isNavigationBarHidden),
+                        destination: InstructionsView()
+                            // hide the navigation bar there, too
+                            .navigationBarTitle("")
+                            .navigationBarHidden(true),
                         isActive: self.$newRecordButtonPressed) {
                             DefaultButton(action: {
                                 self.newRecordButtonPressed.toggle()
-                                self.isNavigationBarHidden = false
                             }) {
                                 Text("Start")
                                     .frame(width: geometry.size.width / 3.0)
@@ -69,14 +69,11 @@ struct WelcomeView: View {
                     // Show past records
                     PastRecords()
                     
-                }.onAppear(perform: {
-                    // always hidden on this screen
-                    self.isNavigationBarHidden = true
-                })
-                    .padding(.bottom)
+                }.padding(.bottom)
+                    
                     // hide the navigation bar
                     .navigationBarTitle("")
-                    .navigationBarHidden(self.isNavigationBarHidden)
+                    .navigationBarHidden(true)
             }
         }
     }

@@ -15,14 +15,27 @@ struct LogoAndHeadlineView: View {
     // MARK: Stored Instance Properties
     let headline: String
     let showLogo: Bool
+    let allowToPopView: Bool
     let height: CGFloat
     
     // MARK: Body
     var body: some View {
+        
+        // Outer VStack
         VStack {
-            if showLogo {
+            
+            if showLogo && allowToPopView {
+                
+                // put back button "on top" of logo
+                ZStack {
+                    Logo().padding()
+                    BackButton()
+                }
+                    
+            } else if showLogo {
                 Logo().padding()
             }
+            
             Spacer()
             Text(headline)
                 .font(.largeTitle)
@@ -34,6 +47,6 @@ struct LogoAndHeadlineView: View {
 // MARK: - Previews
 struct LogoAndHeadlineView_Previews: PreviewProvider {
     static var previews: some View {
-        LogoAndHeadlineView(headline: "test", showLogo: true, height: 200)
+        LogoAndHeadlineView(headline: "My Headline", showLogo: false, allowToPopView: true, height: 200)
     }
 }

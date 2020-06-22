@@ -36,12 +36,20 @@ struct ProcessingView: View {
             VStack(spacing: 16.0) {
                 
                 // pass analysed images further
-                NavigationLink(destination:
-                    VideoResultView(measurement: self.measurement ?? Measurement()),
-                               isActive: self.$finishedProcessing) { EmptyView() }
+                NavigationLink(
+                    destination: VideoResultView(measurement: self.measurement ?? Measurement())
+                        // hide the navigation bar of the VideoResultView, too
+                        .navigationBarTitle("")
+                        .navigationBarHidden(true),
+                    isActive: self.$finishedProcessing) { EmptyView() }
                 
                 // 20% for the headline
-                LogoAndHeadlineView(headline: "Analyzing", showLogo: true, height: geometry.size.height * 0.20)
+                LogoAndHeadlineView(
+                    headline: "Analyzing",
+                    showLogo: true,
+                    allowToPopView: false,
+                    height: geometry.size.height * 0.20
+                )
                 
                 // subheadline
                 SubHeadline(subheadline: "Please wait...", width: geometry.size.width / 2.0)
