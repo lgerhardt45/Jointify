@@ -9,7 +9,7 @@
 // MARK: Imports
 import SwiftUI
 
-// MARK: - PastRecordsList
+// MARK: - PastRecords
 struct PastRecords: View {
     
     // MARK: Stored Instance Properties
@@ -50,14 +50,9 @@ struct PastRecords: View {
     }
 }
 
+// MARK: - Previews
 struct PastRecordsList_Previews: PreviewProvider {
     static var previews: some View {
         PastRecords()
     }
-}
-
-// MARK: Extension Color
-/// add the default colour for the grey fields
-extension Color {
-    static let lightGray = Color("LightGray")
 }
