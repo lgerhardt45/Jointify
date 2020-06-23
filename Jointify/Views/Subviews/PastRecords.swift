@@ -19,31 +19,61 @@ struct PastRecords: View {
     
     // MARK: Body
     var body: some View {
+        
         VStack(alignment: .leading) {
+            
             Text("Your Records:")
                 .font(.system(size: 18))
                 .fontWeight(.light)
-            .padding(.horizontal)
+                .padding(.horizontal)
             
             if !records.isEmpty {
-
+                
                 List(records) { record in
                     
                     RoundedRectangle(cornerRadius: 5)
                         .padding(.vertical, 4.0)
-                        .frame(height: 50.0, alignment: .leading)
+                        .frame(height: 60.0, alignment: .leading)
                         .foregroundColor(.lightGray)
                         .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
                         .cornerRadius(5)
                         // use overlay() for simple ZStack
                         .overlay(
-                            Text("Record from \(record.date)").padding(.horizontal),
-                            alignment: .leading
-                    )
+                            
+                            // Alignment of image and text
+                            HStack {
+                                
+                                // Image for last measurement - sorry for the force unwrap
+                                Image(uiImage: UIImage(data: record.frames[0].image) ?? UIImage(systemName: "heart.fill")!)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(5)
+                                    .padding(.all, 4.0)
+                                
+                                // Text for previous measurement
+                                VStack {
+                                    Text(
+                                        """
+                                        Record from \(record.date, formatter: DateFormats.dateOnlyFormatter)
+                                        """
+                                    ).frame(alignment: .leading)
+                                    Text(
+                                        """
+                                        Max Value: \(String(format: "%.2f", record.maxROM)), Min Value: \(String(format: "%.2f", record.minROM))
+                                        """)
+                                    .allowsTightening(true)
+                                    .scaledToFill()
+                                }
+                                
+                                // pushing image and text to left
+                                Spacer()
+                                
+                            }.padding(.all, 4.0))
                 }
                 
             } else {
                 Text("No previous records.")
+                    .padding(.horizontal)
             }
         }
         .frame(height: 280.0)
