@@ -24,7 +24,7 @@ struct ProcessingView: View {
     @State private var acceptedFramesCounter = 0
     
     // MARK: Stored Instance Properties
-    private let acceptedFramesThreshold: Double = 0.3
+    private let acceptedFramesThreshold: Double = 0.5
     
     // MARK: Body
     var body: some View {

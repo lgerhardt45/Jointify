@@ -64,7 +64,7 @@ class PoseNet {
         /// E.g. if you analyse the right knee, the joints rightHip, rightKnee & rightAnkle
         /// must have a confidence value above the specified threshold, if this is not fulfilled
         /// the whole image is rejected
-        static let confidenceThreshold: Double = 0.70
+        static let confidenceThreshold: Double = 0.3
     }
     
     // MARK: Stored Instance Properties
