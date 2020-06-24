@@ -25,7 +25,7 @@ struct ProcessingView: View {
     @State private var acceptedFramesCounter = 0
     
     // MARK: Stored Instance Properties
-    private let acceptedFramesThreshold: Double = 0.5
+    private let acceptedFramesThreshold: Double = 0.45
     
     // MARK: Body
     var body: some View {
@@ -106,7 +106,7 @@ struct ProcessingView: View {
         generator.appliesPreferredTrackTransform = true
         
         // change frequency of frame creation here by making it a float
-        for index in stride(from: 0.0, to: duration, by: 0.25) {
+        for index in stride(from: 0.0, to: duration, by: 0.33) {
             let time: CMTime = CMTimeMakeWithSeconds(Float64(index), preferredTimescale: 600)
             let image: CGImage
             do {
@@ -181,8 +181,8 @@ struct ProcessingView: View {
                 }
             }
             
+            // TODO: think if this is still necesarry...
             let acceptedFramesPercentage = Double(self.acceptedFramesCounter) / Double(self.progress)
-            
             // If too little frames were of sufficient quality, stop analysis
             if acceptedFramesPercentage < self.acceptedFramesThreshold {
                 print("Error. Please submit another video.")
