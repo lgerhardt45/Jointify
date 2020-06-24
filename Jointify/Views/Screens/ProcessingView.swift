@@ -19,6 +19,7 @@ struct ProcessingView: View {
     // MARK: State Instance Propoerties
     @State private var progress: Int = 0
     @State private var total: Int = 0
+    @State private var remainingFrames: Int = 0
     @State private var finishedProcessing: Bool = false
     @State private var measurement: Measurement?
     @State private var acceptedFramesCounter = 0
@@ -121,50 +122,94 @@ struct ProcessingView: View {
         return frames
     }
     
+    // Find frames with min degree
+    private func findFrameWithMinDegree(_ poseNetArray: [PoseNet]) -> PoseNet? {
+        var poseNetMinDegree: PoseNet?
+        var minDegree: Float = 360
+        for poseNet in poseNetArray where poseNet.degree < minDegree {
+            poseNetMinDegree = poseNet
+            minDegree = poseNet.degree
+        }
+        return poseNetMinDegree
+    }
+    
+    // Find frames with max degree
+    private func findFrameWithMaxDegree(_ poseNetArray: [PoseNet]) -> PoseNet? {
+        var poseNetMaxDegree: PoseNet?
+        var maxDegree: Float = 0
+        for poseNet in poseNetArray where poseNet.degree > maxDegree {
+            poseNetMaxDegree = poseNet
+            maxDegree = poseNet.degree
+        }
+        return poseNetMaxDegree
+    }
+    
     /// runs the machine learning model on an array of UIImages and returns an array of MeasurementFrame instances
     private func analyseVideo(frames: [UIImage], completion: @escaping ([MeasurementFrame]) -> Void) {
-        
         self.total = frames.count
-        
-        // instantiate PoseNet model
-        let poseNet = PoseNet(side: .right)
         
         // let model run asnyc
         let queue = DispatchQueue(label: "ml-queue", qos: .utility)
         queue.async {
             
             print("Starting PoseNet analysis")
-            
             var returnMeasurementFrames: [MeasurementFrame] = []
+            var poseNetArray: [PoseNet] = []
             
             for (frameCount, frame) in frames.enumerated() {
-                
                 print("Analysing frame \(frameCount+1)/\(frames.count)")
-                
-                let drawnImage = poseNet.predict(frame)
-                
+                // instantiate PoseNet model
+                let poseNet = PoseNet(side: .right)
+                // let model run over frame
+                poseNet.predict(frame)
+                // assess the output quality of the model
                 let outputQualityAcceptable = poseNet.assessOutputQuality()
-
                 // Only append measurement frame if it fulfills quality criteria
                 if outputQualityAcceptable {
                     self.acceptedFramesCounter += 1
-                    returnMeasurementFrames.append(
-                        MeasurementFrame(
-                            degree: poseNet.calcAngleBetweenJoints(),
-                            image: drawnImage
-                        )
-                    )
+                    poseNetArray.append(poseNet)
                 }
-                
                 self.progress += 1
+                self.remainingFrames = self.total - self.progress
                 
+                // Provide early exit possibility if acceptedFramesThreshold cannot be reached anymore
+                // TODO: think about how to handle processBar
+                if (Double(self.acceptedFramesCounter + self.remainingFrames)
+                    / Double(self.total)) < self.acceptedFramesThreshold {
+                    print("Error. Please submit another video.")
+                    break
+                }
             }
             
             let acceptedFramesPercentage = Double(self.acceptedFramesCounter) / Double(self.progress)
             
+            // If too little frames were of sufficient quality, stop analysis
             if acceptedFramesPercentage < self.acceptedFramesThreshold {
                 print("Error. Please submit another video.")
             }
+            
+            // Find frames with min and max degree and only draw joints on these frames            
+            guard let poseNetMax = self.findFrameWithMaxDegree(poseNetArray),
+                let poseNetMin = self.findFrameWithMinDegree(poseNetArray) else {
+                    print("Minimium or maximum degree could not be obtained.")
+                    return
+            }
+            
+            // Draw joints on frame with max degree
+            returnMeasurementFrames.append(
+                MeasurementFrame(
+                    degree: poseNetMax.degree,
+                    image: poseNetMax.show()
+                )
+            )
+            
+            // Draw joints on frame with min degree
+             returnMeasurementFrames.append(
+               MeasurementFrame(
+                   degree: poseNetMin.degree,
+                   image: poseNetMin.show()
+               )
+           )
             
             // send when done
             print("Done with PoseNet analysis")
