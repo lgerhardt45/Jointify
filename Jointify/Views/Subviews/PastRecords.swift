@@ -44,7 +44,7 @@ struct PastRecords: View {
                             HStack {
                                 
                                 // Image for last measurement - sorry for the force unwrap
-                                Image(uiImage: UIImage(data: record.frames[0].image) ?? UIImage(systemName: "heart.fill")!)
+                                Image(uiImage: self.getFirstImageFor(record: record))
                                     .resizable()
                                     .scaledToFit()
                                     .cornerRadius(5)
@@ -78,6 +78,14 @@ struct PastRecords: View {
         }
         .frame(height: 280.0)
         .padding(.trailing)
+    }
+    
+    func getFirstImageFor(record: Measurement) -> UIImage {
+        guard let firstEntry = record.frames.first,
+            let firstImage = UIImage(data: firstEntry.image) else {
+            return UIImage(named: "LogoMitText")!
+        }
+        return firstImage
     }
 }
 
