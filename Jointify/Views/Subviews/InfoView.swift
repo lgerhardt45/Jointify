@@ -13,8 +13,9 @@ import SwiftUI
 struct InfoView: View {
     
     // MARK: Stored Instance Properties
+    let width: CGFloat
     // swiftlint:disable line_length
-    let infoMessage = """
+    private let infoMessage = """
     Your values are being measured by the "Neutral-Null-Methode", which is an orthopedic index for measuring joint mobility.
 
     Your mobility will be expressed in 3 angle degrees originating from the neutral-zero position, which is defined for each joint specifically. The neutral-zero position is what we referred to as your starting position earlier.
@@ -36,11 +37,18 @@ struct InfoView: View {
     // MARK: Body
     var body: some View {
         VStack {
-            Text("What are my values").font(.title)
+            Text("What are my values?").font(.title)
+            
             ScrollView {
-                Text(infoMessage).padding()
+                Text(infoMessage)
+                    .padding()
             }
         }
+        .padding(.vertical)
+        .frame(width: width)
+        .background(Color.white)
+        .cornerRadius(20)
+        .shadow(color: .gray, radius: 8)
         
     }
 }
@@ -48,6 +56,6 @@ struct InfoView: View {
 // MARK: - Previews
 struct InfoView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoView().frame(height: 300)
+        InfoView(width: 30)
     }
 }
