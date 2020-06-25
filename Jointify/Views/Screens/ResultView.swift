@@ -45,65 +45,80 @@ struct ResultView: View {
         // GeometryReader to allow for percentage alignments
         GeometryReader { geometry in
             
-            // Outer VStack
-            VStack(spacing: 16) {
-                LogoAndHeadlineView(
-                    headline: "Your Results",
-                    showLogo: true,
-                    allowToPopView: true,
-                    height: geometry.size.height * 0.2
-                )
+            // Used to show InfoView over everything
+            ZStack {
                 
-                Spacer()
-                
-                // Content: Result Values
-                VStack(spacing: 8.0) {
-                    VStack {
-                        
-                        HStack(spacing: 16.0) {
-                            ResultValues(valueType: "Max Value", value: Int(self.measurement.maxROM), showText: true)
-                            ResultValues(valueType: "Min Value", value: Int(self.measurement.minROM), showText: true)
+                // Outer VStack
+                VStack(spacing: 16) {
+                    LogoAndHeadlineView(
+                        headline: "Your Results",
+                        showLogo: true,
+                        allowToPopView: true,
+                        height: geometry.size.height * 0.2
+                    )
+                    
+                    Spacer()
+                    
+                    // Content: Result Values
+                    VStack(spacing: 8.0) {
+                        VStack {
+                            
+                            HStack(spacing: 16.0) {
+                                ResultValues(valueType: "Max Value", value: Int(self.measurement.maxROM), showText: true)
+                                ResultValues(valueType: "Min Value", value: Int(self.measurement.minROM), showText: true)
+                            }
+                            Text("Last Measurement (DD/MM/YY)")
+                                .font(.system(size: 18))
+                                .fontWeight(.light)
+                            
+                            HStack(spacing: 16.0) {
+                                ResultValues(valueType: "Max Value", value: self.mockedPreviousMaxValue, showText: false)
+                                ResultValues(valueType: "Min Value", value: self.mockedPreviousMinValue, showText: false)
+                            }
+                            
+                            Button(action: {
+                                self.showInfoView.toggle()
+                            }) {
+                                Text("What are my values?")
+                            }.padding()
                         }
-                        Text("Last Measurement (DD/MM/YY)")
-                            .font(.system(size: 18))
-                            .fontWeight(.light)
                         
-                        HStack(spacing: 16.0) {
-                            ResultValues(valueType: "Max Value", value: self.mockedPreviousMaxValue, showText: false)
-                            ResultValues(valueType: "Min Value", value: self.mockedPreviousMinValue, showText: false)
-                        }
-                        
-                        Button(action: {
-                            self.showInfoView.toggle()
-                        }) {
-                            Text("What are my values?")
-                        }
                     }
                     
+                    Spacer()
+                    
+                    // Report button
+                    DefaultButton(
+                        mode: self.canSendMail ? .enabled : .disabled,
+                        action: {
+                            self.isShowingMailView.toggle()
+                    }) {
+                        self.canSendMail ?
+                            self.possibleMailLabel.frame(width: geometry.size.width / 3.0) :
+                            self.notPossibleMailLabel.frame(width: geometry.size.width / 3.0)
+                    }
+                    .sheet(isPresented: self.$isShowingMailView) {
+                        MailView(result: self.$result)
+                    }
                 }
+                .padding(.bottom, 32)
                 
-                Spacer()
-                
-                // Report button
-                DefaultButton(
-                    mode: self.canSendMail ? .enabled : .disabled,
-                    action: {
-                        self.isShowingMailView.toggle()
-                }) {
-                    self.canSendMail ?
-                        self.possibleMailLabel.frame(width: geometry.size.width / 3.0) :
-                        self.notPossibleMailLabel.frame(width: geometry.size.width / 3.0)
+                // show InfoView if requested
+                if self.showInfoView {
+                    VStack {
+                        Spacer()
+                        InfoView(
+                            show: self.$showInfoView,
+                            displayDismissButton: true,
+                            width: geometry.size.width * 0.9
+                        ).frame(width: geometry.size.width, height: geometry.size.height * 0.75)
+                        Spacer()
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    .background(Color.black.opacity(0.3))
+                    .edgesIgnoringSafeArea(.all)
                 }
-                .sheet(isPresented: self.$isShowingMailView) {
-                    MailView(result: self.$result)
-                }
-                }
-            .padding(.bottom, 32)
-            .overlay(
-                InfoView(
-                    width: geometry.size.width * 0.8
-                ).frame(height: geometry.size.height * 0.55)
-            )
+            } // end of ZStack
         }
     }
 }
