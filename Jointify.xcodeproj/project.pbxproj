@@ -36,6 +36,8 @@
 		80094B6C247F0F6B002A1A27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80094B6B247F0F6B002A1A27 /* Assets.xcassets */; };
 		80094B6F247F0F6B002A1A27 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80094B6E247F0F6B002A1A27 /* Preview Assets.xcassets */; };
 		80094B72247F0F6B002A1A27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80094B70247F0F6B002A1A27 /* LaunchScreen.storyboard */; };
+		8064E0AF24A40406002DE5A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B65247F0F60002A1A27 /* AppDelegate.swift */; };
+		8064E0B024A40408002DE5A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B67247F0F60002A1A27 /* SceneDelegate.swift */; };
 		808297512483142600DB4A1C /* JointifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808297502483142600DB4A1C /* JointifyTests.swift */; };
 		8088FB06249C155E00E156DE /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8088FB05249C155E00E156DE /* MailView.swift */; };
 		8088FB07249C155E00E156DE /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8088FB05249C155E00E156DE /* MailView.swift */; };
@@ -518,6 +520,7 @@
 				80FB49DE2496A81D001C3DAE /* ResultView.swift in Sources */,
 				80FB49DD2496A80C001C3DAE /* MeasurementFrame.swift in Sources */,
 				80FB49D924967F84001C3DAE /* Measurement.swift in Sources */,
+				8064E0AF24A40406002DE5A4 /* AppDelegate.swift in Sources */,
 				80E67BC5249AC63E00ECC047 /* PoseBuilder.swift in Sources */,
 				6ED11545249E2BCF0020E13F /* LogoAndHeadlineView.swift in Sources */,
 				80E67BC9249AC8F400ECC047 /* CGPoint+MathOperations.swift in Sources */,
@@ -539,6 +542,7 @@
 				80E67BC1249AC57700ECC047 /* Cell.swift in Sources */,
 				80E67BC4249AC63900ECC047 /* PoseNetInput.swift in Sources */,
 				80E67BC8249AC8F000ECC047 /* UIImage+Extensions.swift in Sources */,
+				8064E0B024A40408002DE5A4 /* SceneDelegate.swift in Sources */,
 				80FB49E12496A959001C3DAE /* ProcessingView.swift in Sources */,
 				80E67BC0249AC57300ECC047 /* PoseNetOutput.swift in Sources */,
 			);
