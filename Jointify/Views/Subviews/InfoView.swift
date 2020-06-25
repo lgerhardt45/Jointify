@@ -12,10 +12,15 @@ import SwiftUI
 // MARK: - InfoView
 struct InfoView: View {
     
+    // MARK: Binding Instance Properties
+    @Binding var show: Bool
+    
     // MARK: Stored Instance Properties
+    let displayDismissButton: Bool
     let width: CGFloat
     // swiftlint:disable line_length
-    private let infoMessage = """
+    private let infoMessage =
+    """
     Your values are being measured by the "Neutral-Null-Methode", which is an orthopedic index for measuring joint mobility.
 
     Your mobility will be expressed in 3 angle degrees originating from the neutral-zero position, which is defined for each joint specifically. The neutral-zero position is what we referred to as your starting position earlier.
@@ -34,7 +39,7 @@ struct InfoView: View {
     """
     // swiftlint:enable line_length
     
-    // MARK: Body
+    // MARK: Body
     var body: some View {
         VStack {
             Text("What are my values?").font(.title)
@@ -43,19 +48,29 @@ struct InfoView: View {
                 Text(infoMessage)
                     .padding()
             }
+            if self.displayDismissButton {
+                Button(action: {
+                    self.show.toggle()
+                }) {
+                    Text("Dismiss")
+                }.padding(.top)
+            }
         }
         .padding(.vertical)
         .frame(width: width)
         .background(Color.white)
         .cornerRadius(20)
         .shadow(color: .gray, radius: 8)
-        
     }
 }
 
 // MARK: - Previews
 struct InfoView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoView(width: 30)
+        InfoView(
+            show: .constant(false),
+            displayDismissButton: false,
+            width: 350
+        )
     }
 }
