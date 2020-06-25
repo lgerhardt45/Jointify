@@ -35,15 +35,16 @@ struct PastRecords: View {
                         .padding(.vertical, 4.0)
                         .frame(height: 60.0, alignment: .leading)
                         .foregroundColor(.lightGray)
-                        .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                        .opacity(0.8)
                         .cornerRadius(5)
+                        
                         // use overlay() for simple ZStack
                         .overlay(
                             
                             // Alignment of image and text
                             HStack {
                                 
-                                // Image for last measurement - sorry for the force unwrap
+                                // First image from the MeasurementFrames of the Measurement
                                 Image(uiImage: self.getFirstImageFor(record: record))
                                     .resizable()
                                     .scaledToFit()
@@ -80,7 +81,8 @@ struct PastRecords: View {
         .padding(.trailing)
     }
     
-    func getFirstImageFor(record: Measurement) -> UIImage {
+    // MARK: Private Instance Methods
+    private func getFirstImageFor(record: Measurement) -> UIImage {
         guard let firstEntry = record.frames.first,
             let firstImage = UIImage(data: firstEntry.image) else {
             return UIImage(named: "LogoMitText")!
