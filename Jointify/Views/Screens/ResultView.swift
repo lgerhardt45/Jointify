@@ -76,6 +76,14 @@ struct ResultView: View {
                 
                 Spacer()
                 
+                // Back home button
+                DefaultButton(action: {
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.toWelcomeView()
+                }) {
+                    Text("Done")
+                        .frame(width: geometry.size.width / 3.0)
+                }
+                
                 // Report button
                 DefaultButton(
                     mode: self.canSendMail ? .enabled : .disabled,
