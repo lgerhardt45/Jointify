@@ -64,16 +64,20 @@ struct ResultView: View {
                         VStack {
                             
                             HStack(spacing: 16.0) {
-                                ResultValues(valueType: "Max Value", value: Int(self.measurement.maxROM), showText: true)
-                                ResultValues(valueType: "Min Value", value: Int(self.measurement.minROM), showText: true)
+                                ResultValues(valueType: "Max Value",
+                                             value: Int(self.measurement.maxROM), showText: true)
+                                ResultValues(valueType: "Min Value",
+                                             value: Int(self.measurement.minROM), showText: true)
                             }
                             Text("Last Measurement (DD/MM/YY)")
                                 .font(.system(size: 18))
                                 .fontWeight(.light)
                             
                             HStack(spacing: 16.0) {
-                                ResultValues(valueType: "Max Value", value: self.mockedPreviousMaxValue, showText: false)
-                                ResultValues(valueType: "Min Value", value: self.mockedPreviousMinValue, showText: false)
+                                ResultValues(valueType: "Max Value",
+                                             value: self.mockedPreviousMaxValue, showText: false)
+                                ResultValues(valueType: "Min Value",
+                                             value: self.mockedPreviousMinValue, showText: false)
                             }
                             
                             Button(action: {
