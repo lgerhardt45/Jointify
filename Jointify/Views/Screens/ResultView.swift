@@ -14,12 +14,14 @@ import MessageUI
 struct ResultView: View {
     
     // MARK: State Instance Properties
+    // Show InfoView
+    @State private var showInfoView: Bool = false
     // Home button
     @State private var homeButtonPressed: Bool = false
     // Report button
     @State private var isShowingMailView: Bool = false
     @State private var result: Result<MFMailComposeResult, Error>?
-
+    
     // MARK: Stored Instance Properties
     let measurement: Measurement
     let mockedPreviousMinValue: Int = -45
@@ -70,6 +72,12 @@ struct ResultView: View {
                             ResultValues(valueType: "Max Value", value: self.mockedPreviousMaxValue, showText: false)
                             ResultValues(valueType: "Min Value", value: self.mockedPreviousMinValue, showText: false)
                         }
+                        
+                        Button(action: {
+                            self.showInfoView.toggle()
+                        }) {
+                            Text("What are my values?")
+                        }
                     }
                     
                 }
@@ -86,11 +94,16 @@ struct ResultView: View {
                         self.possibleMailLabel.frame(width: geometry.size.width / 3.0) :
                         self.notPossibleMailLabel.frame(width: geometry.size.width / 3.0)
                 }
-                    
                 .sheet(isPresented: self.$isShowingMailView) {
                     MailView(result: self.$result)
                 }
-            }.padding(.bottom, 32)
+                }
+            .padding(.bottom, 32)
+            .overlay(
+                InfoView(
+                    width: geometry.size.width * 0.8
+                ).frame(height: geometry.size.height * 0.55)
+            )
         }
     }
 }
