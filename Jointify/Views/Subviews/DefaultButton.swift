@@ -70,9 +70,3 @@ struct DefaultButton_Previews: PreviewProvider {
     }
     
 }
-
-// MARK: Extension Color
-/// add the default colour for the button
-extension Color {
-    static let lightBlue = Color("ButtonColor")
-}

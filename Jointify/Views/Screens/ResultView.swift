@@ -87,6 +87,13 @@ struct ResultView: View {
                     
                     Spacer()
                     
+                    // Back home button
+                    DefaultButton(action: {
+                        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.toWelcomeView()
+                    }) {
+                        Text("Done")
+                            .frame(width: geometry.size.width / 3.0)
+                    }
                     // Report button
                     DefaultButton(
                         mode: self.canSendMail ? .enabled : .disabled,
@@ -117,6 +124,10 @@ struct ResultView: View {
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .background(Color.black.opacity(0.3))
                     .edgesIgnoringSafeArea(.all)
+                    .sheet(isPresented: self.$isShowingMailView) {
+                        MailView(result: self.$result)
+                    }
+                    
                 }
             } // end of ZStack
         }
