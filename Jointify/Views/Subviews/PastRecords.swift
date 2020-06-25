@@ -71,13 +71,13 @@ struct PastRecords: View {
                                 
                             }.padding(.all, 4.0))
                 }
-                
             } else {
                 Text("No previous records.")
                     .padding(.horizontal)
             }
         }
         .frame(height: 280.0)
+        .padding(.trailing)
     }
 }
 
