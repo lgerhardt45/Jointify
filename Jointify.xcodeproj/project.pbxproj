@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2141754124865483005CB6E5 /* MediaPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754024865483005CB6E5 /* MediaPicker.swift */; };
+		2161A0BB24A53A9C0038E410 /* ExtremeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161A0BA24A53A9C0038E410 /* ExtremeValue.swift */; };
 		21CFEA762497E9F500421B80 /* Pose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA722497E9F500421B80 /* Pose.swift */; };
 		21CFEA772497E9F500421B80 /* PoseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA732497E9F500421B80 /* PoseBuilder.swift */; };
 		21CFEA782497E9F500421B80 /* PoseBuilderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA742497E9F500421B80 /* PoseBuilderConfiguration.swift */; };
@@ -98,6 +99,7 @@
 
 /* Begin PBXFileReference section */
 		2141754024865483005CB6E5 /* MediaPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPicker.swift; sourceTree = "<group>"; };
+		2161A0BA24A53A9C0038E410 /* ExtremeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtremeValue.swift; sourceTree = "<group>"; };
 		21CFEA722497E9F500421B80 /* Pose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pose.swift; sourceTree = "<group>"; };
 		21CFEA732497E9F500421B80 /* PoseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoseBuilder.swift; sourceTree = "<group>"; };
 		21CFEA742497E9F500421B80 /* PoseBuilderConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoseBuilderConfiguration.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 			children = (
 				80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */,
 				80FB49D724967F84001C3DAE /* Measurement.swift */,
+				2161A0BA24A53A9C0038E410 /* ExtremeValue.swift */,
 				21CFEA702497E9F500421B80 /* PoseMachineLearning */,
 			);
 			path = Model;
@@ -461,6 +464,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2161A0BB24A53A9C0038E410 /* ExtremeValue.swift in Sources */,
 				80DFDB752492991C0021124C /* InstructionContent.swift in Sources */,
 				21CFEA802497EA2600421B80 /* PoseNetMobileNet100S8FP16.mlmodel in Sources */,
 				21ED3D02249A0F4E0031199A /* Side.swift in Sources */,
