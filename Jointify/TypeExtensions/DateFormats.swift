@@ -9,9 +9,10 @@
 // MARK: Imports
 import Foundation
 
-//MARK: -DateFormats
+//MARK: - DateFormats
 struct DateFormats {
     
+    // MARK: Computed Type Properties
     // Adapted from https://www.ralfebert.de/ios/swift-dateformatter-datumsangaben-formatieren/
     static var dateOnlyFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -26,9 +27,9 @@ struct DateFormats {
         formatter.dateStyle = .none
         return formatter
     }()
-    
 }
 
+// MARK: - Extensions
 extension DefaultStringInterpolation {
     
     mutating func appendInterpolation(_ value: Date, formatter: DateFormatter) {
