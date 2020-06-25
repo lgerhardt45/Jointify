@@ -9,7 +9,7 @@
 // MARK: Imports
 import Foundation
 
-//MARK: -DateExtension
+//MARK: -DateFormats
 struct DateFormats {
     
     // Adapted from https://www.ralfebert.de/ios/swift-dateformatter-datumsangaben-formatieren/
