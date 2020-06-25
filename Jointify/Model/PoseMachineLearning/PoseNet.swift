@@ -68,7 +68,7 @@ class PoseNet {
     }
     
     // MARK: Stored Instance Properties
-    var degree: Float = 0.0
+    public var degree: Float = 0.0
     private let side: Side
     private let jointSegments: [JointSegment]
     private let selectedJointNames: [JointName]
@@ -77,11 +77,11 @@ class PoseNet {
     private var initialImage: CGImage?
     // The Core ML model that the PoseNet model uses to generate estimates for the poses.
     /// - Note: Other variants of the PoseNet model are available from the Model Gallery.
-    let model = PoseNetMobileNet100S8FP16().model
+    private let model = PoseNetMobileNet100S8FP16().model
     /// The set of parameters passed to the pose builder when detecting poses.
-    var poseBuilderConfiguration = PoseBuilderConfiguration()
+    private var poseBuilderConfiguration = PoseBuilderConfiguration()
     /// Array of poses that is outputted from the model
-    var pose: Pose?
+    private var pose: Pose?
 
     // MARK: Initializers
     init(side: Side) {
@@ -104,11 +104,7 @@ class PoseNet {
     }
     
     // MARK: Instance Methods
-    /// Returns an image showing the detected poses.
-    ///
-    /// - parameters:
-    ///     - poses: An array of detected poses.
-    ///     - frame: The image used to detect the poses and used as the background for the returned image.
+    // Returns an image showing the joints and joint segments.
     func show() -> UIImage {
         // swiftlint:disable force_unwrapping
         let alternativeImage = UIImage(systemName: "bolt")!
@@ -188,8 +184,8 @@ class PoseNet {
         }
     }
     
-    // Calculate the angle between two joints
-    // Returns a Float degree number.
+    /// Calculate the angle between two joints
+    /// Returns a Float degree number.
     func calcAngleBetweenJoints() -> Float {
         var innerAngle: Float = 0.0
         // Place the joint coordinates in the global class dictionary jointPositions
@@ -279,7 +275,7 @@ class PoseNet {
         return context.createCGImage(inputImage, from: inputImage.extent)
     }
     
-    /// Runs the frame through the model and saves the output in the respective variables
+    /// Runs the given image through the model and saves the output in the respective variables
     ///
     /// - parameters:
     ///     - image: The image to be analysed.
@@ -294,7 +290,7 @@ class PoseNet {
             return
         }
         guard let cgImage = convertCIImageToCGImage(inputImage: ciImage) else {
-            print("Error. CIImage could not be created.")
+            print("Error. CGImage could not be created.")
             return
         }
         
@@ -314,10 +310,9 @@ class PoseNet {
                                           configuration: poseBuilderConfiguration,
                                           inputImage: cgImage)
             pose = poseBuilder.pose
+            
             // Calculate the angles between the joints
             degree = calcAngleBetweenJoints()
-            // Add the joints and edges to the original image
-            //return show(on: cgImage)
         } else {
             print("Error. Prediction could not be found.")
         }
