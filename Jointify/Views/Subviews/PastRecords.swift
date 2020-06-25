@@ -61,7 +61,11 @@ struct PastRecords: View {
                                         .scaledToFill()
                                     Text(
                                         """
-                                        Max Value: \(String(Int(record.maxROM))), Min Value: \(String(Int(record.minROM)))
+                                        Max Value: \(
+                                        String(Int(record.maxROM))
+                                        ), Min Value: \(
+                                        String(Int(record.minROM))
+                                        )
                                         """)
                                         .allowsTightening(true)
                                         .scaledToFill()
@@ -85,7 +89,7 @@ struct PastRecords: View {
     private func getFirstImageFor(record: Measurement) -> UIImage {
         guard let firstEntry = record.frames.first,
             let firstImage = UIImage(data: firstEntry.image) else {
-            return UIImage(named: "LogoMitText")!
+                return UIImage(named: "LogoMitText")!
         }
         return firstImage
     }

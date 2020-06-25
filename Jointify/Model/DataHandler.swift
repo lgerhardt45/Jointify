@@ -73,7 +73,9 @@ enum DataHandler {
     ///   - fileName: file name that is to be loaded
     ///   - type: type of object that file (if found) is to be decoded to
     /// - Returns: the object, if file was found and decoding worked, nil otherwise
-    static func loadFromJSON<TObjectType: Decodable>(from fileName: String, expecting type: TObjectType.Type) -> TObjectType? {
+    static func loadFromJSON<TObjectType: Decodable>(
+        from fileName: String, expecting type: TObjectType.Type
+    ) -> TObjectType? {
         
         print("Attempting to load object of type \(type) from \(fileName).")
         do {

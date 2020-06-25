@@ -20,6 +20,7 @@ struct Measurement: Codable, Identifiable {
     let jointName: JointName = .leftKnee
     let side: Side = .left
     
+    // swiftlint:disable:next identifier_name
     var id: UUID = UUID()
 
     // MARK: Computed Instance Properties
