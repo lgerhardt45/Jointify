@@ -59,7 +59,7 @@ struct PastRecords: View {
                                     ).frame(alignment: .leading)
                                     Text(
                                         """
-                                        Max Value: \(String(format: "%.2f", record.maxROM)), Min Value: \(String(format: "%.2f", record.minROM))
+                                        Max Value: \(String(Int(record.maxROM)), Min Value: \(String(Int(record.minROM))
                                         """)
                                     .allowsTightening(true)
                                     .scaledToFill()
