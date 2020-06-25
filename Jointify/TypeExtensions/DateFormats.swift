@@ -9,7 +9,7 @@
 // MARK: Imports
 import Foundation
 
-//MARK: - DateFormats
+// MARK: - DateFormats
 struct DateFormats {
     
     // MARK: Computed Type Properties

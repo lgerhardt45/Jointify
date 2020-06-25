@@ -51,7 +51,7 @@ struct PastRecords: View {
                                     .padding(.all, 4.0)
                                 
                                 // Text for previous measurement
-                                VStack {
+                                VStack(alignment: .leading) {
                                     Text(
                                         """
                                         Record from \(record.date, formatter: DateFormats.dateOnlyFormatter)
@@ -59,7 +59,7 @@ struct PastRecords: View {
                                     ).frame(alignment: .leading)
                                     Text(
                                         """
-                                        Max Value: \(String(Int(record.maxROM)), Min Value: \(String(Int(record.minROM))
+                                        Max Value: \(String(Int(record.maxROM))), Min Value: \(String(Int(record.minROM)))
                                         """)
                                     .allowsTightening(true)
                                     .scaledToFill()
