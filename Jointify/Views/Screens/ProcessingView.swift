@@ -52,7 +52,9 @@ struct ProcessingView: View {
                 )
                 
                 // Placeholder
-                InfoView(width: geometry.size.width * 0.8)
+                InfoView(show: .constant(true),
+                         displayDismissButton: false,
+                         width: geometry.size.width * 0.9)
                     .padding(.vertical)
                                     
                 ProgressBar(
