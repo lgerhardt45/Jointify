@@ -56,13 +56,14 @@ struct PastRecords: View {
                                         """
                                         Record from \(record.date, formatter: DateFormats.dateOnlyFormatter)
                                         """
-                                    ).frame(alignment: .leading)
+                                    ).allowsTightening(true)
+                                        .scaledToFill()
                                     Text(
                                         """
                                         Max Value: \(String(Int(record.maxROM))), Min Value: \(String(Int(record.minROM)))
                                         """)
-                                    .allowsTightening(true)
-                                    .scaledToFill()
+                                        .allowsTightening(true)
+                                        .scaledToFill()
                                 }
                                 
                                 // pushing image and text to left
