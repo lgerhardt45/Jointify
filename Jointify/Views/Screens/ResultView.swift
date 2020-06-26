@@ -14,12 +14,14 @@ import MessageUI
 struct ResultView: View {
     
     // MARK: State Instance Properties
+    // Show InfoView
+    @State private var showInfoView: Bool = false
     // Home button
     @State private var homeButtonPressed: Bool = false
     // Report button
     @State private var isShowingMailView: Bool = false
     @State private var result: Result<MFMailComposeResult, Error>?
-
+    
     // MARK: Stored Instance Properties
     let measurement: Measurement
     let mockedPreviousMinValue: Int = -45
@@ -43,62 +45,95 @@ struct ResultView: View {
         // GeometryReader to allow for percentage alignments
         GeometryReader { geometry in
             
-            // Outer VStack
-            VStack(spacing: 16) {
-                LogoAndHeadlineView(
-                    headline: "Your Results",
-                    showLogo: true,
-                    allowToPopView: true,
-                    height: geometry.size.height * 0.2
-                )
+            // Used to show InfoView over everything
+            ZStack {
                 
-                Spacer()
+                // Outer VStack
+                VStack(spacing: 16) {
+                    LogoAndHeadlineView(
+                        headline: "Your Results",
+                        showLogo: true,
+                        allowToPopView: true,
+                        height: geometry.size.height * 0.2
+                    )
+                    
+                    Spacer()
+                    
+                    // Content: Result Values
+                    VStack(spacing: 8.0) {
+                        VStack {
+                            
+                            HStack(spacing: 16.0) {
+                                ResultValues(valueType: "Max Value",
+                                             value: Int(self.measurement.maxROM), showText: true)
+                                ResultValues(valueType: "Min Value",
+                                             value: Int(self.measurement.minROM), showText: true)
+                            }
+                            Text("Last Measurement (DD/MM/YY)")
+                                .font(.system(size: 18))
+                                .fontWeight(.light)
+                            
+                            HStack(spacing: 16.0) {
+                                ResultValues(valueType: "Max Value",
+                                             value: self.mockedPreviousMaxValue, showText: false)
+                                ResultValues(valueType: "Min Value",
+                                             value: self.mockedPreviousMinValue, showText: false)
+                            }
+                            
+                            Button(action: {
+                                self.showInfoView.toggle()
+                            }) {
+                                Text("What do my values mean?")
+                            }.padding()
+                        }
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    // Back home button
+                    DefaultButton(action: {
+                        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.toWelcomeView()
+                    }) {
+                        Text("Done")
+                            .frame(width: geometry.size.width / 3.0)
+                    }
+                    // Report button
+                    DefaultButton(
+                        mode: self.canSendMail ? .enabled : .disabled,
+                        action: {
+                            self.isShowingMailView.toggle()
+                    }) {
+                        self.canSendMail ?
+                            self.possibleMailLabel.frame(width: geometry.size.width / 3.0) :
+                            self.notPossibleMailLabel.frame(width: geometry.size.width / 3.0)
+                    }
+                    .sheet(isPresented: self.$isShowingMailView) {
+                        MailView(result: self.$result)
+                    }
+                }
+                .padding(.bottom, 32)
                 
-                // Content: Result Values
-                VStack(spacing: 8.0) {
+                // show InfoView if requested
+                if self.showInfoView {
                     VStack {
-                        
-                        HStack(spacing: 16.0) {
-                            ResultValues(valueType: "Max Value", value: Int(self.measurement.maxROM), showText: true)
-                            ResultValues(valueType: "Min Value", value: Int(self.measurement.minROM), showText: true)
-                        }
-                        Text("Last Measurement (DD/MM/YY)")
-                            .font(.system(size: 18))
-                            .fontWeight(.light)
-                        
-                        HStack(spacing: 16.0) {
-                            ResultValues(valueType: "Max Value", value: self.mockedPreviousMaxValue, showText: false)
-                            ResultValues(valueType: "Min Value", value: self.mockedPreviousMinValue, showText: false)
-                        }
+                        Spacer()
+                        InfoView(
+                            show: self.$showInfoView,
+                            displayDismissButton: true,
+                            width: geometry.size.width * 0.9
+                        ).frame(width: geometry.size.width, height: geometry.size.height * 0.75)
+                        Spacer()
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    .background(Color.black.opacity(0.3))
+                    .edgesIgnoringSafeArea(.all)
+                    .sheet(isPresented: self.$isShowingMailView) {
+                        MailView(result: self.$result)
                     }
                     
                 }
-                
-                Spacer()
-                
-                // Back home button
-                DefaultButton(action: {
-                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.toWelcomeView()
-                }) {
-                    Text("Done")
-                        .frame(width: geometry.size.width / 3.0)
-                }
-                
-                // Report button
-                DefaultButton(
-                    mode: self.canSendMail ? .enabled : .disabled,
-                    action: {
-                        self.isShowingMailView.toggle()
-                }) {
-                    self.canSendMail ?
-                        self.possibleMailLabel.frame(width: geometry.size.width / 3.0) :
-                        self.notPossibleMailLabel.frame(width: geometry.size.width / 3.0)
-                }
-                    
-                .sheet(isPresented: self.$isShowingMailView) {
-                    MailView(result: self.$result)
-                }
-            }.padding(.bottom, 32)
+            } // end of ZStack
         }
     }
 }
