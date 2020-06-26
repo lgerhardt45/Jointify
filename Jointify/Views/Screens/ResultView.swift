@@ -83,7 +83,7 @@ struct ResultView: View {
                             Button(action: {
                                 self.showInfoView.toggle()
                             }) {
-                                Text("What are my values?")
+                                Text("What do my values mean?")
                             }.padding()
                         }
                         
