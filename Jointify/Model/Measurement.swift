@@ -10,13 +10,19 @@
 import Foundation
 
 // MARK: - Measurement
-struct Measurement {
+struct Measurement: Codable, Identifiable {
     
     // MARK: Stored Instance Properties
     let date: Date
-    let videoUrl: NSURL?
     let frames: [MeasurementFrame]
     
+    let bodyHalf: BodyHalf = .lower
+    let jointName: JointName = .leftKnee
+    let side: Side = .left
+    
+    // swiftlint:disable:next identifier_name
+    var id: UUID = UUID()
+
     // MARK: Computed Instance Properties
     var minROM: Float {
         return frames.map({$0.degree}).min() ?? 0
@@ -26,16 +32,14 @@ struct Measurement {
     }
     
     // MARK: Initializers
-    init(date: Date, videoUrl: NSURL?, frames: [MeasurementFrame]) {
+    init(date: Date, frames: [MeasurementFrame]) {
         self.date = date
-        self.videoUrl = videoUrl
         self.frames = frames
     }
     
     /// creates a mock instance
     init() {
         self.date = Date()
-        self.videoUrl = nil
         self.frames = []
     }
 }

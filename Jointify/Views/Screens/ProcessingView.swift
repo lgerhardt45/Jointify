@@ -46,20 +46,18 @@ struct ProcessingView: View {
                 
                 // 20% for the headline
                 LogoAndHeadlineView(
-                    headline: "Analyzing",
+                    headline: "Analyzing...",
                     showLogo: true,
                     allowToPopView: false,
                     height: geometry.size.height * 0.20
                 )
                 
-                // subheadline
-                SubHeadline(subheadline: "Please wait...", width: geometry.size.width / 2.0)
-                
                 // Placeholder
-                Text("Insert fun facts and info stuff here")
-                
-                Spacer()
-                
+                InfoView(show: .constant(true),
+                         displayDismissButton: false,
+                         width: geometry.size.width * 0.9)
+                    .padding(.vertical)
+                                    
                 ProgressBar(
                     currentProgress: self.$progress,
                     total: self.$total,
@@ -79,11 +77,14 @@ struct ProcessingView: View {
                     self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
                         
                         // set the measurement property when done
-                        self.measurement = Measurement(
+                        let measurement = Measurement(
                             date: Date(),
-                            videoUrl: videoUrl,
                             frames: drawnFrames
                         )
+                        self.measurement = measurement
+                        
+                        // save to DataHandler
+                        DataHandler.saveNewMeasurement(measurement: measurement)
                         
                         // trigger navigation to VideoResultView
                         self.finishedProcessing.toggle()
