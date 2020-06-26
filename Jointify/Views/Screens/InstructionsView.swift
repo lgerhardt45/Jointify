@@ -32,11 +32,9 @@ struct InstructionsView: View {
                     height: geometry.size.height * 0.20
                 )
                 
-                
                 // Content
-                InstructionContent().padding()
-                
-                Spacer()
+                InstructionContent()
+                    .padding(.horizontal, 24)
                 
                 // "I understand" button to ChooseInputView
                 NavigationLink(
