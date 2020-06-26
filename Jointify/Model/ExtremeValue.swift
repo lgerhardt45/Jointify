@@ -10,7 +10,7 @@
 import Foundation
 
 // MARK: - ExtremeValue
-// Enum for the to different extreme values we want to show to the patient
+/// Enum for the two different extreme values we want to show to the patient
 enum ExtremeValue: String {
     case minimum
     case maximum
