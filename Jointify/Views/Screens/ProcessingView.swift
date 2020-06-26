@@ -76,11 +76,14 @@ struct ProcessingView: View {
                     self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
                         
                         // set the measurement property when done
-                        self.measurement = Measurement(
+                        let measurement = Measurement(
                             date: Date(),
-                            videoUrl: videoUrl,
                             frames: drawnFrames
                         )
+                        self.measurement = measurement
+                        
+                        // save to DataHandler
+                        DataHandler.saveNewMeasurement(measurement: measurement)
                         
                         // trigger navigation to VideoResultView
                         self.finishedProcessing.toggle()

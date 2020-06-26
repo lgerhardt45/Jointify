@@ -13,33 +13,85 @@ import SwiftUI
 struct PastRecords: View {
     
     // MARK: Stored Instance Properties
-    let records: [Measurement] = []
+    var records: [Measurement] {
+        DataHandler.actualMeasurements
+    }
     
     // MARK: Body
     var body: some View {
+        
         VStack(alignment: .leading) {
+            
             Text("Your Records:")
                 .font(.system(size: 18))
                 .fontWeight(.light)
-            .padding(.horizontal)
+                .padding(.horizontal)
             
-            // change to records when mock data added
-            List(1..<6) { row in
-                RoundedRectangle(cornerRadius: 5)
-                    .padding(.vertical, 4.0)
-                    .frame(height: 50.0, alignment: .leading)
-                    .foregroundColor(.lightGray)
-                    .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
-                    .cornerRadius(5)
-                    // use overlay() for simple ZStack
-                    .overlay(
-                        Text("Record \(row)").padding(.horizontal),
-                        alignment: .leading
-                        )
+            if !records.isEmpty {
                 
+                List(records) { record in
+                    
+                    RoundedRectangle(cornerRadius: 5)
+                        .padding(.vertical, 4.0)
+                        .frame(height: 60.0, alignment: .leading)
+                        .foregroundColor(.lightGray)
+                        .opacity(0.8)
+                        .cornerRadius(5)
+                        
+                        // use overlay() for simple ZStack
+                        .overlay(
+                            
+                            // Alignment of image and text
+                            HStack {
+                                
+                                // First image from the MeasurementFrames of the Measurement
+                                Image(uiImage: self.getFirstImageFor(record: record))
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(5)
+                                    .padding(.all, 4.0)
+                                
+                                // Text for previous measurement
+                                VStack(alignment: .leading) {
+                                    Text(
+                                        """
+                                        Record from \(record.date, formatter: DateFormats.dateOnlyFormatter)
+                                        """
+                                    ).allowsTightening(true)
+                                        .scaledToFill()
+                                    Text(
+                                        """
+                                        Max Value: \(
+                                        String(Int(record.maxROM))
+                                        ), Min Value: \(
+                                        String(Int(record.minROM))
+                                        )
+                                        """)
+                                        .allowsTightening(true)
+                                        .scaledToFill()
+                                }
+                                
+                                // pushing image and text to left
+                                Spacer()
+                                
+                            }.padding(.all, 4.0))
+                }
+            } else {
+                Text("No previous records.")
+                    .padding(.horizontal)
             }
         }
         .frame(height: 280.0)
+        .padding(.trailing)
+    }
+    
+    // MARK: Private Instance Methods
+    private func getFirstImageFor(record: Measurement) -> UIImage {
+        guard let firstEntry = record.frames.first,
+            let firstImage = UIImage(data: firstEntry.image) else {
+                return UIImage(named: "LogoMitText")!
+        }
+        return firstImage
     }
 }
 
