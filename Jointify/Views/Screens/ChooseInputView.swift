@@ -53,8 +53,8 @@ struct ChooseInputView: View {
                     
                     // SubHeadline
                     SubHeadline(
-                        subheadline: "Would you like to start a new recording or use an existing one?",
-                        width: geometry.size.width / 2.0
+                        subheadline: "Choose the body side to be analysed and whether you want to use an existing or a new recording.",
+                        width: geometry.size.width * 0.8
                     )
                     
                     Spacer()
