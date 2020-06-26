@@ -45,20 +45,18 @@ struct ProcessingView: View {
                 
                 // 20% for the headline
                 LogoAndHeadlineView(
-                    headline: "Analyzing",
+                    headline: "Analyzing...",
                     showLogo: true,
                     allowToPopView: false,
                     height: geometry.size.height * 0.20
                 )
                 
-                // subheadline
-                SubHeadline(subheadline: "Please wait...", width: geometry.size.width / 2.0)
-                
                 // Placeholder
-                Text("Insert fun facts and info stuff here")
-                
-                Spacer()
-                
+                InfoView(show: .constant(true),
+                         displayDismissButton: false,
+                         width: geometry.size.width * 0.9)
+                    .padding(.vertical)
+                                    
                 ProgressBar(
                     currentProgress: self.$progress,
                     total: self.$total,
