@@ -26,17 +26,12 @@ struct InstructionsView: View {
                 
                 // 20% for the Header
                 LogoAndHeadlineView(
-                    headline: "Instructions",
+                    headline: "Beta Instructions",
                     showLogo: true,
                     allowToPopView: true,
                     height: geometry.size.height * 0.20
                 )
                 
-                // SubHeadline
-                SubHeadline(
-                    subheadline: "How do I record a measurement?",
-                    width: geometry.size.width / 2.0
-                )
                 
                 // Content
                 InstructionContent().padding()
