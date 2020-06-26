@@ -17,7 +17,9 @@ struct DateFormats {
     static var dateOnlyFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
-        formatter.timeStyle = .none
+        formatter.timeStyle = .medium
+        formatter.locale = Locale(identifier: "de_DE")
+        formatter.dateFormat = "dd.MM.yyyy"
         return formatter
     }()
     
@@ -25,6 +27,7 @@ struct DateFormats {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         formatter.dateStyle = .none
+        formatter.locale = Locale(identifier: "de_DE")
         return formatter
     }()
 }
