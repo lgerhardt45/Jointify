@@ -122,7 +122,7 @@ struct ProcessingView: View {
         return frames
     }
     
-    // Find frames with maximum or minimum degree
+    /// Find frames with maximum or minimum degree
     private func findFrameWithDegree(_ poseNetArray: [PoseNet], _ value: ExtremeValue) -> PoseNet? {
         var poseNetDegree: PoseNet?
         var degree: Float

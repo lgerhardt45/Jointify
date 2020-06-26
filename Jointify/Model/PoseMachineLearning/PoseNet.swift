@@ -104,7 +104,7 @@ class PoseNet {
     }
     
     // MARK: Instance Methods
-    // Returns an image showing the joints and joint segments.
+    /// Returns an image showing the joints and joint segments.
     func show() -> UIImage {
         // swiftlint:disable force_unwrapping
         let alternativeImage = UIImage(systemName: "bolt")!
