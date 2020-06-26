@@ -40,11 +40,35 @@ struct InstructionContent: View {
         "Please ensure that there is no lighting source in the background facing the camera (e.g. windows)."
     ]
     // swiftlint:enable line_length
+    
     // MARK: Body
     var body: some View {
-        VStack {
-            Text("why the fuck would we add fifty lines of instructions?")
+        
+        ScrollView {
+            VStack(spacing: 24) {
+                BulletedList(headline: "Recording Instructions",
+                             text: instructionsMessage)
+                
+                BulletedList(headline: "Video Editing Requirements",
+                             text: videoEditingRequirements)
+                
+                BulletedList(headline: "How to improve the recording",
+                             text: howToImprove)
+                
+                VStack(spacing: 8) {
+                    Text("Privacy Disclaimer")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                    Text(privacyDisclaimer)
+                        .font(.body)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                }
+            }
         }
+    }
+}
+
 // MARK: - BulletedList
 struct BulletedList: View {
     
@@ -87,6 +111,7 @@ struct BulletedList: View {
     }
 }
 
+// MARK: - Previews
 struct InstructionContent_Previews: PreviewProvider {
     static var previews: some View {
         InstructionContent()
