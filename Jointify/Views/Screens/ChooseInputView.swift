@@ -13,6 +13,9 @@ import SwiftUI
 struct ChooseInputView: View {
     
     // MARK: State Instance Properties
+    /// the chosen body side. Needs to be a Double as the value is used
+    ///  for the slider that choses the body side
+    @State var chosenSideIndex: Double = 0
     /// is set by VideoPickerView and sent to Processsing
     @State var videoUrl: NSURL?
     /// source type for the Image Picker: .camera or .photoLibrary
