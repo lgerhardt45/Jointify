@@ -59,10 +59,9 @@ struct ChooseInputView: View {
                     
                     // SubHeadline
                     SubHeadline(
-                        subheadline:
-                        """
-                        Choose the body side to be analysed and whether you want to use an existing video from your gallery or take a new recording.
-                        """,
+                        // swiftlint:disable line_length
+                        subheadline: "Choose the body side to be analysed and whether you want to use an existing video from your gallery or take a new recording.",
+                        // swiftlint:enable line_length
                         width: geometry.size.width * 0.8
                     )
                     
