@@ -61,7 +61,7 @@ struct ChooseInputView: View {
                     SubHeadline(
                         subheadline:
                         """
-                        Choose the body side to be analysed and whether you want to use an existing or a new recording.
+                        Choose the body side to be analysed and whether you want to use an existing video from your gallery or take a new recording.
                         """,
                         width: geometry.size.width * 0.8
                     )
