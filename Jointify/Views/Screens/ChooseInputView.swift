@@ -35,7 +35,10 @@ struct ChooseInputView: View {
                 
                 // when video was chosen, send to ProcessingView
                 NavigationLink(
-                    destination: ProcessingView(videoUrl: self.$videoUrl)
+                    destination: ProcessingView(
+                        videoUrl: self.$videoUrl,
+                        // the chosen side returned by the slider is used in the allCases array of Side
+                        chosenSide: Side.allCases[Int(self.chosenSideIndex)])
                         // hide the navigation bar on the ProcessingView, too
                         .navigationBarTitle("")
                         .navigationBarHidden(true),
