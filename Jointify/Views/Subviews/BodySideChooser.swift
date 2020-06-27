@@ -38,7 +38,7 @@ struct BodySideChooser: View {
             Button(action: {
                 self.chosenSideIndex = 0.0
             }) {
-                leftLabel.frame(width: width * 0.3)
+                leftLabel
             }
             
             // slider
@@ -57,7 +57,7 @@ struct BodySideChooser: View {
             Button(action: {
                 self.chosenSideIndex = 1.0
             }) {
-                rightLabel.frame(width: width * 0.3)
+                rightLabel
             }
             
         }.frame(width: width)
@@ -68,6 +68,6 @@ struct BodySideChooser: View {
 struct BodySideChooser_Previews: PreviewProvider {
     
     static var previews: some View {
-        BodySideChooser(chosenSideIndex: .constant(0.0), width: 250)
+        BodySideChooser(chosenSideIndex: .constant(1.0), width: 250)
     }
 }
