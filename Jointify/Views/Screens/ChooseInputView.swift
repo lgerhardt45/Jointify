@@ -65,7 +65,19 @@ struct ChooseInputView: View {
                     
                     Spacer()
                     
-                    VStack(spacing: 16) { // Buttons
+                    // Choose body side
+                    VStack {
+                        Text("Choose side")
+                        BodySideChooser(
+                            chosenSideIndex: self.$chosenSideIndex,
+                            width: geometry.size.width * 0.45
+                        )
+                    }
+                    
+                    Spacer()
+                    
+                    // Buttons
+                    VStack(spacing: 16) {
                         
                         // don't show Record button in simulator to avoid accidental crashes
                         #if !targetEnvironment(simulator)
