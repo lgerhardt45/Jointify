@@ -43,7 +43,7 @@ struct BodySideChooser: View {
             
             // slider
             Slider(value: self.$chosenSideIndex, in: 0.0...1.0, step: 1)
-                .accentColor(.gray)
+                .accentColor(Color.sliderColor)
                 .padding(.horizontal, 2)
                 .background(Capsule().foregroundColor(.gray)).onTapGesture(perform: {
                     if self.chosenSideIndex == 0.0 {
