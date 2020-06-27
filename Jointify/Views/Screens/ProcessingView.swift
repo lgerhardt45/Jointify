@@ -151,6 +151,8 @@ struct ProcessingView: View {
         // total number of frames
         self.total = frames.count
         
+        var qualityAssessmentFailed = false
+        
         // let model run asnyc
         let queue = DispatchQueue(label: "ml-queue", qos: .utility)
         queue.async {
@@ -181,37 +183,43 @@ struct ProcessingView: View {
                 /// -> too little frames were of sufficient quality
                 if (Double(self.acceptedFramesCounter + self.remainingFrames)
                     / Double(self.total)) < self.acceptedFramesThreshold {
-                    print("Error. Please submit another video.")
+                    qualityAssessmentFailed = true
                     break
                 }
             }
             
-            // Find frames with min and max degree and only draw joints on these frames            
-            guard let poseNetMax = self.findFrameWithDegree(poseNetArray, .maximum),
-                let poseNetMin = self.findFrameWithDegree(poseNetArray, .minimum) else {
-                    print("Minimium or maximum degree could not be obtained.")
-                    return
-            }
-            
-            // Draw joints on frame with max degree
-            returnMeasurementFrames.append(
-                MeasurementFrame(
-                    degree: poseNetMax.degree,
-                    image: poseNetMax.show()
+            // Check if video could be analyzed or if the qualitity assessment failed
+            if qualityAssessmentFailed {
+                print("Video could not be anaylzed successfully")
+                completion(returnMeasurementFrames)
+            } else {
+                // Find frames with min and max degree and only draw joints on these frames
+                 guard let poseNetMax = self.findFrameWithDegree(poseNetArray, .maximum),
+                     let poseNetMin = self.findFrameWithDegree(poseNetArray, .minimum) else {
+                         print("Minimium or maximum degree could not be obtained")
+                         return
+                 }
+                 
+                 // Draw joints on frame with max degree
+                 returnMeasurementFrames.append(
+                     MeasurementFrame(
+                         degree: poseNetMax.degree,
+                         image: poseNetMax.show()
+                     )
+                 )
+                 
+                 // Draw joints on frame with min degree
+                  returnMeasurementFrames.append(
+                    MeasurementFrame(
+                        degree: poseNetMin.degree,
+                        image: poseNetMin.show()
+                    )
                 )
-            )
-            
-            // Draw joints on frame with min degree
-             returnMeasurementFrames.append(
-               MeasurementFrame(
-                   degree: poseNetMin.degree,
-                   image: poseNetMin.show()
-               )
-           )
-            
-            // send when done
-            print("Done with PoseNet analysis")
-            completion(returnMeasurementFrames)
+                 
+                 // send when done
+                 print("Done with PoseNet analysis")
+                 completion(returnMeasurementFrames)
+            }
         }
     }
 }
