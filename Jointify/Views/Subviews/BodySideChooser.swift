@@ -45,7 +45,13 @@ struct BodySideChooser: View {
             Slider(value: self.$chosenSideIndex, in: 0.0...1.0, step: 1)
                 .accentColor(.gray)
                 .padding(.horizontal, 2)
-                .background(Capsule().foregroundColor(.gray))
+                .background(Capsule().foregroundColor(.gray)).onTapGesture(perform: {
+                    if self.chosenSideIndex == 0.0 {
+                        self.chosenSideIndex = 1.0
+                    } else {
+                        self.chosenSideIndex = 0.0
+                    }
+                })
             
             // right button
             Button(action: {
