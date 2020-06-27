@@ -15,7 +15,7 @@ struct ChooseInputView: View {
     // MARK: State Instance Properties
     /// the chosen body side. Needs to be a Double as the value is used
     ///  for the slider that choses the body side
-    @State var chosenSideIndex: Double = 1
+    @State var chosenSideIndex: Int = 1
     /// is set by VideoPickerView and sent to Processsing
     @State var videoUrl: NSURL?
     /// source type for the Image Picker: .camera or .photoLibrary
@@ -72,7 +72,7 @@ struct ChooseInputView: View {
                         Text("Choose side")
                         BodySideChooser(
                             chosenSideIndex: self.$chosenSideIndex,
-                            width: geometry.size.width * 0.45
+                            width: geometry.size.width * 0.6
                         )
                     }
                     

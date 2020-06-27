@@ -13,7 +13,7 @@ import SwiftUI
 struct BodySideChooser: View {
     
     // MARK: Binding Instance Properties
-    @Binding var chosenSideIndex: Double
+    @Binding var chosenSideIndex: Int
     
     // MARK: Stored Instance Properties
     let width: CGFloat
@@ -32,35 +32,12 @@ struct BodySideChooser: View {
     // MARK: Body
     var body: some View {
         
-        // Slider
-        HStack(spacing: 16) {
-            // left button
-            Button(action: {
-                self.chosenSideIndex = 0.0
-            }) {
-                leftLabel
+        Picker("Choose side", selection: $chosenSideIndex) {
+            ForEach(0..<Side.allCases.count) { sideIndex in
+                Text(Side.allCases[sideIndex].rawValue).tag(sideIndex)
             }
-            
-            // slider
-            Slider(value: self.$chosenSideIndex, in: 0.0...1.0, step: 1)
-                .accentColor(Color.sliderColor)
-                .padding(.horizontal, 2)
-                .background(Capsule().foregroundColor(.gray)).onTapGesture(perform: {
-                    if self.chosenSideIndex == 0.0 {
-                        self.chosenSideIndex = 1.0
-                    } else {
-                        self.chosenSideIndex = 0.0
-                    }
-                })
-            
-            // right button
-            Button(action: {
-                self.chosenSideIndex = 1.0
-            }) {
-                rightLabel
-            }
-            
-        }.frame(width: width)
+        }.pickerStyle(SegmentedPickerStyle())
+            .frame(width: width)
     }
 }
 
@@ -68,6 +45,6 @@ struct BodySideChooser: View {
 struct BodySideChooser_Previews: PreviewProvider {
     
     static var previews: some View {
-        BodySideChooser(chosenSideIndex: .constant(1.0), width: 250)
+        BodySideChooser(chosenSideIndex: .constant(1), width: 250)
     }
 }
