@@ -15,4 +15,7 @@ import SwiftUI
 extension Color {
     static let lightBlue = Color("ButtonColor")
     static let lightGray = Color("LightGray")
+    static let sliderColor = Color(
+        red: 137 / 255, green: 137 / 255, blue: 144 / 255
+    )
 }

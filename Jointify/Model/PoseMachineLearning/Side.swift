@@ -10,7 +10,7 @@
 import Foundation
 
 // MARK: - Side
-enum Side: String, Codable {
+enum Side: String, Codable, CaseIterable {
     case left
     case right
 }
