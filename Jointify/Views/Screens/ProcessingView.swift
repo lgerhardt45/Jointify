@@ -15,7 +15,7 @@ struct ProcessingView: View {
     
     // MARK: Binding Instance Properties
     @Binding var videoUrl: NSURL?
-    
+
     // MARK: State Instance Propoerties
     @State private var progress: Int = 0
     @State private var total: Int = 0
@@ -26,6 +26,7 @@ struct ProcessingView: View {
     
     // MARK: Stored Instance Properties
     private let acceptedFramesThreshold: Double = 0.45
+    let chosenSide: Side
     
     // MARK: Body
     var body: some View {
@@ -154,7 +155,8 @@ struct ProcessingView: View {
         
         var qualityAssessmentFailed = false
         // instantiate PoseNet model
-        let poseNet = PoseNet(side: .right) // TODO: correct side
+        print("Chosen side: \(self.chosenSide)")
+        let poseNet = PoseNet(side: self.chosenSide)
         
         // let model run asnyc
         let queue = DispatchQueue(label: "ml-queue", qos: .utility)
@@ -228,6 +230,6 @@ struct ProcessingView: View {
 // MARK: - Previews
 struct ProcessingView_Previews: PreviewProvider {
     static var previews: some View {
-        ProcessingView(videoUrl: .constant(nil))
+        ProcessingView(videoUrl: .constant(nil), chosenSide: .right)
     }
 }

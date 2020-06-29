@@ -13,6 +13,9 @@ import SwiftUI
 struct ChooseInputView: View {
     
     // MARK: State Instance Properties
+    /// the chosen body side. Needs to be a Double as the value is used
+    ///  for the slider that choses the body side
+    @State var chosenSideIndex: Int = 1
     /// is set by VideoPickerView and sent to Processsing
     @State var videoUrl: NSURL?
     /// source type for the Image Picker: .camera or .photoLibrary
@@ -32,7 +35,10 @@ struct ChooseInputView: View {
                 
                 // when video was chosen, send to ProcessingView
                 NavigationLink(
-                    destination: ProcessingView(videoUrl: self.$videoUrl)
+                    destination: ProcessingView(
+                        videoUrl: self.$videoUrl,
+                        // the chosen side returned by the slider is used in the allCases array of Side
+                        chosenSide: Side.allCases[Int(self.chosenSideIndex)])
                         // hide the navigation bar on the ProcessingView, too
                         .navigationBarTitle("")
                         .navigationBarHidden(true),
@@ -53,13 +59,27 @@ struct ChooseInputView: View {
                     
                     // SubHeadline
                     SubHeadline(
-                        subheadline: "Would you like to start a new recording or use an existing one?",
-                        width: geometry.size.width / 2.0
+                        // swiftlint:disable line_length
+                        subheadline: "Choose the body side to be analysed and whether you want to use an existing video from your gallery or take a new recording.",
+                        // swiftlint:enable line_length
+                        width: geometry.size.width * 0.8
                     )
                     
                     Spacer()
                     
-                    VStack(spacing: 16) { // Buttons
+                    // Choose body side
+                    VStack {
+                        Text("Choose side")
+                        BodySideChooser(
+                            chosenSideIndex: self.$chosenSideIndex,
+                            width: geometry.size.width * 0.6
+                        )
+                    }
+                    
+                    Spacer()
+                    
+                    // Buttons
+                    VStack(spacing: 16) {
                         
                         // don't show Record button in simulator to avoid accidental crashes
                         #if !targetEnvironment(simulator)

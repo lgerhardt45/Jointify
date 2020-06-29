@@ -41,6 +41,8 @@
 		80094B6F247F0F6B002A1A27 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80094B6E247F0F6B002A1A27 /* Preview Assets.xcassets */; };
 		80094B72247F0F6B002A1A27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80094B70247F0F6B002A1A27 /* LaunchScreen.storyboard */; };
 		8043A58324A5489400C1918F /* ExtremeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161A0BA24A53A9C0038E410 /* ExtremeValue.swift */; };
+		8033E54924A72C4C00F0D1E8 /* BodySideChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8033E54824A72C4C00F0D1E8 /* BodySideChooser.swift */; };
+		8033E54A24A72C4C00F0D1E8 /* BodySideChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8033E54824A72C4C00F0D1E8 /* BodySideChooser.swift */; };
 		8064E0AF24A40406002DE5A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B65247F0F60002A1A27 /* AppDelegate.swift */; };
 		8064E0B024A40408002DE5A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B67247F0F60002A1A27 /* SceneDelegate.swift */; };
 		808297512483142600DB4A1C /* JointifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808297502483142600DB4A1C /* JointifyTests.swift */; };
@@ -142,6 +144,7 @@
 		80094B6E247F0F6B002A1A27 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		80094B71247F0F6B002A1A27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		80094B73247F0F6B002A1A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8033E54824A72C4C00F0D1E8 /* BodySideChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySideChooser.swift; sourceTree = "<group>"; };
 		8082974E2483142600DB4A1C /* JointifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JointifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		808297502483142600DB4A1C /* JointifyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointifyTests.swift; sourceTree = "<group>"; };
 		808297522483142600DB4A1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -316,6 +319,7 @@
 				80F1D4DA2491994B00ACCEC2 /* DefaultButton.swift */,
 				80DFDB742492991B0021124C /* InstructionContent.swift */,
 				80DFDB772492AAC20021124C /* PastRecords.swift */,
+				8033E54824A72C4C00F0D1E8 /* BodySideChooser.swift */,
 				2141754024865483005CB6E5 /* MediaPicker.swift */,
 				80EF89C02498242000E345F0 /* ProgressBar.swift */,
 				8088FB05249C155E00E156DE /* MailView.swift */,
@@ -491,6 +495,7 @@
 				2161A0BB24A53A9C0038E410 /* ExtremeValue.swift in Sources */,
 				80FD2FAC24A1385900418DEB /* BodyHalf.swift in Sources */,
 				80DFDB752492991C0021124C /* InstructionContent.swift in Sources */,
+				8033E54924A72C4C00F0D1E8 /* BodySideChooser.swift in Sources */,
 				21CFEA802497EA2600421B80 /* PoseNetMobileNet100S8FP16.mlmodel in Sources */,
 				21ED3D02249A0F4E0031199A /* Side.swift in Sources */,
 				8088FB06249C155E00E156DE /* MailView.swift in Sources */,
@@ -570,6 +575,7 @@
 				8088FB07249C155E00E156DE /* MailView.swift in Sources */,
 				80FD2FB324A1514500418DEB /* CustomColors.swift in Sources */,
 				80E67BBD249AC56600ECC047 /* Joint.swift in Sources */,
+				8033E54A24A72C4C00F0D1E8 /* BodySideChooser.swift in Sources */,
 				80FB49E22496ABC7001C3DAE /* PastRecords.swift in Sources */,
 				80FB49E52496AD78001C3DAE /* MediaPicker.swift in Sources */,
 				80FB49E02496A953001C3DAE /* WelcomeView.swift in Sources */,
