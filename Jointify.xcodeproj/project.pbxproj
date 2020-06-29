@@ -40,9 +40,10 @@
 		80094B6C247F0F6B002A1A27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80094B6B247F0F6B002A1A27 /* Assets.xcassets */; };
 		80094B6F247F0F6B002A1A27 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80094B6E247F0F6B002A1A27 /* Preview Assets.xcassets */; };
 		80094B72247F0F6B002A1A27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80094B70247F0F6B002A1A27 /* LaunchScreen.storyboard */; };
-		8043A58324A5489400C1918F /* ExtremeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161A0BA24A53A9C0038E410 /* ExtremeValue.swift */; };
+		802B32F424AA9ECB004EB124 /* PoseNetPredictionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4F7124AA2EBE001827E9 /* PoseNetPredictionOutput.swift */; };
 		8033E54924A72C4C00F0D1E8 /* BodySideChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8033E54824A72C4C00F0D1E8 /* BodySideChooser.swift */; };
 		8033E54A24A72C4C00F0D1E8 /* BodySideChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8033E54824A72C4C00F0D1E8 /* BodySideChooser.swift */; };
+		8043A58324A5489400C1918F /* ExtremeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161A0BA24A53A9C0038E410 /* ExtremeValue.swift */; };
 		8064E0AF24A40406002DE5A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B65247F0F60002A1A27 /* AppDelegate.swift */; };
 		8064E0B024A40408002DE5A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B67247F0F60002A1A27 /* SceneDelegate.swift */; };
 		808297512483142600DB4A1C /* JointifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808297502483142600DB4A1C /* JointifyTests.swift */; };
@@ -570,6 +571,7 @@
 				8088FB0A249FE30600E156DE /* BackButton.swift in Sources */,
 				80E67BCA249AC8F800ECC047 /* CGImage+Size.swift in Sources */,
 				80E67BC2249AC61100ECC047 /* Side.swift in Sources */,
+				802B32F424AA9ECB004EB124 /* PoseNetPredictionOutput.swift in Sources */,
 				80EF89BF2497F31100E345F0 /* Edge.swift in Sources */,
 				80E67BC6249AC64200ECC047 /* PoseBuilderConfiguration.swift in Sources */,
 				8088FB07249C155E00E156DE /* MailView.swift in Sources */,

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
-// MARK: Import
+// MARK: Imports
 import Foundation
 import SwiftUI
 
