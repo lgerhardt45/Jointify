@@ -124,26 +124,27 @@ struct ProcessingView: View {
     }
     
     /// Find frames with maximum or minimum degree
-    private func findFrameWithDegree(_ poseNetArray: [PoseNet], _ value: ExtremeValue) -> PoseNet? {
-        var poseNetDegree: PoseNet?
+    private func findFrameWithDegree(_ poseNetPredictionOutputArray: [PoseNetPredictionOutput],
+                                     _ value: ExtremeValue) -> PoseNetPredictionOutput? {
+        var poseNetPredictionOutputDegree: PoseNetPredictionOutput?
         var degree: Float
         
         switch value {
         case .maximum:
             degree = 0
-            for poseNet in poseNetArray where poseNet.degree > degree {
-                poseNetDegree = poseNet
-                degree = poseNet.degree
+            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree > degree {
+                poseNetPredictionOutputDegree = poseNetPredictionOutput
+                degree = poseNetPredictionOutput.degree
             }
         case .minimum:
             degree = 361
-            for poseNet in poseNetArray where poseNet.degree < degree {
-                poseNetDegree = poseNet
-                degree = poseNet.degree
+            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree < degree {
+                poseNetPredictionOutputDegree = poseNetPredictionOutput
+                degree = poseNetPredictionOutput.degree
             }
         }
         
-        return poseNetDegree
+        return poseNetPredictionOutputDegree
     }
     
     /// runs the machine learning model on an array of UIImages and returns an array of MeasurementFrame instances
@@ -152,6 +153,8 @@ struct ProcessingView: View {
         self.total = frames.count
         
         var qualityAssessmentFailed = false
+        // instantiate PoseNet model
+        let poseNet = PoseNet(side: .right) // TODO: correct side
         
         // let model run asnyc
         let queue = DispatchQueue(label: "ml-queue", qos: .utility)
@@ -159,20 +162,18 @@ struct ProcessingView: View {
             
             print("Starting PoseNet analysis")
             var returnMeasurementFrames: [MeasurementFrame] = []
-            var poseNetArray: [PoseNet] = []
+            var poseNetPredictionOutputArray: [PoseNetPredictionOutput] = []
             
             for (frameCount, frame) in frames.enumerated() {
                 print("Analysing frame \(frameCount+1)/\(frames.count)")
-                // instantiate PoseNet model for the current frame
-                let poseNet = PoseNet(side: .right)
+                
                 // let model run over current frame
-                poseNet.predict(frame)
-                // assess the output quality of the model
-                let outputQualityAcceptable = poseNet.assessOutputQuality()
+                let poseNetPredictionOutput = poseNet.predict(frame)
+                
                 // Only append measurement frame if it fulfills quality criteria
-                if outputQualityAcceptable {
+                if poseNetPredictionOutput.outputQualityAcceptable {
                     self.acceptedFramesCounter += 1
-                    poseNetArray.append(poseNet)
+                    poseNetPredictionOutputArray.append(poseNetPredictionOutput)
                 }
                 
                 self.progress += 1
@@ -194,8 +195,8 @@ struct ProcessingView: View {
                 completion(returnMeasurementFrames)
             } else {
                 // Find frames with min and max degree and only draw joints on these frames
-                 guard let poseNetMax = self.findFrameWithDegree(poseNetArray, .maximum),
-                     let poseNetMin = self.findFrameWithDegree(poseNetArray, .minimum) else {
+                 guard let poseNetMax = self.findFrameWithDegree(poseNetPredictionOutputArray, .maximum),
+                     let poseNetMin = self.findFrameWithDegree(poseNetPredictionOutputArray, .minimum) else {
                          print("Minimium or maximum degree could not be obtained")
                          return
                  }
@@ -204,15 +205,15 @@ struct ProcessingView: View {
                  returnMeasurementFrames.append(
                      MeasurementFrame(
                          degree: poseNetMax.degree,
-                         image: poseNetMax.show()
+                         image: poseNet.show(poseNetMax.image, poseNetMax.pose)
                      )
                  )
-                 
+                
                  // Draw joints on frame with min degree
                   returnMeasurementFrames.append(
                     MeasurementFrame(
                         degree: poseNetMin.degree,
-                        image: poseNetMin.show()
+                        image: poseNet.show(poseNetMin.image, poseNetMin.pose)
                     )
                 )
                  
