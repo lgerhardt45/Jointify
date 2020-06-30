@@ -61,7 +61,6 @@ struct MailView: UIViewControllerRepresentable {
         messageBody += "\n\nplease find attached the copy of my recent ROM measurement."
         
         // setup compose view
-        composeVC.setToRecipients(["lukas.gerhardt@onlinehome.de"])
         composeVC.setMessageBody(messageBody, isHTML: false)
         composeVC.setSubject("ROM measurement from today")
         
