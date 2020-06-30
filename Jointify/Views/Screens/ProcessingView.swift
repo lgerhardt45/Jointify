@@ -84,8 +84,10 @@ struct ProcessingView: View {
                         )
                         self.measurement = measurement
                         
-                        // save to DataHandler
-                        DataHandler.saveNewMeasurement(measurement: measurement)
+                        // save to DataHandler only if analysis was successfull
+                        if !measurement.frames.isEmpty {
+                            DataHandler.saveNewMeasurement(measurement: measurement)
+                        }
                         
                         // trigger navigation to VideoResultView
                         self.finishedProcessing.toggle()
