@@ -64,9 +64,9 @@ struct ResultView: View {
                         VStack {
                             
                             HStack(spacing: 16.0) {
-                                ResultValues(valueType: "Max Value",
+                                ResultValues(valueType: "Max Degree",
                                              value: Int(self.measurement.maxROM), showText: true)
-                                ResultValues(valueType: "Min Value",
+                                ResultValues(valueType: "Min Degree",
                                              value: Int(self.measurement.minROM), showText: true)
                             }
                             Text("Last Measurement (DD/MM/YY)")
@@ -74,9 +74,9 @@ struct ResultView: View {
                                 .fontWeight(.light)
                             
                             HStack(spacing: 16.0) {
-                                ResultValues(valueType: "Max Value",
+                                ResultValues(valueType: "Max Degree",
                                              value: self.mockedPreviousMaxValue, showText: false)
-                                ResultValues(valueType: "Min Value",
+                                ResultValues(valueType: "Min. Degree",
                                              value: self.mockedPreviousMinValue, showText: false)
                             }
                             
