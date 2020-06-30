@@ -16,7 +16,7 @@ struct InstructionContent: View {
     // swiftlint:disable line_length
     private let instructionsMessage = [
         "Find a suitable spot with as little visual distraction as possible. The analysis works best in front of a plain white wall.",
-        "Place your mobile phone roughly 3 meters away from you on a object which is at least 60 centimetres high (e.g. a chair). It is important that your whole body is in the centre of the picture, since you have to submit a video in square format.",
+        "Place your mobile phone roughly 3 meters away from you on a object which is at least 60 centimetres high (e.g. a chair). It is important that your whole body is in the centre of the picture, since your video will be analysed in square format.",
         "Start the recording.",
         "Get into the initial position as indicated in the exemplary video.",
         "Move your joint as shown in the video. Make sure that all of your body parts are visible all the time.",
@@ -25,7 +25,6 @@ struct InstructionContent: View {
     ]
     
     let videoEditingRequirements = [
-        "The analysis is based on the center of the picture, therefore the video has to be cut to square format before uploading it to the app.",
         "Make sure that you stand in the centre of the video while showing your whole body.",
         "The first frame should be the initial position as indicated in the example video. The same holds for the last frame. Please cut the video accordingly."
     ]

@@ -313,19 +313,19 @@
 		80FB49D624967F45001C3DAE /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				8088FB08249FE30300E156DE /* BackButton.swift */,
+				8033E54824A72C4C00F0D1E8 /* BodySideChooser.swift */,
+				80F1D4DA2491994B00ACCEC2 /* DefaultButton.swift */,
+				C1A84C9724A50ED100AB7B5D /* InfoView.swift */,
+				80DFDB742492991B0021124C /* InstructionContent.swift */,
 				6ED11543249E2BCD0020E13F /* LogoAndHeadlineView.swift */,
 				6EC86731249C0A740012C30B /* Logo.swift */,
-				8088FB08249FE30300E156DE /* BackButton.swift */,
-				6ED11546249E30BA0020E13F /* SubHeadline.swift */,
-				80F1D4DA2491994B00ACCEC2 /* DefaultButton.swift */,
-				80DFDB742492991B0021124C /* InstructionContent.swift */,
-				80DFDB772492AAC20021124C /* PastRecords.swift */,
-				8033E54824A72C4C00F0D1E8 /* BodySideChooser.swift */,
-				2141754024865483005CB6E5 /* MediaPicker.swift */,
-				80EF89C02498242000E345F0 /* ProgressBar.swift */,
 				8088FB05249C155E00E156DE /* MailView.swift */,
+				2141754024865483005CB6E5 /* MediaPicker.swift */,
+				80DFDB772492AAC20021124C /* PastRecords.swift */,
+				80EF89C02498242000E345F0 /* ProgressBar.swift */,
 				6ED1154D249E4CCA0020E13F /* ResultValues.swift */,
-				C1A84C9724A50ED100AB7B5D /* InfoView.swift */,
+				6ED11546249E30BA0020E13F /* SubHeadline.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";

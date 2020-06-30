@@ -28,19 +28,32 @@ struct VideoResultView: View {
                 
                 // 20% for the Header
                 LogoAndHeadlineView(
-                    headline: "Done!",
+                    headline: "Your analysis results",
                     showLogo: true,
                     allowToPopView: false,
                     height: geometry.size.height * 0.2
                 )
                 
                 // subheadline
-                SubHeadline(subheadline: "Your video was analyzed succesfully.", width: geometry.size.width / 2.0)
+                //SubHeadline(subheadline: "Your analysis results", width: geometry.size.width / 2.0)
                 
                 ScrollView {
                     VStack(spacing: 16) {
                         if self.measurement.frames.isEmpty {
-                            Text("Frames could not be analysed 😔")
+                            //Spacer()
+                            //Text("The video could not be analyzed successfully 😔")
+                            //pacer()
+                            //Text("The video could not be analyzed successfully 😔")
+                            Text("Please make sure to read the instructions carefully and try again.")
+                            Text("The video could not be analyzed successfully")
+                            Text("Please make sure to read the instructions carefully and try again.")
+                            // Back home button
+                            DefaultButton(action: {
+                                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.toWelcomeView() // TODO: go to instructions view
+                            }) {
+                                Text("Try again")
+                                    .frame(width: geometry.size.width / 3.0)
+                            }
                         } else {
                             ForEach(self.measurement.frames, id: \.self) { frame in
                                 VStack(spacing: 8) {
@@ -52,23 +65,22 @@ struct VideoResultView: View {
                                     Text("Degree: \(Int(round(frame.degree)))°")
                                 }
                             }
+                            // Button to ResultView
+                            NavigationLink(
+                                destination: ResultView(measurement: self.measurement)
+                                    // hide the navigation bar on the ResultView, too
+                                    .navigationBarTitle("")
+                                    .navigationBarHidden(true),
+                                isActive: self.$goToResultView) {
+                                    DefaultButton(action: {
+                                        self.goToResultView.toggle()
+                                    }) {
+                                        Text("Done")
+                                            .frame(width: geometry.size.width / 3.0)
+                                    }
+                            }
                         }
                     }
-                }
-                
-                // Button to ResultView
-                NavigationLink(
-                    destination: ResultView(measurement: self.measurement)
-                        // hide the navigation bar on the ResultView, too
-                        .navigationBarTitle("")
-                        .navigationBarHidden(true),
-                    isActive: self.$goToResultView) {
-                        DefaultButton(action: {
-                            self.goToResultView.toggle()
-                        }) {
-                            Text("Done")
-                                .frame(width: geometry.size.width / 3.0)
-                        }
                 }
             }.padding(.bottom, 32)
                 .padding(.horizontal)
