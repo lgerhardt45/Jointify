@@ -23,12 +23,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //   (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
+        let welcomeView = WelcomeView()
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
+            window.rootViewController = UIHostingController(rootView: welcomeView)
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -61,6 +61,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+    }
+    
+    /// sets the WelcomeView as root ViewController
+    /// from https://stackoverflow.com/a/59426362
+    func toWelcomeView() {
+      let welcomeView = WelcomeView()
+      window?.rootViewController = UIHostingController(rootView: welcomeView)
     }
 
 }
