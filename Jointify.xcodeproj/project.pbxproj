@@ -746,6 +746,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = "v1.1-beta";
 				PRODUCT_BUNDLE_IDENTIFIER = lukasgerhardt.Jointify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -768,6 +769,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = "v1.1-beta";
 				PRODUCT_BUNDLE_IDENTIFIER = lukasgerhardt.Jointify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
