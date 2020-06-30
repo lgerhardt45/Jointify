@@ -49,7 +49,7 @@ struct VideoResultView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .cornerRadius(5)
-                                    Text("Degrees: \(frame.degree)")
+                                    Text("Degree: \(Int(round(frame.degree)))°")
                                 }
                             }
                         }
