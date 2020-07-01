@@ -19,7 +19,7 @@ struct ResultValues: View {
     
     // MARK: Body
     var body: some View {
-        VStack(spacing: 16.0) {
+        VStack(spacing: 8.0) {
             if showText {
                 Text(valueType)
                     .font(.system(size: 18))
