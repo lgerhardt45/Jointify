@@ -62,9 +62,9 @@ struct PastRecords: View {
                                     Text(
                                         """
                                         Max Value: \(
-                                        String(Int(record.maxROM))
+                                        String(Int(round(record.maxROM)))
                                         ), Min Value: \(
-                                        String(Int(record.minROM))
+                                        String(Int(round(record.minROM)))
                                         )
                                         """)
                                         .allowsTightening(true)
