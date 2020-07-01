@@ -64,10 +64,11 @@ struct ResultView: View {
                         VStack {
                             
                             HStack(spacing: 16.0) {
-                                ResultValues(valueType: "Max Degree",
-                                             value: Int(self.measurement.maxROM), showText: true)
-                                ResultValues(valueType: "Min Degree",
-                                             value: Int(self.measurement.minROM), showText: true)
+
+                                ResultValues(valueType: "Max Value",
+                                             value: Int(round(self.measurement.maxROM)), showText: true)
+                                ResultValues(valueType: "Min Value",
+                                             value: Int(round(self.measurement.minROM)), showText: true)
                             }
                             Text("Last Measurement (DD/MM/YY)")
                                 .font(.system(size: 18))

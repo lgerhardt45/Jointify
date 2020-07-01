@@ -193,12 +193,12 @@
 		2141754324866B48005CB6E5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				80FD2FB424A151AB00418DEB /* DataHandler.swift */,
 				80FB49D724967F84001C3DAE /* Measurement.swift */,
 				2161A0BA24A53A9C0038E410 /* ExtremeValue.swift */,
 				80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */,
 				80FD2FAB24A1385900418DEB /* BodyHalf.swift */,
 				21CFEA702497E9F500421B80 /* PoseMachineLearning */,
-				80FD2FB424A151AB00418DEB /* DataHandler.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
