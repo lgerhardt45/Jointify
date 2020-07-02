@@ -75,29 +75,21 @@ struct ProcessingView: View {
                     
                     let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
                     
-                    // TODO: Make this a Result<AnalysisResult, AnalysisErro>
-                    self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
+                    self.analyseVideo(frames: videoAsImageArray) { analysisResult  in
                         
-                        if let maxROMFrame = drawnFrames.first,
-                            let minROMFrame = drawnFrames.last {
-                            
-                            // set the measurement property when done
-                            let measurement = Measurement(
-                                date: Date(),
-                                minROMFrame: minROMFrame,
-                                maxROMFrame: maxROMFrame
-                            )
+                        switch analysisResult {
+                        case .success(let measurement):
                             
                             // save to DataHandler
                             DataHandler.saveNewMeasurement(measurement: measurement)
                             self.measurement = measurement
                             
-                        } else {
-                            self.measurement = nil
+                            // trigger navigation to VideoResultView
+                            self.finishedProcessing.toggle()
+                            
+                        case .failure(let error):
+                            print("Failure")
                         }
-                        
-                        // trigger navigation to VideoResultView
-                        self.finishedProcessing.toggle()
                     }
                 })
         }
@@ -158,7 +150,10 @@ struct ProcessingView: View {
     }
     
     /// runs the machine learning model on an array of UIImages and returns an array of MeasurementFrame instances
-    private func analyseVideo(frames: [UIImage], completion: @escaping ([MeasurementFrame]) -> Void) {
+    private func analyseVideo(
+        frames: [UIImage],
+        completion: @escaping (Result<Measurement, PoseNetAnalysisError>) -> Void) {
+        
         // total number of frames
         self.total = frames.count
         
@@ -172,7 +167,6 @@ struct ProcessingView: View {
         queue.async {
             
             print("Starting PoseNet analysis")
-            var returnMeasurementFrames: [MeasurementFrame] = []
             var poseNetPredictionOutputArray: [PoseNetPredictionOutput] = []
             
             for (frameCount, frame) in frames.enumerated() {
@@ -202,35 +196,34 @@ struct ProcessingView: View {
             
             // Check if video could be analyzed or if the qualitity assessment failed
             if qualityAssessmentFailed {
-                print("Video could not be anaylzed successfully")
-                completion(returnMeasurementFrames)
-            } else {
-                // Find frames with min and max degree and only draw joints on these frames
-                 guard let poseNetMax = self.findFrameWithDegree(poseNetPredictionOutputArray, .maximum),
-                     let poseNetMin = self.findFrameWithDegree(poseNetPredictionOutputArray, .minimum) else {
-                         print("Minimium or maximum degree could not be obtained")
-                         return
-                 }
-                 
-                 // Draw joints on frame with max degree
-                 returnMeasurementFrames.append(
-                     MeasurementFrame(
-                         degree: poseNetMax.degree,
-                         image: poseNet.show(poseNetMax.image, poseNetMax.pose)
-                     )
-                 )
                 
-                 // Draw joints on frame with min degree
-                  returnMeasurementFrames.append(
-                    MeasurementFrame(
-                        degree: poseNetMin.degree,
-                        image: poseNet.show(poseNetMin.image, poseNetMin.pose)
-                    )
+                print("Video could not be anaylzed successfully")
+                // TODO: Improve the failure reasons with Niki
+                // failure when (...)
+                completion(.failure(.acceptanceCriteriaFailed))
+                
+            } else {
+                
+                // Find frames with min and max degree and only draw joints on these frames
+                guard let poseNetMin = self.findFrameWithDegree(poseNetPredictionOutputArray, .minimum),
+                    let poseNetMax = self.findFrameWithDegree(poseNetPredictionOutputArray, .maximum) else {
+                        print("Minimium or maximum degree could not be obtained")
+                        return
+                }
+                
+                let drawnMinImage = poseNet.show(poseNetMin.image, poseNetMin.pose)
+                let drawnMaxImage = poseNet.show(poseNetMax.image, poseNetMax.pose)
+                
+                // successfully derived a Measurement instance
+                let measurement = Measurement(
+                    date: Date(),
+                    minROMFrame: MeasurementFrame(degree: poseNetMin.degree, image: drawnMinImage),
+                    maxROMFrame: MeasurementFrame(degree: poseNetMax.degree, image: drawnMaxImage)
                 )
-                 
-                 // send when done
-                 print("Done with PoseNet analysis")
-                 completion(returnMeasurementFrames)
+                
+                // success when done
+                print("Done with PoseNet analysis")
+                completion(.success(measurement))
             }
         }
     }
