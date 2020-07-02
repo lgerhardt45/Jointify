@@ -170,11 +170,8 @@
 		80FD2FB124A1514500418DEB /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		80FD2FB424A151AB00418DEB /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.debug.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.debug.xcconfig"; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementSheetPDFWriter.swift; sourceTree = "<group>"; };
-=======
 		C1A84C9724A50ED100AB7B5D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
->>>>>>> a48f391f4adbc31e3225cfc18578a73aee1e8820
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,13 +198,10 @@
 			children = (
 				80FD2FB424A151AB00418DEB /* DataHandler.swift */,
 				80FB49D724967F84001C3DAE /* Measurement.swift */,
-<<<<<<< HEAD
 				C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */,
-=======
 				2161A0BA24A53A9C0038E410 /* ExtremeValue.swift */,
 				80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */,
 				80FD2FAB24A1385900418DEB /* BodyHalf.swift */,
->>>>>>> a48f391f4adbc31e3225cfc18578a73aee1e8820
 				21CFEA702497E9F500421B80 /* PoseMachineLearning */,
 			);
 			path = Model;

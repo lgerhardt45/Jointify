@@ -10,12 +10,6 @@
 import SwiftUI
 import PDFKit
 
-// MARK: - BodyHalf
-enum BodyHalf {
-    case upper
-    case lower
-}
-
 // MARK: - MeasurementSheetPDFWriter
 class MeasurementSheetPDFWriter {
     
@@ -141,8 +135,8 @@ class MeasurementSheetPDFWriter {
     /// from https://stackoverflow.com/a/28907826
     func writeMeasurement(onto image: UIImage, at point: CGPoint) -> UIImage? {
         
-        let minRom = String(measurement.minROM)
-        let maxRom = String(measurement.maxROM)
+        let minRom = String(measurement.minROMFrame.degree)
+        let maxRom = String(measurement.maxROMFrame.degree)
         let textColor = UIColor.red
         let textFont = UIFont(name: "Helvetica Bold", size: 12)!
         
