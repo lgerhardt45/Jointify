@@ -6,8 +6,10 @@
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
+// MARK: Imports
 import SwiftUI
 
+// MARK: - ResultValues
 struct ResultValues: View {
     
     // MARK: Stored Instance Properties
@@ -17,7 +19,7 @@ struct ResultValues: View {
     
     // MARK: Body
     var body: some View {
-        VStack(spacing: 16.0) {
+        VStack(spacing: 8.0) {
             if showText {
                 Text(valueType)
                     .font(.system(size: 18))

@@ -64,16 +64,21 @@ class PoseNet {
         /// E.g. if you analyse the right knee, the joints rightHip, rightKnee & rightAnkle
         /// must have a confidence value above the specified threshold, if this is not fulfilled
         /// the whole image is rejected
-        static let confidenceThreshold: Double = 0.70
+        static let confidenceThreshold: Double = 0.35
     }
     
     // MARK: Stored Instance Properties
-    private var degree: Float = 0.0
+    public var degree: Float = 0.0
     private let side: Side
     private let jointSegments: [JointSegment]
     private let selectedJointNames: [JointName]
     // mapping the recognized Joints to their respective coordinates on the canvas
     private var jointPositions: [String: Float] = [:]
+    // The Core ML model that the PoseNet model uses to generate estimates for the poses.
+    /// - Note: Other variants of the PoseNet model are available from the Model Gallery.
+    private let model = PoseNetMobileNet100S8FP16().model
+    /// The set of parameters passed to the pose builder when detecting poses.
+    private var poseBuilderConfiguration = PoseBuilderConfiguration()
 
     // MARK: Initializers
     init(side: Side) {
@@ -95,34 +100,16 @@ class PoseNet {
         }
     }
     
-    // The Core ML model that the PoseNet model uses to generate estimates for the poses.
-    /// - Note: Other variants of the PoseNet model are available from the Model Gallery.
-    let model = PoseNetMobileNet100S8FP16().model
-
-    /// The set of parameters passed to the pose builder when detecting poses.
-    var poseBuilderConfiguration = PoseBuilderConfiguration()
-    
-    /// Array of poses that is outputted from the model
-    var pose: Pose?
-    
     // MARK: Instance Methods
-    /// Returns an image showing the detected poses.
-    ///
-    /// - parameters:
-    ///     - poses: An array of detected poses.
-    ///     - frame: The image used to detect the poses and used as the background for the returned image.
-    private func show(on frame: CGImage) -> UIImage {
+    /// Returns an image showing the joints and joint segments.
+    func show(_ frame: CGImage, _ pose: Pose) -> UIImage {
+        
         let dstImageSize = CGSize(width: frame.width, height: frame.height)
         let dstImageFormat = UIGraphicsImageRendererFormat()
 
         dstImageFormat.scale = 1
         let renderer = UIGraphicsImageRenderer(size: dstImageSize,
                                                format: dstImageFormat)
-        
-        guard let pose = pose else {
-            print("Pose instance could not be retrieved")
-            return UIImage(systemName: "heart.fill")!
-        }
 
         let dstImage = renderer.image { rendererContext in
             // Draw the current frame as the background for the new image.
@@ -170,28 +157,19 @@ class PoseNet {
     /// Get X and Y coordinates of joints and place them in the dictionary
     /// This function depends on pose, which only is created in the predict() function
     /// Thus, it can only be called once the prediction function is done
-    func fillJointCoordinatesDictionaries() {
-        guard let pose = pose else {
-            print("Error. No pose could be detected.")
-            return
-        }
-        
+    func fillJointCoordinatesDictionaries(_ pose: Pose) {
         for joint in pose.joints.values.filter({ $0.isValid }) {
                 jointPositions["\(joint.name)X"] = Float(joint.position.x)
                 jointPositions["\(joint.name)Y"] = Float(joint.position.y)
         }
     }
     
-    // Calculate the angle between two joints
-    // Returns a Float degree number.
-    //
-    func calcAngleBetweenJoints() -> Float {
-        //var jointPositions = [String: Float]()
+    /// Calculate the angle between two joints
+    /// Returns a Float degree number.
+    func calcAngleBetweenJoints(_ pose: Pose) -> Float {
         var innerAngle: Float = 0.0
-        
         // Place the joint coordinates in the global class dictionary jointPositions
-        fillJointCoordinatesDictionaries()
-        
+        fillJointCoordinatesDictionaries(pose)
         guard let jointPositionsHipX = jointPositions["\(side)HipX"],
             let jointPositionsHipY = jointPositions["\(side)HipY"],
             let jointPositionsKneeX = jointPositions["\(side)KneeX"],
@@ -202,7 +180,6 @@ class PoseNet {
             print("Error. At least one joint position could not be obtained.")
             return innerAngle
         }
-        
         // Create vectors leading from ankle and hip towards knee
         let vectorKneeHip: [String: Float] = ["X": jointPositionsHipX - jointPositionsKneeX,
                                               "Y": jointPositionsHipY - jointPositionsKneeY]
@@ -213,18 +190,15 @@ class PoseNet {
             let vectorKneeHipY = vectorKneeHip["Y"], let vectorKneeAnkleY = vectorKneeAnkle["Y"] else {
                 return innerAngle
         }
-        
         let scalarProduct = (vectorKneeHipX * vectorKneeAnkleX + vectorKneeHipY * vectorKneeAnkleY)
         let amountProduct = sqrt(pow(vectorKneeHip["X"]!, 2) + pow(vectorKneeHip["Y"]!, 2)) *
             sqrt(pow(vectorKneeAnkle["X"]!, 2) + pow(vectorKneeAnkle["Y"]!, 2))
-        
         // Prevent divided by zero bug
         if amountProduct != 0.0 {
             innerAngle = acos(scalarProduct / amountProduct) * 180 / Float.pi
         } else {
             print("Error. At least one vector is of size 0")
         }
-
         return innerAngle
     }
 
@@ -281,31 +255,36 @@ class PoseNet {
         return context.createCGImage(inputImage, from: inputImage.extent)
     }
     
-    /// Draw a circle in the location of the given joint.
-    /// Returns an UIImage with the specified edges and joints drawn on it.
+    /// Runs the given image through the model and saves the output in the respective variables
     ///
     /// - parameters:
     ///     - image: The image to be analysed.
-    func predict (_ image: UIImage) -> UIImage {
-        // Add alternative image which is definitely shipped once
-        // swiftlint:disable force_unwrapping
-        let alternativeImage = UIImage(systemName: "bolt")!
-        // swiftlint:enable force_unwrapping
-        
+    func predict (_ image: UIImage) -> PoseNetPredictionOutput {
         // Convert UIImage into a CGImage, because this is what the model requires as input
+        
+        //standard picture
+        let defaultImage = UIImage(systemName: "heart.fill")!
+        let defaultCIImage = CIImage(image: defaultImage)
+        let defaultCGImage = convertCIImageToCGImage(inputImage: defaultCIImage!)!
+        
+        let errorOutput = PoseNetPredictionOutput(degree: 0,
+                                                  image: defaultCGImage,
+                                                  outputQualityAcceptable: false,
+                                                  pose: Pose())
+        
         guard let resizedImage = image.resizeTo(size: Constants.modelInputSize) else {
             print("Error. Image could not be resized.")
-            return alternativeImage
+            return errorOutput
         }
-        
         guard let ciImage = CIImage(image: resizedImage) else {
             print("Error. CIImage could not be created.")
-            return alternativeImage
+            return errorOutput
         }
         guard let cgImage = convertCIImageToCGImage(inputImage: ciImage) else {
-            print("Error. CGImage could not be created")
-            return alternativeImage
+            print("Error. CGImage could not be created.")
+            return errorOutput
         }
+        
         // Input the converted image into the model and let it run
         let poseNetInput = PoseNetInput(image: cgImage, size: Constants.modelInputSize)
         
@@ -319,24 +298,29 @@ class PoseNet {
             let poseBuilder = PoseBuilder(output: poseNetOutput,
                                           configuration: poseBuilderConfiguration,
                                           inputImage: cgImage)
-            pose = poseBuilder.pose
+            let detectedPose = poseBuilder.pose
+            
             // Calculate the angles between the joints
-            degree = calcAngleBetweenJoints()
-            // Add the joints and edges to the original image
-            return show(on: cgImage)
+            let angleDegree = calcAngleBetweenJoints(detectedPose)
+            
+            // assess the output quality of the model
+            let isOutputQualityAcceptable = assessOutputQuality(detectedPose)
+            
+            // Create object for the output
+            let poseNetPredictionOutput = PoseNetPredictionOutput(degree: angleDegree,
+                                                                  image: cgImage,
+                                                                  outputQualityAcceptable: isOutputQualityAcceptable,
+                                                                  pose: detectedPose)
+            
+            return(poseNetPredictionOutput)
         } else {
             print("Error. Prediction could not be found.")
-            return UIImage(named: "placeholder")!
+            return errorOutput
         }
     }
     
     // Asses the output quality of the model by checking the confidence values and the X coordinates of the joints
-    func assessOutputQuality() -> Bool {
-        guard let pose = pose else {
-            print("Pose instance could not be retrieved")
-            return false
-        }
-        
+    func assessOutputQuality(_ pose: Pose) -> Bool {
         // Assess confidence value of model
         // Iterate through the confidence values of the joints to find the lowest confidence value
         var lowestConfidence: Double = 1.01

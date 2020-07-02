@@ -19,8 +19,6 @@ struct WelcomeView: View {
     }
     
     // MARK: State Instance Properties
-    // used to hide the navigation bar
-    @State private var isNavigationBarHidden: Bool = true
     // used to activate the NavigationLink (next screen)
     @State private var newRecordButtonPressed: Bool = false
     
@@ -30,7 +28,7 @@ struct WelcomeView: View {
         // starts the navigation stack (screens are loaded "on top" of each other
         NavigationView {
             
-            //GeometryReader to allow for percentage alignments
+            // GeometryReader to allow for percentage alignments
             GeometryReader { geometry in
                 
                 // Outer VStack
@@ -40,6 +38,7 @@ struct WelcomeView: View {
                     LogoAndHeadlineView(
                         headline: "Hello!",
                         showLogo: false,
+                        allowToPopView: false,
                         height: geometry.size.height * Constants.headerHeightPercentage)
                     
                     // SubHeadline
@@ -50,20 +49,19 @@ struct WelcomeView: View {
                     
                     Spacer()
                     
-                    // Navigation
-                    VStack(spacing: 16.0) {
-                        NavigationLink(
-                            destination: InstructionsView(
-                                isNavigationBarHidden: self.$isNavigationBarHidden),
-                            isActive: self.$newRecordButtonPressed) {
-                                DefaultButton(action: {
-                                    self.newRecordButtonPressed.toggle()
-                                    self.isNavigationBarHidden = false
-                                }) {
-                                    Text("Start")
-                                        .frame(width: geometry.size.width / 3.0)
-                                }
-                        }
+                    // "Start" button to InstructionsView
+                    NavigationLink(
+                        destination: InstructionsView()
+                            // hide the navigation bar there, too
+                            .navigationBarTitle("")
+                            .navigationBarHidden(true),
+                        isActive: self.$newRecordButtonPressed) {
+                            DefaultButton(action: {
+                                self.newRecordButtonPressed.toggle()
+                            }) {
+                                Text("Start")
+                                    .frame(width: geometry.size.width / 3.0)
+                            }
                     }
                     
                     Spacer()
@@ -71,16 +69,13 @@ struct WelcomeView: View {
                     // Show past records
                     PastRecords()
                     
-                }.onAppear(perform: {
-                    // always hidden on this screen
-                    self.isNavigationBarHidden = true
-                })
-                    .padding(.bottom)
+                }.padding(.bottom)
+                    
                     // hide the navigation bar
                     .navigationBarTitle("")
-                    .navigationBarHidden(self.isNavigationBarHidden)
+                    .navigationBarHidden(true)
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

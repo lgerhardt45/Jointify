@@ -6,16 +6,22 @@
 //  Copyright © 2020 Lukas Gerhardt. All rights reserved.
 //
 
+// MARK: Imports
 import SwiftUI
 
+// MARK: - Logo
 struct Logo: View {
+    
+    // MARK: Type Properties
+    static let width: CGFloat = 192
+    static let height: CGFloat = 64
     
     // MARK: Body
     var body: some View {
         Image("LogoMitText")
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: 192, height: 64)
+            .frame(width: Logo.width, height: Logo.height)
     }
 }
 

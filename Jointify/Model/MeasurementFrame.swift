@@ -11,9 +11,18 @@ import Foundation
 import UIKit
 
 // MARK: - MeasurementFrame
-struct MeasurementFrame: Hashable {
+struct MeasurementFrame: Hashable, Codable {
     
     // MARK: Stored Instance Properties
     let degree: Float
-    let image: UIImage
+    let image: Data
+    
+    init(degree: Float, image: UIImage) {
+        self.degree = degree
+        if let imageData = image.pngData() {
+            self.image = imageData
+        } else {
+            self.image = UIImage(systemName: "heart.fill")!.pngData()!
+        }
+    }
 }

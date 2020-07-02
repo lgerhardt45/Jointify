@@ -19,12 +19,14 @@ struct ProcessingView: View {
     // MARK: State Instance Propoerties
     @State private var progress: Int = 0
     @State private var total: Int = 0
+    @State private var remainingFrames: Int = 0
     @State private var finishedProcessing: Bool = false
     @State private var measurement: Measurement?
     @State private var acceptedFramesCounter = 0
     
     // MARK: Stored Instance Properties
-    private let acceptedFramesThreshold: Double = 0.7
+    private let acceptedFramesThreshold: Double = 0.45
+    let chosenSide: Side
     
     // MARK: Body
     var body: some View {
@@ -36,20 +38,25 @@ struct ProcessingView: View {
             VStack(spacing: 16.0) {
                 
                 // pass analysed images further
-                NavigationLink(destination:
-                    VideoResultView(measurement: self.measurement ?? Measurement()),
-                               isActive: self.$finishedProcessing) { EmptyView() }
+                NavigationLink(
+                    destination: VideoResultView(measurement: self.measurement ?? Measurement())
+                        // hide the navigation bar of the VideoResultView, too
+                        .navigationBarTitle("")
+                        .navigationBarHidden(true),
+                    isActive: self.$finishedProcessing) { EmptyView() }
                 
                 // 20% for the headline
-                LogoAndHeadlineView(headline: "Analyzing", showLogo: true, height: geometry.size.height * 0.20)
+                LogoAndHeadlineView(
+                    headline: "Analyzing...",
+                    showLogo: true,
+                    allowToPopView: false,
+                    height: geometry.size.height * 0.20
+                )
                 
-                // subheadline
-                SubHeadline(subheadline: "Please wait...", width: geometry.size.width / 2.0)
-                
-                // Placeholder
-                Text("Insert fun facts and info stuff here")
-                
-                Spacer()
+                InfoView(show: .constant(true),
+                         displayDismissButton: false,
+                         width: geometry.size.width * 0.9)
+                    .padding(.vertical)
                 
                 ProgressBar(
                     currentProgress: self.$progress,
@@ -58,6 +65,7 @@ struct ProcessingView: View {
                     height: 20
                 )
             }.padding(.bottom, 32)
+                
                 // start the analysis when screen is loaded
                 .onAppear(perform: {
                     guard let videoUrl = self.videoUrl else {
@@ -67,14 +75,26 @@ struct ProcessingView: View {
                     
                     let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
                     
+                    // TODO: Make this a Result<AnalysisResult, AnalysisErro>
                     self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
                         
-                        // set the measurement property when done
-                        self.measurement = Measurement(
-                            date: Date(),
-                            videoUrl: videoUrl,
-                            frames: drawnFrames
-                        )
+                        if let maxROMFrame = drawnFrames.first,
+                            let minROMFrame = drawnFrames.last {
+                            
+                            // set the measurement property when done
+                            let measurement = Measurement(
+                                date: Date(),
+                                minROMFrame: minROMFrame,
+                                maxROMFrame: maxROMFrame
+                            )
+                            
+                            // save to DataHandler
+                            DataHandler.saveNewMeasurement(measurement: measurement)
+                            self.measurement = measurement
+                            
+                        } else {
+                            self.measurement = nil
+                        }
                         
                         // trigger navigation to VideoResultView
                         self.finishedProcessing.toggle()
@@ -97,7 +117,7 @@ struct ProcessingView: View {
         generator.appliesPreferredTrackTransform = true
         
         // change frequency of frame creation here by making it a float
-        for index: Int in 0 ..< Int(duration) {
+        for index in stride(from: 0.0, to: duration, by: 0.33) {
             let time: CMTime = CMTimeMakeWithSeconds(Float64(index), preferredTimescale: 600)
             let image: CGImage
             do {
@@ -115,59 +135,113 @@ struct ProcessingView: View {
     
     /// runs the machine learning model on an array of UIImages and returns an array of MeasurementFrame instances
     private func analyseVideo(frames: [UIImage], completion: @escaping ([MeasurementFrame]) -> Void) {
-        
+        // total number of frames
         self.total = frames.count
         
+        var qualityAssessmentFailed = false
         // instantiate PoseNet model
-        let poseNet = PoseNet(side: .right)
+        print("Chosen side: \(self.chosenSide)")
+        let poseNet = PoseNet(side: self.chosenSide)
         
         // let model run asnyc
         let queue = DispatchQueue(label: "ml-queue", qos: .utility)
         queue.async {
             
             print("Starting PoseNet analysis")
-            
             var returnMeasurementFrames: [MeasurementFrame] = []
+            var poseNetPredictionOutputArray: [PoseNetPredictionOutput] = []
             
             for (frameCount, frame) in frames.enumerated() {
+                print("Analysing frame \(frameCount+1)/\(frames.count)")
                 
-                print("Analysing frame \(frameCount)/\(frames.count)")
+                // let model run over current frame
+                let poseNetPredictionOutput = poseNet.predict(frame)
                 
-                let drawnImage = poseNet.predict(frame)
-                
-                let outputQualityAcceptable = poseNet.assessOutputQuality()
-
                 // Only append measurement frame if it fulfills quality criteria
-                if outputQualityAcceptable {
+                if poseNetPredictionOutput.outputQualityAcceptable {
                     self.acceptedFramesCounter += 1
-                    returnMeasurementFrames.append(
-                        MeasurementFrame(
-                            degree: poseNet.calcAngleBetweenJoints(),
-                            image: drawnImage
-                        )
-                    )
+                    poseNetPredictionOutputArray.append(poseNetPredictionOutput)
                 }
                 
                 self.progress += 1
                 
+                self.remainingFrames = self.total - self.progress
+                
+                ///Provide early exit possibility if acceptedFramesThreshold cannot be reached anymore
+                /// -> too little frames were of sufficient quality
+                if (Double(self.acceptedFramesCounter + self.remainingFrames)
+                    / Double(self.total)) < self.acceptedFramesThreshold {
+                    qualityAssessmentFailed = true
+                    break
+                }
             }
             
-            let acceptedFramesPercentage = Double(self.acceptedFramesCounter) / Double(self.progress)
-            
-            if acceptedFramesPercentage < self.acceptedFramesThreshold {
-                print("Error. Please submit another video.")
+            // Check if video could be analyzed or if the qualitity assessment failed
+            if qualityAssessmentFailed {
+                
+                print("Video could not be anaylzed successfully")
+                completion(returnMeasurementFrames)
+                
+            } else {
+                
+                // Find frames with min and max degree and only draw joints on these frames
+                 guard let poseNetMax = self.findFrameWithDegree(poseNetPredictionOutputArray, .maximum),
+                     let poseNetMin = self.findFrameWithDegree(poseNetPredictionOutputArray, .minimum) else {
+                         print("Minimium or maximum degree could not be obtained")
+                         return
+                 }
+                 
+                 // Draw joints on frame with max degree
+                 returnMeasurementFrames.append(
+                     MeasurementFrame(
+                         degree: poseNetMax.degree,
+                         image: poseNet.show(poseNetMax.image, poseNetMax.pose)
+                     )
+                 )
+                
+                 // Draw joints on frame with min degree
+                  returnMeasurementFrames.append(
+                    MeasurementFrame(
+                        degree: poseNetMin.degree,
+                        image: poseNet.show(poseNetMin.image, poseNetMin.pose)
+                    )
+                )
+                 
+                 // send when done
+                 print("Done with PoseNet analysis")
+                 completion(returnMeasurementFrames)
             }
-            
-            // send when done
-            print("Done with PoseNet analysis")
-            completion(returnMeasurementFrames)
         }
+    }
+    
+    /// Find frames with maximum or minimum degree
+    private func findFrameWithDegree(_ poseNetPredictionOutputArray: [PoseNetPredictionOutput],
+                                     _ value: ExtremeValue) -> PoseNetPredictionOutput? {
+        var poseNetPredictionOutputDegree: PoseNetPredictionOutput?
+        var degree: Float
+        
+        switch value {
+        case .maximum:
+            degree = 0
+            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree > degree {
+                poseNetPredictionOutputDegree = poseNetPredictionOutput
+                degree = poseNetPredictionOutput.degree
+            }
+        case .minimum:
+            degree = 361
+            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree < degree {
+                poseNetPredictionOutputDegree = poseNetPredictionOutput
+                degree = poseNetPredictionOutput.degree
+            }
+        }
+        
+        return poseNetPredictionOutputDegree
     }
 }
 
 // MARK: - Previews
 struct ProcessingView_Previews: PreviewProvider {
     static var previews: some View {
-        ProcessingView(videoUrl: .constant(nil))
+        ProcessingView(videoUrl: .constant(nil), chosenSide: .right)
     }
 }

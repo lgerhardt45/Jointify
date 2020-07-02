@@ -11,12 +11,7 @@ import SwiftUI
 
 // MARK: - InstructionsView
 struct InstructionsView: View {
-    
-    // MARK: Binding Instance Properties
-    // navigation bar properties (hidden or not) lie onn avigation view
-    //   (root view) and have to be modified there
-    @Binding var isNavigationBarHidden: Bool
-    
+
     // MARK: State Instance Properties
     @State var understoodButtonPressed: Bool = false
     
@@ -30,37 +25,34 @@ struct InstructionsView: View {
             VStack(spacing: 16.0) {
                 
                 // 20% for the Header
-                LogoAndHeadlineView(headline: "Instructions", showLogo: true, height: geometry.size.height * 0.20)
-                
-                // SubHeadline
-                SubHeadline(
-                    subheadline: "How do I record a measurement?",
-                    width: geometry.size.width / 2.0
+                LogoAndHeadlineView(
+                    headline: "Beta Instructions",
+                    showLogo: true,
+                    allowToPopView: true,
+                    height: geometry.size.height * 0.20
                 )
                 
                 // Content
-                InstructionContent().padding()
+                InstructionContent()
+                    .padding(.horizontal, 24)
                 
-                Spacer()
-                
-                // Move video data to ProcessingView
-                VStack(spacing: 16.0) {
-                    NavigationLink(
-                        destination: ChooseInputView(
-                        ),
-                        isActive: self.$understoodButtonPressed
-                    ) {
-                        DefaultButton(action: {
-                            // activate NavigationLink to ChooseInputView
-                            self.understoodButtonPressed.toggle()
-                        }) {
-                            Text("I understand")
-                                .frame(width: geometry.size.width / 3.0)
-                        } }
+                // "I understand" button to ChooseInputView
+                NavigationLink(
+                    destination: ChooseInputView()
+                        // hide the navigation bar on the ChooseInputView, too
+                        .navigationBarTitle("")
+                        .navigationBarHidden(true),
+                    isActive: self.$understoodButtonPressed
+                ) {
+                    DefaultButton(action: {
+                        // activate NavigationLink to ChooseInputView
+                        self.understoodButtonPressed.toggle()
+                    }) {
+                        Text("I understand")
+                            .frame(width: geometry.size.width / 3.0)
+                    }
                 }
             }.padding(.bottom, 32)
-                .navigationBarTitle(Text("Instructions"), displayMode: .inline)
-                .navigationBarHidden(self.isNavigationBarHidden) // is turned to 'false' in WelcomeView
         }
     }
 }
@@ -69,11 +61,11 @@ struct InstructionsView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            InstructionsView(isNavigationBarHidden: .constant(false))
+            InstructionsView()
                 .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
                 .previewDisplayName("iPhone SE")
             
-            InstructionsView(isNavigationBarHidden: .constant(false))
+            InstructionsView()
                 .previewDevice(PreviewDevice(rawValue: "iPhone XS Max"))
                 .previewDisplayName("iPhone XS Max")
         }
