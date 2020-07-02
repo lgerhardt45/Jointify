@@ -66,36 +66,41 @@ struct ProcessingView: View {
                     height: 20
                 )
             }.padding(.bottom, 32)
+                
                 // start the analysis when screen is loaded
-                .onAppear(perform: {
-                    guard let videoUrl = self.videoUrl else {
-                        print("videoUrl could not be retrieved")
-                        return
-                    }
-                    
-                    let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
-                    
-                    self.analyseVideo(frames: videoAsImageArray) { analysisResult  in
-                        
-                        switch analysisResult {
-                        case .success(let measurement):
-                            
-                            // save to DataHandler
-                            DataHandler.saveNewMeasurement(measurement: measurement)
-                            self.measurement = measurement
-                            
-                            // trigger navigation to VideoResultView
-                            self.finishedProcessing.toggle()
-                            
-                        case .failure(let error):
-                            print("Failure")
-                        }
-                    }
-                })
+                .onAppear(perform: self.analysis)
         }
     }
     
     // MARK: Private Instance Methods
+    /// starts the PoseNet analysis on the loaded video(url)
+    private func analysis() {
+        
+        guard let videoUrl = self.videoUrl else {
+            print("videoUrl could not be retrieved")
+            return
+        }
+        
+        let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
+        
+        self.analyseVideo(frames: videoAsImageArray) { analysisResult  in
+            
+            switch analysisResult {
+            case .success(let measurement):
+                
+                // save to DataHandler
+                DataHandler.saveNewMeasurement(measurement: measurement)
+                self.measurement = measurement
+                
+                // trigger navigation to VideoResultView
+                self.finishedProcessing.toggle()
+                
+            case .failure(let error):
+                print("Failure")
+            }
+        }
+    }
+    
     /// From https://stackoverflow.com/questions/42665271/swift-get-all-frames-from-video
     /// takes the NSURL of a video and converts it to an UIImage array by taking frame by frame (one per second)
     private func transformVideoToImageArray(videoUrl: NSURL) -> [UIImage] {
