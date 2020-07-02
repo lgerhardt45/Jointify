@@ -20,12 +20,15 @@ struct ResultView: View {
     @State private var homeButtonPressed: Bool = false
     // Report button
     @State private var isShowingMailView: Bool = false
+    @State private var isShowingCannotSendMailView: Bool = false
     @State private var result: Result<MFMailComposeResult, Error>?
     
     // MARK: Stored Instance Properties
     let measurement: Measurement
     let mockedPreviousMinValue: Int = -45
     let mockedPreviousMaxValue: Int = 80
+    let cannotSendMailErrorMessage =
+    "We cannot send the report. Please make sure that your mail account is setup on your phone."
     
     // MARK: Computed Instance Properties
     let canSendMail: Bool = MFMailComposeViewController.canSendMail()
@@ -104,19 +107,33 @@ struct ResultView: View {
                         Text("Done")
                             .frame(width: geometry.size.width / 3.0)
                     }
+                    
                     // Report button
                     DefaultButton(
                         mode: self.canSendMail ? .enabled : .disabled,
                         action: {
-                            self.isShowingMailView.toggle()
+                            if self.canSendMail {
+                                self.isShowingMailView.toggle()
+                            } else {
+                                self.isShowingCannotSendMailView.toggle()
+                            }
                     }) {
                         self.canSendMail ?
                             self.possibleMailLabel.frame(width: geometry.size.width / 3.0) :
-                            self.notPossibleMailLabel.frame(width: geometry.size.width / 3.0)
+                            self.notPossibleMailLabel.frame(width: geometry.size.width / 2.0)
                     }
+                        
                     .sheet(isPresented: self.$isShowingMailView) {
                         MailView(result: self.$result)
                     }
+    
+                    .alert(isPresented: self.$isShowingCannotSendMailView) {
+                        Alert(
+                            title: Text("Mail not set up"),
+                            message: Text(self.cannotSendMailErrorMessage),
+                            dismissButton: .cancel(Text("Dismiss")))
+                    }
+                    
                 }
                 .padding(.bottom, 32)
                 
