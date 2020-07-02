@@ -63,10 +63,11 @@ struct ProcessingView: View {
                          displayDismissButton: false,
                          width: geometry.size.width * 0.9)
                     .padding(.vertical)
-                                    
+                
                 ProgressBar(
                     currentProgress: self.$progress,
                     total: self.$total,
+                    failed: self.$analysisFailed,
                     maxWidth: 150,
                     height: 20
                 )

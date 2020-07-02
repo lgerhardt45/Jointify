@@ -15,14 +15,27 @@ struct ProgressBar: View {
     // MARK: Binding Instance Properties
     @Binding var currentProgress: Int
     @Binding var total: Int
+    @Binding var failed: Bool
     
     // MARK: Computed Properties
     private var fractionDone: Double {
-        return total == 0 ? 0 : Double(currentProgress) / Double(total)
+        if !self.failed {
+            return total == 0 ? 0 : Double(currentProgress) / Double(total)
+        } else {
+            return 1
+        }
     }
     
     private var barProgress: CGFloat {
-        return CGFloat(fractionDone) * maxWidth
+        return self.failed ? maxWidth : CGFloat(fractionDone) * maxWidth
+    }
+    
+    private var stateColor: Color {
+        if !self.failed {
+            return barProgress < 0.9 * maxWidth ? .lightBlue : .green
+        } else {
+            return .red
+        }
     }
         
     // MARK: Instance Properties
@@ -41,22 +54,27 @@ struct ProgressBar: View {
                 
                 // progress bar
                 RoundedRectangle(cornerRadius: 5)
-                    .foregroundColor(barProgress < 0.9 * maxWidth ? .lightBlue : .green)
+                    .foregroundColor(stateColor)
                     .frame(
                         width: barProgress <= self.maxWidth ? barProgress : self.maxWidth,
                         height: self.height)
                 
             }.padding()
             
-            Text("\(Int(fractionDone * 100))% done")
+            Text(self.failed ? "Analysis failed 😔" : "\(Int(fractionDone * 100))% done")
             
         }
-        
     }
 }
 
 struct ProgressBar_Previews: PreviewProvider {
     static var previews: some View {
-        ProgressBar(currentProgress: .constant(9), total: .constant(10), maxWidth: 150, height: 20)
+        ProgressBar(
+            currentProgress: .constant(9),
+            total: .constant(10),
+            failed: .constant(true),
+            maxWidth: 150,
+            height: 20
+        )
     }
 }
