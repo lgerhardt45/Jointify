@@ -29,7 +29,7 @@ struct ProcessingView: View {
     private let errorMessage = """
         Unfortunately, the analysis failed.
         Please follow the instructions carefully when preparing your video for the analysis and try again.
-        NOTE: In the future, we want to show you a detailed reason, why.
+        NOTE: In the future, we want to show you a detailed reason for the failure.
     """
     private let acceptedFramesThreshold: Double = 0.45
     let chosenSide: Side
