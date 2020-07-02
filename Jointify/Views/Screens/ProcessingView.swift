@@ -15,7 +15,7 @@ struct ProcessingView: View {
     
     // MARK: Binding Instance Properties
     @Binding var videoUrl: NSURL?
-
+    
     // MARK: State Instance Propoerties
     @State private var progress: Int = 0
     @State private var total: Int = 0
@@ -53,12 +53,11 @@ struct ProcessingView: View {
                     height: geometry.size.height * 0.20
                 )
                 
-                // Placeholder
                 InfoView(show: .constant(true),
                          displayDismissButton: false,
                          width: geometry.size.width * 0.9)
                     .padding(.vertical)
-                                    
+                
                 ProgressBar(
                     currentProgress: self.$progress,
                     total: self.$total,
@@ -66,6 +65,7 @@ struct ProcessingView: View {
                     height: 20
                 )
             }.padding(.bottom, 32)
+                
                 // start the analysis when screen is loaded
                 .onAppear(perform: {
                     guard let videoUrl = self.videoUrl else {
@@ -202,9 +202,12 @@ struct ProcessingView: View {
             
             // Check if video could be analyzed or if the qualitity assessment failed
             if qualityAssessmentFailed {
+                
                 print("Video could not be anaylzed successfully")
                 completion(returnMeasurementFrames)
+                
             } else {
+                
                 // Find frames with min and max degree and only draw joints on these frames
                  guard let poseNetMax = self.findFrameWithDegree(poseNetPredictionOutputArray, .maximum),
                      let poseNetMin = self.findFrameWithDegree(poseNetPredictionOutputArray, .minimum) else {
