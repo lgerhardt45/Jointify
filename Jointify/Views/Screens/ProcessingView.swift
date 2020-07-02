@@ -133,30 +133,6 @@ struct ProcessingView: View {
         return frames
     }
     
-    /// Find frames with maximum or minimum degree
-    private func findFrameWithDegree(_ poseNetPredictionOutputArray: [PoseNetPredictionOutput],
-                                     _ value: ExtremeValue) -> PoseNetPredictionOutput? {
-        var poseNetPredictionOutputDegree: PoseNetPredictionOutput?
-        var degree: Float
-        
-        switch value {
-        case .maximum:
-            degree = 0
-            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree > degree {
-                poseNetPredictionOutputDegree = poseNetPredictionOutput
-                degree = poseNetPredictionOutput.degree
-            }
-        case .minimum:
-            degree = 361
-            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree < degree {
-                poseNetPredictionOutputDegree = poseNetPredictionOutput
-                degree = poseNetPredictionOutput.degree
-            }
-        }
-        
-        return poseNetPredictionOutputDegree
-    }
-    
     /// runs the machine learning model on an array of UIImages and returns an array of MeasurementFrame instances
     private func analyseVideo(frames: [UIImage], completion: @escaping ([MeasurementFrame]) -> Void) {
         // total number of frames
@@ -236,6 +212,30 @@ struct ProcessingView: View {
                  completion(returnMeasurementFrames)
             }
         }
+    }
+    
+    /// Find frames with maximum or minimum degree
+    private func findFrameWithDegree(_ poseNetPredictionOutputArray: [PoseNetPredictionOutput],
+                                     _ value: ExtremeValue) -> PoseNetPredictionOutput? {
+        var poseNetPredictionOutputDegree: PoseNetPredictionOutput?
+        var degree: Float
+        
+        switch value {
+        case .maximum:
+            degree = 0
+            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree > degree {
+                poseNetPredictionOutputDegree = poseNetPredictionOutput
+                degree = poseNetPredictionOutput.degree
+            }
+        case .minimum:
+            degree = 361
+            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree < degree {
+                poseNetPredictionOutputDegree = poseNetPredictionOutput
+                degree = poseNetPredictionOutput.degree
+            }
+        }
+        
+        return poseNetPredictionOutputDegree
     }
 }
 
