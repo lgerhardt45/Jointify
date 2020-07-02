@@ -92,14 +92,14 @@
 		80FB49E42496AD6D001C3DAE /* InstructionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFDB742492991B0021124C /* InstructionContent.swift */; };
 		80FB49E52496AD78001C3DAE /* MediaPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754024865483005CB6E5 /* MediaPicker.swift */; };
 		80FB49E62496AD8A001C3DAE /* ChooseInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FB49D02492E698001C3DAE /* ChooseInputView.swift */; };
-		C190815C249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
-		C190815D249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
 		80FD2FAC24A1385900418DEB /* BodyHalf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FAB24A1385900418DEB /* BodyHalf.swift */; };
 		80FD2FAD24A1385900418DEB /* BodyHalf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FAB24A1385900418DEB /* BodyHalf.swift */; };
 		80FD2FB224A1514500418DEB /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB124A1514500418DEB /* CustomColors.swift */; };
 		80FD2FB324A1514500418DEB /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB124A1514500418DEB /* CustomColors.swift */; };
 		80FD2FB524A151AB00418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB424A151AB00418DEB /* DataHandler.swift */; };
 		80FD2FB624A151AB00418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB424A151AB00418DEB /* DataHandler.swift */; };
+		C190815C249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
+		C190815D249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
 		C1A84C9824A50ED100AB7B5D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A84C9724A50ED100AB7B5D /* InfoView.swift */; };
 		C1A84C9924A50ED100AB7B5D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A84C9724A50ED100AB7B5D /* InfoView.swift */; };
 /* End PBXBuildFile section */
