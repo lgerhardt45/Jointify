@@ -60,7 +60,6 @@ struct ResultView: View {
                     Spacer()
                     
                     // Content: Result Values
-
                     VStack(spacing: 16.0) {
                         
                         // current values
@@ -75,14 +74,6 @@ struct ResultView: View {
                         
                         // last values
                         VStack {
-                            
-                            HStack(spacing: 16.0) {
-
-                                ResultValues(valueType: "Max Value",
-                                             value: Int(round(self.measurement.maxROM)), showText: true)
-                                ResultValues(valueType: "Min Value",
-                                             value: Int(round(self.measurement.minROM)), showText: true)
-                            }
                             Text("Last Measurement (DD/MM/YY)")
                                 .font(.system(size: 18))
                                 .fontWeight(.light)
@@ -93,12 +84,11 @@ struct ResultView: View {
                                 ResultValues(valueType: "Min. Degree",
                                              value: self.mockedPreviousMinValue, showText: false)
                             }
-                            
-                            Button(action: {
-                                self.showInfoView.toggle()
-                            }) {
-                                Text("What do my values mean?")
-                            }.padding()
+                        }
+                        Button(action: {
+                            self.showInfoView.toggle()
+                        }) {
+                            Text("What do my values mean?")
                         }
                         
                     }
