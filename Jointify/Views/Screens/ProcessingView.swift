@@ -15,7 +15,7 @@ struct ProcessingView: View {
     
     // MARK: Binding Instance Properties
     @Binding var videoUrl: NSURL?
-
+    
     // MARK: State Instance Propoerties
     @State private var progress: Int = 0
     @State private var total: Int = 0
@@ -23,8 +23,14 @@ struct ProcessingView: View {
     @State private var finishedProcessing: Bool = false
     @State private var measurement: Measurement?
     @State private var acceptedFramesCounter = 0
+    @State private var analysisFailed: Bool = false
     
     // MARK: Stored Instance Properties
+    private let errorMessage = """
+        Unfortunately, the analysis failed.
+        Please follow the instructions carefully when preparing your video for the analysis and try again.
+        NOTE: In the future, we want to show you a detailed reason, why.
+    """
     private let acceptedFramesThreshold: Double = 0.45
     let chosenSide: Side
     
@@ -68,6 +74,17 @@ struct ProcessingView: View {
                 
                 // start the analysis when screen is loaded
                 .onAppear(perform: self.analysis)
+                
+                .alert(isPresented: self.$analysisFailed) {
+                    Alert(
+                        title: Text("Please try again"),
+                        message: Text(self.errorMessage),
+                        dismissButton: .cancel(Text("Try again")) {
+                            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
+                                .toWelcomeView()
+                        }
+                    )
+            }
         }
     }
     
@@ -84,6 +101,7 @@ struct ProcessingView: View {
         
         self.analyseVideo(frames: videoAsImageArray) { analysisResult  in
             
+            // work with the success and the passed through Measurement here
             switch analysisResult {
             case .success(let measurement):
                 
@@ -95,7 +113,14 @@ struct ProcessingView: View {
                 self.finishedProcessing.toggle()
                 
             case .failure(let error):
-                print("Failure")
+                
+                // work with the error type here
+                switch error {
+                case .acceptanceCriteriaFailed:
+                    self.analysisFailed.toggle()
+                default:
+                    print("Not implemented yet")
+                }
             }
         }
     }
