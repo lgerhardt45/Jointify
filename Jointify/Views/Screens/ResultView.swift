@@ -60,7 +60,20 @@ struct ResultView: View {
                     Spacer()
                     
                     // Content: Result Values
-                    VStack(spacing: 8.0) {
+
+                    VStack(spacing: 16.0) {
+                        
+                        // current values
+                        HStack(spacing: 16.0) {
+                            ResultValues(valueType: "Max Value",
+                                         value: Int(round(self.measurement.maxROMFrame.degree)),
+                                         showText: true)
+                            ResultValues(valueType: "Min Value",
+                                         value: Int(round(self.measurement.minROMFrame.degree)),
+                                         showText: true)
+                        }
+                        
+                        // last values
                         VStack {
                             
                             HStack(spacing: 16.0) {
@@ -144,10 +157,7 @@ struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
         
         ResultView(
-            measurement: Measurement(
-                date: Date(),
-                frames: []
-            )
+            measurement: DataHandler.mockMeasurements[0]
         )
     }
 }
