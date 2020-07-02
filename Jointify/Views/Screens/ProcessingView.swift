@@ -75,17 +75,26 @@ struct ProcessingView: View {
                     
                     let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
                     
+                    // TODO: Make this a Result<AnalysisResult, AnalysisErro>
                     self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
                         
-                        // set the measurement property when done
-                        let measurement = Measurement(
-                            date: Date(),
-                            frames: drawnFrames
-                        )
-                        self.measurement = measurement
-                        
-                        // save to DataHandler
-                        DataHandler.saveNewMeasurement(measurement: measurement)
+                        if let maxROMFrame = drawnFrames.first,
+                            let minROMFrame = drawnFrames.last {
+                            
+                            // set the measurement property when done
+                            let measurement = Measurement(
+                                date: Date(),
+                                minROMFrame: minROMFrame,
+                                maxROMFrame: maxROMFrame
+                            )
+                            
+                            // save to DataHandler
+                            DataHandler.saveNewMeasurement(measurement: measurement)
+                            self.measurement = measurement
+                            
+                        } else {
+                            self.measurement = nil
+                        }
                         
                         // trigger navigation to VideoResultView
                         self.finishedProcessing.toggle()

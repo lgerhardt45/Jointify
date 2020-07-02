@@ -8,13 +8,15 @@
 
 // MARK: Imports
 import Foundation
+import UIKit
 
 // MARK: - Measurement
 struct Measurement: Codable, Identifiable {
     
     // MARK: Stored Instance Properties
     let date: Date
-    let frames: [MeasurementFrame]
+    let minROMFrame: MeasurementFrame
+    let maxROMFrame: MeasurementFrame
     
     let bodyHalf: BodyHalf = .lower
     let jointName: JointName = .leftKnee
@@ -24,22 +26,25 @@ struct Measurement: Codable, Identifiable {
     var id: UUID = UUID()
 
     // MARK: Computed Instance Properties
-    var minROM: Float {
-        return frames.map({$0.degree}).min() ?? 0
+    var minROMValue: Float {
+        return minROMFrame.degree
     }
     var maxROM: Float {
-        return frames.map({$0.degree}).max() ?? 0
+        return maxROMFrame.degree
     }
     
     // MARK: Initializers
-    init(date: Date, frames: [MeasurementFrame]) {
+    init(date: Date, minROMFrame: MeasurementFrame, maxROMFrame: MeasurementFrame) {
         self.date = date
-        self.frames = frames
+        self.minROMFrame = minROMFrame
+        self.maxROMFrame = maxROMFrame
     }
     
+    // TODO: remove when proper check for failing to create an instance is setup
     /// creates a mock instance
     init() {
         self.date = Date()
-        self.frames = []
+        self.minROMFrame = MeasurementFrame(degree: 0, image: UIImage(named: "LogoMitText")!)
+        self.maxROMFrame = MeasurementFrame(degree: 0, image: UIImage(named: "LogoMitText")!)
     }
 }

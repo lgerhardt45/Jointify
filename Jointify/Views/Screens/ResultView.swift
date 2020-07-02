@@ -65,26 +65,27 @@ struct ResultView: View {
                         // current values
                         HStack(spacing: 16.0) {
                             ResultValues(valueType: "Max Value",
-                                         value: Int(round(self.measurement.maxROM)), showText: true)
+                                         value: Int(round(self.measurement.maxROMFrame.degree)),
+                                         showText: true)
                             ResultValues(valueType: "Min Value",
-                                         value: Int(round(self.measurement.minROM)), showText: true)
+                                         value: Int(round(self.measurement.minROMFrame.degree)),
+                                         showText: true)
                         }
                         
                         // last values
                         VStack {
-                            
                             Text("Last Measurement (DD/MM/YY)")
                                 .font(.system(size: 18))
                                 .fontWeight(.light)
                             
                             HStack(spacing: 16.0) {
-                                ResultValues(valueType: "Max Value",
+                                ResultValues(valueType: "Max Degree",
                                              value: self.mockedPreviousMaxValue, showText: false)
-                                ResultValues(valueType: "Min Value",
+                                ResultValues(valueType: "Min. Degree",
                                              value: self.mockedPreviousMinValue, showText: false)
                             }
                         }
-                        
+
                         // Button for InfoView
                         Button(action: {
                             self.showInfoView.toggle()
@@ -148,10 +149,7 @@ struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
         
         ResultView(
-            measurement: Measurement(
-                date: Date(),
-                frames: []
-            )
+            measurement: DataHandler.mockMeasurements[0]
         )
     }
 }
