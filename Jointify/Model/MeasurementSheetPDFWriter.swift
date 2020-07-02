@@ -10,6 +10,11 @@
 import SwiftUI
 import PDFKit
 
+// MARK: - PDFWriterError
+enum PDFWriterError: Error {
+    case writerError(String)
+}
+
 // MARK: - MeasurementSheetPDFWriter
 class MeasurementSheetPDFWriter {
     
@@ -39,32 +44,32 @@ class MeasurementSheetPDFWriter {
     //  = methods that are available to others
     
     /// creates the relevant PDF (upper and lower) with the measurements written onto it
-    func createPDF() -> Data? {
+    func createPDF(completion: (Result<Data, PDFWriterError>) -> Void) {
         
         // step 1: get template as UIImage
         guard let template: UIImage = loadTemplate() else {
-            print("Template could not be loaded.")
-            return nil
+            completion(.failure(.writerError("Template could not be loaded.")))
+            return
         }
         
         // step 2: locate writing position
-        guard let writingPosition: CGPoint = locateWritingPosition() else {
-            print("Could not determine writing position on the template")
-            return nil
+        guard let writingPositions: [CGPoint] = locateWritingPosition() else {
+            completion(.failure(.writerError("Could not determine writing position on the template")))
+            return
         }
         
         // step 3: write measurement on template
-        guard let filledTemplate: UIImage = writeMeasurement(onto: template, at: writingPosition) else {
-            print("Could not write on template.")
-            return nil
+        guard let filledTemplate: UIImage = writeMeasurement(onto: template, at: writingPositions) else {
+            completion(.failure(.writerError("Could not write on template.")))
+            return
         }
         
         guard let pdf: Data = exportToPDF(imageToConvert: filledTemplate) else {
-            print("Could not create PDFPage from image")
-            return nil
+            completion(.failure(.writerError("Could not create PDFPage from image")))
+            return
         }
         
-        return pdf
+        completion(.success(pdf))
     }
     
     // MARK: Private Instance Methods
