@@ -53,7 +53,6 @@ struct ProcessingView: View {
                     height: geometry.size.height * 0.20
                 )
                 
-                // Placeholder
                 InfoView(show: .constant(true),
                          displayDismissButton: false,
                          width: geometry.size.width * 0.9)
