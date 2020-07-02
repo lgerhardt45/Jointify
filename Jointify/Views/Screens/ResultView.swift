@@ -85,6 +85,8 @@ struct ResultView: View {
                                              value: self.mockedPreviousMinValue, showText: false)
                             }
                         }
+
+                        // Button for InfoView
                         Button(action: {
                             self.showInfoView.toggle()
                         }) {
