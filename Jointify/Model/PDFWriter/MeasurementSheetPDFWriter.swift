@@ -151,8 +151,10 @@ class MeasurementSheetPDFWriter {
         // draw base template
         image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
         
-        // TODO: is this right (min = left value?)
-        // TODO: check array length beforehand
+        guard points.count == 3 else {
+            return nil
+        }
+        
         let minROMLeftRect = CGRect(origin: points[0], size: image.size)
         let neutralROMMiddleRect = CGRect(origin: points[1], size: image.size)
         let maxROMRightRect = CGRect(origin: points[2], size: image.size)
