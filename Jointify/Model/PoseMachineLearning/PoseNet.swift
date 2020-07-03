@@ -64,7 +64,7 @@ class PoseNet {
         /// E.g. if you analyse the right knee, the joints rightHip, rightKnee & rightAnkle
         /// must have a confidence value above the specified threshold, if this is not fulfilled
         /// the whole image is rejected
-        static let confidenceThreshold: Double = 0.35
+        static let confidenceThreshold: Double = 0.3
     }
     
     // MARK: Stored Instance Properties
@@ -287,9 +287,7 @@ class PoseNet {
         
         // Input the converted image into the model and let it run
         let poseNetInput = PoseNetInput(image: cgImage, size: Constants.modelInputSize)
-        
         let prediction = try? self.model.prediction(from: poseNetInput)
-        
         if let prediction = prediction {
             // Obtain the results of the model and assign them
             let poseNetOutput = PoseNetOutput(prediction: prediction,
@@ -299,13 +297,10 @@ class PoseNet {
                                           configuration: poseBuilderConfiguration,
                                           inputImage: cgImage)
             let detectedPose = poseBuilder.pose
-            
             // Calculate the angles between the joints
             let angleDegree = calcAngleBetweenJoints(detectedPose)
-            
             // assess the output quality of the model
             let isOutputQualityAcceptable = assessOutputQuality(detectedPose)
-            
             // Create object for the output
             let poseNetPredictionOutput = PoseNetPredictionOutput(degree: angleDegree,
                                                                   image: cgImage,
@@ -329,12 +324,10 @@ class PoseNet {
                 lowestConfidence = joint.confidence
             }
         }
-        
         // If the lowest confidence value is under the threshold, the model output should not be used
         if lowestConfidence < Constants.confidenceThreshold {
             return false
         }
-        
         // Assess X coordinates of joints
         var otherSide: String
         var rationalCoordinates = true
@@ -345,18 +338,18 @@ class PoseNet {
         case .right:
             otherSide = "left"
         }
-        
         guard let jointPositionsHipXSide = jointPositions["\(side)HipX"],
             let jointPositionsKneeXSide = jointPositions["\(side)KneeX"],
             let jointPositionsAnkleXSide = jointPositions["\(side)AnkleX"],
             let jointPositionsHipXOtherSide = jointPositions[otherSide + "HipX"],
             let jointPositionsKneeXOtherSide = jointPositions[otherSide + "KneeX"],
-            let jointPositionsAnkleXOtherSide = jointPositions[otherSide + "AnkleX"]
+            let jointPositionsAnkleXOtherSide = jointPositions[otherSide + "AnkleX"],
+            let jointPositionsKneeYSide = jointPositions["\(side)KneeY"],
+            let jointPositionsAnkleYSide = jointPositions["\(side)AnkleY"]
         else {
             print("Error. At least one joint position could not be obtained.")
             return false
         }
-        
         // Check if X coordinates of right joint are larger than the X coordinates of the left joint and vice versa
         // If this is the case, the model output is irrational
         switch side {
@@ -373,7 +366,31 @@ class PoseNet {
                 rationalCoordinates = false
             }
         }
-        
+        // Fix "hockeystick problem", where hip and ankle are detected correctly,
+        // but the knee is taken from the other leg
+        switch side {
+        case .right:
+            if jointPositionsKneeXSide > jointPositionsAnkleXSide &&
+                jointPositionsKneeYSide > jointPositionsAnkleYSide {
+               rationalCoordinates = false
+            }
+        case .left:
+            if jointPositionsKneeXSide < jointPositionsAnkleXSide &&
+                jointPositionsKneeYSide > jointPositionsAnkleYSide {
+                rationalCoordinates = false
+            }
+        }
+        // Fix problem where hip is only detected correctly, but knee and ankle are taken from other leg
+        switch side {
+        case .right:
+            if jointPositionsHipXSide < jointPositionsAnkleXSide && jointPositionsHipXSide < jointPositionsKneeXSide {
+                rationalCoordinates = false
+            }
+        case .left:
+            if jointPositionsHipXSide > jointPositionsAnkleXSide && jointPositionsHipXSide > jointPositionsKneeXSide {
+                rationalCoordinates = false
+            }
+        }
         if !rationalCoordinates {
             return false
         } else {
