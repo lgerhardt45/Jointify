@@ -39,7 +39,7 @@ struct Measurement: Codable, Identifiable {
     }
 
     var neutralNullKneeMiddleValue: Int {
-        return maxROMValue >= 180 ? 0 : Int(round(180 - maxROMValue))
+        return maxROMValue >= 180 ? 0 : Int(round(maxROMValue))
     }
     
     var neutralNullKneeRightValue: Int {
