@@ -27,7 +27,7 @@ struct InstructionContent: View {
         "4) Bring your leg back into the initial position."
     
     let videoEditingInstructions1 =
-        "1) Start editing the video."
+        "1) Go to your Gallery and start editing the video."
     
     let videoEditingInstructions2 =
         "2) Trim video so that the first frame is the initial position as indicated above."
