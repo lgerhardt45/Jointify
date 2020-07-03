@@ -146,7 +146,7 @@ class MeasurementSheetPDFWriter {
         let rightROM = String(measurement.neutralNullKneeRightValue)
         
         let textColor = UIColor.black
-        let textFont = UIFont(name: "Helvetica Bold", size: 20)!
+        let textFont = UIFont(name: "Helvetica Bold", size: 25)!
         
         let scale = UIScreen.main.scale
         

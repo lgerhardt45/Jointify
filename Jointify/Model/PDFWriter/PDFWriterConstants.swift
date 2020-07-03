@@ -15,13 +15,13 @@ import UIKit
 enum PDFWriterConstants {
     
     // name
-    static let namePosition = CGPoint(x: 215, y: 75)
+    static let namePosition = CGPoint(x: 215, y: 70)
     
     // date
-    static let datePosition = CGPoint(x: 330, y: 125)
+    static let datePosition = CGPoint(x: 330, y: 120)
     
     // elbows
-    static let elbowYPosition = 525
+    static let elbowYPosition = 520
     // left elbow
     static let leftElbowLeftNeutralNullPosition = CGPoint(x: 675, y: PDFWriterConstants.elbowYPosition)
     static let leftElbowMiddleNeutralNullPosition = CGPoint(x: 735, y: PDFWriterConstants.elbowYPosition)
@@ -43,7 +43,7 @@ enum PDFWriterConstants {
     ]
     
     // knees
-    static let kneeYPosition = 550
+    static let kneeYPosition = 545
     // left knee
     static let leftKneeLeftNeutralNullPosition = CGPoint(x: 655, y: PDFWriterConstants.kneeYPosition)
     static let leftKneeMiddleNeutralNullPosition = CGPoint(x: 710, y: PDFWriterConstants.kneeYPosition)
@@ -55,9 +55,9 @@ enum PDFWriterConstants {
     ]
     
     // right knee
-    static let rightKneeLeftNeutralNullPosition = CGPoint(x: 500, y: PDFWriterConstants.kneeYPosition)
-    static let rightKneeMiddleNeutralNullPosition = CGPoint(x: 555, y: PDFWriterConstants.kneeYPosition)
-    static let rightKneeRightNeutralNullPosition = CGPoint(x: 610, y: PDFWriterConstants.kneeYPosition)
+    static let rightKneeLeftNeutralNullPosition = CGPoint(x: 495, y: PDFWriterConstants.kneeYPosition)
+    static let rightKneeMiddleNeutralNullPosition = CGPoint(x: 550, y: PDFWriterConstants.kneeYPosition)
+    static let rightKneeRightNeutralNullPosition = CGPoint(x: 605, y: PDFWriterConstants.kneeYPosition)
     static let rightKneeNeutralNullPositions = [
         PDFWriterConstants.rightKneeLeftNeutralNullPosition,
         PDFWriterConstants.rightKneeMiddleNeutralNullPosition,
