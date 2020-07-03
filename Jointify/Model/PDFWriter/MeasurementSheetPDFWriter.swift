@@ -50,7 +50,12 @@ class MeasurementSheetPDFWriter {
         }
         
         // step 3: write measurement on template
-        guard let filledTemplate: UIImage = writeMeasurement(onto: template, at: writingPositions) else {
+        let namePosition = PDFWriterConstants.namePosition
+        let datePosition = PDFWriterConstants.datePosition
+        guard let filledTemplate: UIImage = writeMeasurement(onto: template,
+                                                             at: writingPositions,
+                                                             namePosition: namePosition,
+                                                             datePosition: datePosition) else {
             completion(.failure(.writerError("Could not write on template.")))
             return
         }
@@ -129,8 +134,13 @@ class MeasurementSheetPDFWriter {
     
     /// writes measurement values in the right spot in the UIImage
     /// from https://stackoverflow.com/a/28907826
-    func writeMeasurement(onto image: UIImage, at points: [CGPoint]) -> UIImage? {
+    func writeMeasurement(onto image: UIImage,
+                          at points: [CGPoint],
+                          namePosition: CGPoint,
+                          datePosition: CGPoint) -> UIImage? {
         
+        let patientName = "Patient01"
+        let date = "\(measurement.date, formatter: DateFormats.dateOnlyFormatter)"
         let leftROM = String(measurement.neutralNullKneeLeftValue)
         let middleROM = String(measurement.neutralNullKneeMiddleValue)
         let rightROM = String(measurement.neutralNullKneeRightValue)
@@ -154,10 +164,14 @@ class MeasurementSheetPDFWriter {
             return nil
         }
         
+        let nameRect = CGRect(origin: namePosition, size: image.size)
+        let dateRect = CGRect(origin: datePosition, size: image.size)
         let minROMLeftRect = CGRect(origin: points[0], size: image.size)
         let neutralROMMiddleRect = CGRect(origin: points[1], size: image.size)
         let maxROMRightRect = CGRect(origin: points[2], size: image.size)
         
+        patientName.draw(in: nameRect, withAttributes: textFontAttributes)
+        date.draw(in: dateRect, withAttributes: textFontAttributes)
         leftROM.draw(in: minROMLeftRect, withAttributes: textFontAttributes)
         middleROM.draw(in: neutralROMMiddleRect, withAttributes: textFontAttributes)
         rightROM.draw(in: maxROMRightRect, withAttributes: textFontAttributes)
