@@ -40,7 +40,6 @@ struct Measurement: Codable, Identifiable {
         self.maxROMFrame = maxROMFrame
     }
     
-    // TODO: remove when proper check for failing to create an instance is setup
     /// creates a mock instance
     init() {
         self.date = Date()
