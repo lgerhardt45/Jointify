@@ -131,13 +131,12 @@ class MeasurementSheetPDFWriter {
     /// from https://stackoverflow.com/a/28907826
     func writeMeasurement(onto image: UIImage, at points: [CGPoint]) -> UIImage? {
         
-        // TODO: Use "ROM-values" in Measurement here
-        let minRom = String(Int(round(measurement.minROMFrame.degree)))
-        let neutralRom = "0"
-        let maxRom = String(Int(round(measurement.maxROMFrame.degree)))
+        let leftROM = String(measurement.neutralNullKneeLeftValue)
+        let middleROM = String(measurement.neutralNullKneeMiddleValue)
+        let rightROM = String(measurement.neutralNullKneeRightValue)
         
-        let textColor = UIColor.red
-        let textFont = UIFont(name: "Helvetica Bold", size: 15)!
+        let textColor = UIColor.black
+        let textFont = UIFont(name: "Helvetica Bold", size: 20)!
         
         let scale = UIScreen.main.scale
         
@@ -159,9 +158,9 @@ class MeasurementSheetPDFWriter {
         let neutralROMMiddleRect = CGRect(origin: points[1], size: image.size)
         let maxROMRightRect = CGRect(origin: points[2], size: image.size)
         
-        minRom.draw(in: minROMLeftRect, withAttributes: textFontAttributes)
-        neutralRom.draw(in: neutralROMMiddleRect, withAttributes: textFontAttributes)
-        maxRom.draw(in: maxROMRightRect, withAttributes: textFontAttributes)
+        leftROM.draw(in: minROMLeftRect, withAttributes: textFontAttributes)
+        middleROM.draw(in: neutralROMMiddleRect, withAttributes: textFontAttributes)
+        rightROM.draw(in: maxROMRightRect, withAttributes: textFontAttributes)
         
         // get final image from drawing environment
         let imageWithMeasurement = UIGraphicsGetImageFromCurrentImageContext()
