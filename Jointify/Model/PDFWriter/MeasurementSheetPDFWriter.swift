@@ -18,50 +18,6 @@ enum PDFWriterError: Error {
 // MARK: - MeasurementSheetPDFWriter
 class MeasurementSheetPDFWriter {
     
-    // MARK: Constants
-    enum Constants {
-        // add fixed on values on respective canvas
-        // left elbow
-        static let leftElbowLeftNeutralNullPosition = CGPoint(x: 675, y: 520)
-        static let leftElbowMiddleNeutralNullPosition = CGPoint(x: 725, y: 520) // TODO: richtig?
-        static let leftElbowRightNeutralNullPosition = CGPoint(x: 775, y: 520) // TODO: richtig?
-        static let leftElbowNeutralNullPositions = [
-            Constants.leftElbowLeftNeutralNullPosition,
-            Constants.leftElbowMiddleNeutralNullPosition,
-            Constants.leftElbowRightNeutralNullPosition
-        ]
-        
-        // right elbow
-        static let rightElbowLeftNeutralNullPosition = CGPoint(x: 495, y: 520)
-        static let rightElbowMiddleNeutralNullPosition = CGPoint(x: 545, y: 520) // TODO: richtig?
-        static let rightElbowRightNeutralNullPosition = CGPoint(x: 595, y: 520) // TODO: richtig?
-        static let rightElbowNeutralNullPositions = [
-            Constants.rightElbowLeftNeutralNullPosition,
-            Constants.rightElbowMiddleNeutralNullPosition,
-            Constants.rightElbowRightNeutralNullPosition
-        ]
-        
-        // left knee
-        static let leftKneeLeftNeutralNullPosition = CGPoint(x: 660, y: 544)
-        static let leftKneeMiddleNeutralNullPosition = CGPoint(x: 710, y: 544) // TODO: richtig?
-        static let leftKneeRightNeutralNullPosition = CGPoint(x: 760, y: 544) // TODO: richtig?
-        static let leftKneeNeutralNullPositions = [
-            Constants.leftKneeLeftNeutralNullPosition,
-            Constants.leftKneeMiddleNeutralNullPosition,
-            Constants.leftKneeRightNeutralNullPosition
-        ]
-        
-        // right knee
-        static let rightKneeLeftNeutralNullPosition = CGPoint(x: 495, y: 544)
-        static let rightKneeMiddleNeutralNullPosition = CGPoint(x: 545, y: 544) // TODO: richtig?
-        static let rightKneeRightNeutralNullPosition = CGPoint(x: 595, y: 544) // TODO: richtig?
-        static let rightKneeNeutralNullPositions = [
-            Constants.rightKneeLeftNeutralNullPosition,
-            Constants.rightKneeMiddleNeutralNullPosition,
-            Constants.rightKneeRightNeutralNullPosition
-        ]
-    }
-    
     // MARK: Stored Instance Properties
     let measurement: Measurement
     
@@ -140,10 +96,10 @@ class MeasurementSheetPDFWriter {
                     
                 case .leftKnee:
                     print("Getting CGPoints for left Knee")
-                    return Constants.leftKneeNeutralNullPositions
+                    return PDFWriterConstants.leftKneeNeutralNullPositions
                 case .rightKnee:
                     print("Getting CGPoints for right Knee")
-                    return Constants.rightKneeNeutralNullPositions
+                    return PDFWriterConstants.rightKneeNeutralNullPositions
                     
                 default: return nil // will not happen
                     
@@ -159,10 +115,10 @@ class MeasurementSheetPDFWriter {
                     
                 case .leftElbow:
                     print("Getting CGPoint for left elbow")
-                    return Constants.leftElbowNeutralNullPositions
+                    return PDFWriterConstants.leftElbowNeutralNullPositions
                 case .rightElbow:
                     print("Getting CGPoint for right elbow")
-                    return Constants.rightElbowNeutralNullPositions
+                    return PDFWriterConstants.rightElbowNeutralNullPositions
                     
                 default: return nil // will not happen
                     
