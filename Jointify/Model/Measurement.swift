@@ -24,12 +24,26 @@ struct Measurement: Codable, Identifiable {
     
     // swiftlint:disable:next identifier_name
     var id: UUID = UUID()
+    
     // MARK: Computed Instance Properties
     var minROMValue: Float {
         return minROMFrame.degree
     }
-    var maxROM: Float {
+    
+    var maxROMValue: Float {
         return maxROMFrame.degree
+    }
+    
+    var neutralNullKneeLeftValue: Int {
+        return maxROMValue >= 180 ? Int(round(maxROMValue - 180)) : 0
+    }
+
+    var neutralNullKneeMiddleValue: Int {
+        return maxROMValue >= 180 ? 0 : Int(round(180 - maxROMValue))
+    }
+    
+    var neutralNullKneeRightValue: Int {
+        return 180 - Int(round(minROMValue))
     }
     
     // MARK: Initializers
