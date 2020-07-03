@@ -35,6 +35,8 @@
 		6ED4222624A1E905007CA917 /* DateFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED4222524A1E905007CA917 /* DateFormats.swift */; };
 		6ED4222724A1E905007CA917 /* DateFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED4222524A1E905007CA917 /* DateFormats.swift */; };
 		76FB0BCAC64D40DE3D042719 /* Pods_Jointify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21F6BA9AA7770A6DA6E8D97A /* Pods_Jointify.framework */; };
+		80049FC224AF688F00F33CB8 /* PDFWriterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80049FC124AF688F00F33CB8 /* PDFWriterConstants.swift */; };
+		80049FC324AF688F00F33CB8 /* PDFWriterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80049FC124AF688F00F33CB8 /* PDFWriterConstants.swift */; };
 		80094B66247F0F60002A1A27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B65247F0F60002A1A27 /* AppDelegate.swift */; };
 		80094B68247F0F60002A1A27 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80094B67247F0F60002A1A27 /* SceneDelegate.swift */; };
 		80094B6C247F0F6B002A1A27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80094B6B247F0F6B002A1A27 /* Assets.xcassets */; };
@@ -102,6 +104,8 @@
 		80FD2FB624A151AB00418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB424A151AB00418DEB /* DataHandler.swift */; };
 		C198FD3824AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */; };
 		C198FD3924AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */; };
+		C190815C249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
+		C190815D249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
 		C1A84C9824A50ED100AB7B5D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A84C9724A50ED100AB7B5D /* InfoView.swift */; };
 		C1A84C9924A50ED100AB7B5D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A84C9724A50ED100AB7B5D /* InfoView.swift */; };
 /* End PBXBuildFile section */
@@ -142,6 +146,7 @@
 		6ED11546249E30BA0020E13F /* SubHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubHeadline.swift; sourceTree = "<group>"; };
 		6ED1154D249E4CCA0020E13F /* ResultValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultValues.swift; sourceTree = "<group>"; };
 		6ED4222524A1E905007CA917 /* DateFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormats.swift; sourceTree = "<group>"; };
+		80049FC124AF688F00F33CB8 /* PDFWriterConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFWriterConstants.swift; sourceTree = "<group>"; };
 		80094B62247F0F60002A1A27 /* Jointify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jointify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80094B65247F0F60002A1A27 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80094B67247F0F60002A1A27 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -174,6 +179,7 @@
 		80FD2FB424A151AB00418DEB /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.debug.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.debug.xcconfig"; sourceTree = "<group>"; };
 		C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionContentHelpers.swift; sourceTree = "<group>"; };
+		C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementSheetPDFWriter.swift; sourceTree = "<group>"; };
 		C1A84C9724A50ED100AB7B5D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -205,6 +211,7 @@
 				80FB49D22492E6E3001C3DAE /* MeasurementFrame.swift */,
 				80FD2FAB24A1385900418DEB /* BodyHalf.swift */,
 				21CFEA702497E9F500421B80 /* PoseMachineLearning */,
+				80049FC024AF685400F33CB8 /* PDFWriter */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -240,6 +247,15 @@
 				6ED4222524A1E905007CA917 /* DateFormats.swift */,
 			);
 			path = TypeExtensions;
+			sourceTree = "<group>";
+		};
+		80049FC024AF685400F33CB8 /* PDFWriter */ = {
+			isa = PBXGroup;
+			children = (
+				C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */,
+				80049FC124AF688F00F33CB8 /* PDFWriterConstants.swift */,
+			);
+			path = PDFWriter;
 			sourceTree = "<group>";
 		};
 		80094B59247F0F60002A1A27 = {
@@ -526,10 +542,12 @@
 				80FB49DB249689C0001C3DAE /* VideoResultView.swift in Sources */,
 				21CFEA7F2497EA2600421B80 /* PoseNetInput.swift in Sources */,
 				21CFEA772497E9F500421B80 /* PoseBuilder.swift in Sources */,
+				C190815C249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */,
 				6EC86732249C0A740012C30B /* Logo.swift in Sources */,
 				6ED11547249E30BA0020E13F /* SubHeadline.swift in Sources */,
 				80F1D4D8249198B600ACCEC2 /* WelcomeView.swift in Sources */,
 				2141754124865483005CB6E5 /* MediaPicker.swift in Sources */,
+				80049FC224AF688F00F33CB8 /* PDFWriterConstants.swift in Sources */,
 				80DFDB782492AAC20021124C /* PastRecords.swift in Sources */,
 				21CFEA872497EA2F00421B80 /* UIImage+Extensions.swift in Sources */,
 				80EF89BE2497F31100E345F0 /* Edge.swift in Sources */,
@@ -577,11 +595,13 @@
 				80E67BC9249AC8F400ECC047 /* CGPoint+MathOperations.swift in Sources */,
 				C1A84C9924A50ED100AB7B5D /* InfoView.swift in Sources */,
 				80E67BBE249AC56900ECC047 /* Pose.swift in Sources */,
+				80049FC324AF688F00F33CB8 /* PDFWriterConstants.swift in Sources */,
 				6E874DC2249E5682006E4491 /* SubHeadline.swift in Sources */,
 				C198FD3924AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */,
 				80E67BC3249AC63600ECC047 /* JointName.swift in Sources */,
 				8088FB0A249FE30600E156DE /* BackButton.swift in Sources */,
 				80E67BCA249AC8F800ECC047 /* CGImage+Size.swift in Sources */,
+				C190815D249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */,
 				80E67BC2249AC61100ECC047 /* Side.swift in Sources */,
 				802B32F424AA9ECB004EB124 /* PoseNetPredictionOutput.swift in Sources */,
 				80EF89BF2497F31100E345F0 /* Edge.swift in Sources */,

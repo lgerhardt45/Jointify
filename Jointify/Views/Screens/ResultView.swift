@@ -20,8 +20,12 @@ struct ResultView: View {
     @State private var homeButtonPressed: Bool = false
     // Report button
     @State private var isShowingMailView: Bool = false
-    @State private var isShowingCannotSendMailView: Bool = false
+    @State private var isShowingAlert: Bool = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
     @State private var result: Result<MFMailComposeResult, Error>?
+    @State private var pdfData: Data = Data()
+
     
     // MARK: Stored Instance Properties
     let measurement: Measurement
@@ -112,25 +116,47 @@ struct ResultView: View {
                     DefaultButton(
                         mode: self.canSendMail ? .enabled : .disabled,
                         action: {
+                            
+                            // possible to send mail
                             if self.canSendMail {
-                                self.isShowingMailView.toggle()
+                                
+                                let writer = MeasurementSheetPDFWriter(measurement: self.measurement)
+                                
+                                writer.createPDF { result in
+                                    switch result {
+                                    
+                                    // sucessfully written measurements on PDF
+                                    case .success(let pdfData):
+                                        self.pdfData = pdfData
+                                        self.isShowingMailView.toggle()
+                                    
+                                    // error writing pdf: show alert
+                                    case .failure(let error):
+                                        self.alertMessage = error.localizedDescription
+                                        self.isShowingAlert.toggle()
+                                    }
+                                }
+                                
                             } else {
-                                self.isShowingCannotSendMailView.toggle()
+                                // mail not configured
+                                self.alertMessage = self.cannotSendMailErrorMessage
+                                self.isShowingAlert.toggle()
                             }
                     }) {
+                        // Button style
                         self.canSendMail ?
                             self.possibleMailLabel.frame(width: geometry.size.width / 3.0) :
                             self.notPossibleMailLabel.frame(width: geometry.size.width / 2.0)
                     }
                         
                     .sheet(isPresented: self.$isShowingMailView) {
-                        MailView(result: self.$result)
+                        MailView(pdfData: self.$pdfData, result: self.$result)
                     }
     
-                    .alert(isPresented: self.$isShowingCannotSendMailView) {
+                    .alert(isPresented: self.$isShowingAlert) {
                         Alert(
-                            title: Text("Mail not set up"),
-                            message: Text(self.cannotSendMailErrorMessage),
+                            title: Text(self.alertTitle),
+                            message: Text(self.alertMessage),
                             dismissButton: .cancel(Text("Dismiss")))
                     }
                     
@@ -151,10 +177,6 @@ struct ResultView: View {
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .background(Color.black.opacity(0.3))
                     .edgesIgnoringSafeArea(.all)
-                    .sheet(isPresented: self.$isShowingMailView) {
-                        MailView(result: self.$result)
-                    }
-                    
                 }
             } // end of ZStack
         }
