@@ -15,13 +15,13 @@ import UIKit
 enum PDFWriterConstants {
     
     // name
-    static let namePosition = CGPoint(x: 215, y: 70)
+    static let namePosition = CGPoint(x: 215, y: 63)
     
     // date
-    static let datePosition = CGPoint(x: 330, y: 120)
+    static let datePosition = CGPoint(x: 330, y: 117)
     
     // elbows
-    static let elbowYPosition = 520
+    static let elbowYPosition = 517
     // left elbow
     static let leftElbowLeftNeutralNullPosition = CGPoint(x: 675, y: PDFWriterConstants.elbowYPosition)
     static let leftElbowMiddleNeutralNullPosition = CGPoint(x: 735, y: PDFWriterConstants.elbowYPosition)
@@ -43,7 +43,7 @@ enum PDFWriterConstants {
     ]
     
     // knees
-    static let kneeYPosition = 545
+    static let kneeYPosition = 542
     // left knee
     static let leftKneeLeftNeutralNullPosition = CGPoint(x: 655, y: PDFWriterConstants.kneeYPosition)
     static let leftKneeMiddleNeutralNullPosition = CGPoint(x: 710, y: PDFWriterConstants.kneeYPosition)
