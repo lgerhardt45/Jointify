@@ -15,7 +15,7 @@ import UIKit
 enum PDFWriterConstants {
     
     // name
-    static let namePosition = CGPoint(x: 215, y: 63)
+    static let namePosition = CGPoint(x: 215, y: 68)
     
     // date
     static let datePosition = CGPoint(x: 330, y: 117)
