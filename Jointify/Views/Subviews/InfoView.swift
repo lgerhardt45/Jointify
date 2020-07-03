@@ -19,59 +19,51 @@ struct InfoView: View {
     let displayDismissButton: Bool
     let width: CGFloat
     // swiftlint:disable line_length
-    
-    //solution from https://stackoverflow.com/questions/59624838/swiftui-tappable-subtext
-    struct infoMessage: View {
-        
-        var body: some View {
-            
-            HStack {
-                
-                Text("""
+    let infoMessage = """
 
-The values you see are the maximum and minumum range of motion angle you were able to reach by straigthening and bending your joint.
+    The values you see are the maximum and minumum range of motion angle you were able to reach by straigthening and bending your joint.
 
-            For the PDF sent to your doctor we will translate your values into the "Neutral-Zero-Method", which is an orthopedic index for measuring joint mobility.
+    For the PDF sent to your doctor we will translate your values into the "Neutral-Zero-Method", which is an orthopedic index for measuring joint mobility.
 
-            Your mobility will be expressed in 3 angle degrees originating from the neutral-zero position, which is defined for each joint specifically.
+    Your mobility will be expressed in 3 angle degrees originating from the neutral-zero position, which is defined for each joint specifically.
 
-            Taking your knee as an example, the neutral-zero position would be a 180 degree straight joint.
+    Taking your knee as an example, the neutral-zero position would be a 180 degree straight joint.
 
-            Especially during recovery, you might not reach the neutral-zero position, which will be shown in the PDF as well, depending which three values are written in the PDF.
+    Especially during recovery, you might not reach the neutral-zero position, which will be shown in the PDF as well, depending which three values are written in the PDF.
 
-            Hint: If the middle number displays 0, you are able to reach the neutral zero position for the respective joint. :-)
+    Hint: If the middle number displays 0, you are able to reach the neutral zero position for the respective joint. :-)
 
-            Disclaimer: Please note that Range of Motion values are highly individually dependent on your physical conditions and can only be correctly interpreted by a professional. Do not use these values to diagnose yourself.
+    Disclaimer: Please note that Range of Motion values are highly individually dependent on your physical conditions and can only be correctly interpreted by a professional. Do not use these values to diagnose yourself.
 
-            If your interested in how exactly the values are read by a doctor please visit:
-""")
-                
-                Text("link")
-                    .foregroundColor(.blue)
-                    .underline()
-                    .onTapGesture {
-                        let url = URL.init(string: "https://flexikon.doccheck.com/de/Neutral-Null-Methode")
-                        guard let infoURL = url, UIApplication.shared.canOpenURL(infoURL) else { return }
-                        UIApplication.shared.open(infoURL)
-                }
-            }
-        }
-    }
-    
-    //(Quelle: https://flexikon.doccheck.com/de/Neutral-Null-Methode)
-    
+    If your interested in how exactly the values are read by a doctor please visit:
+    """
     // swiftlint:enable line_length
+    let source = "https://flexikon.doccheck.com/de/Neutral-Null-Methode"
     
     // MARK: Body
     var body: some View {
         VStack {
-
-            Text("What are my values?").font(.title)
-                        ScrollView {
-                // TO DO: hier irgendwie die struct einbinden, ich weiß nicht wie das geht
-                Text(infoMessage)
-                    .padding()
+            
+            Text("What are my values?")
+                .font(.title)
+            
+            ScrollView {
+                VStack {
+                    
+                    Text(infoMessage)
+                    
+                    Text(source)
+                        .foregroundColor(.blue)
+                        .underline()
+                        .multilineTextAlignment(.center)
+                        .onTapGesture {
+                            let url = URL.init(string: self.source)
+                            guard let infoURL = url, UIApplication.shared.canOpenURL(infoURL) else { return }
+                            UIApplication.shared.open(infoURL)
+                    }
+                }.padding(.horizontal, 8)
             }
+            
             if self.displayDismissButton {
                 Button(action: {
                     self.show.toggle()
@@ -79,6 +71,7 @@ The values you see are the maximum and minumum range of motion angle you were ab
                     Text("Dismiss")
                 }.padding(.top)
             }
+            
         }
         .padding(.vertical)
         .frame(width: width)
