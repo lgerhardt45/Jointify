@@ -33,8 +33,7 @@ struct InstructionsView: View {
                 )
                 
                 // Content
-                InstructionContent()
-                    .padding(.horizontal, 24)
+                InstructionContent(instructionPointWidth: geometry.size.width * 0.70)
                 
                 // "I understand" button to ChooseInputView
                 NavigationLink(
