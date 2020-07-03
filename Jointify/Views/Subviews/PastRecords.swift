@@ -45,7 +45,7 @@ struct PastRecords: View {
                             HStack {
                                 
                                 // First image from the MeasurementFrames of the Measurement
-                                Image(uiImage: self.getFirstImageFor(record: record))
+                                Image(uiImage: self.getDisplayImage(record: record))
                                     .resizable()
                                     .scaledToFit()
                                     .cornerRadius(5)
@@ -53,18 +53,14 @@ struct PastRecords: View {
                                 
                                 // Text for previous measurement
                                 VStack(alignment: .leading) {
-                                    Text(
-                                        """
-                                        Record from \(record.date, formatter: DateFormats.dateOnlyFormatter)
-                                        """
+                                    Text("Record from \(record.date, formatter: DateFormats.dateOnlyFormatter)"
                                     ).allowsTightening(true)
                                         .scaledToFill()
-                                    Text(
-                                        """
-                                        Max Value: \(
-                                        String(Int(record.maxROM))
-                                        ), Min Value: \(
-                                        String(Int(record.minROM))
+                                    Text("""
+                                        Max degree: \(
+                                            String(Int(round(record.maxROMFrame.degree)))
+                                        ), min degree: \(
+                                            String(Int(round(record.minROMFrame.degree)))
                                         )
                                         """)
                                         .allowsTightening(true)
@@ -86,18 +82,10 @@ struct PastRecords: View {
     }
     
     // MARK: Private Instance Methods
-    private func getFirstImageFor(record: Measurement) -> UIImage {
-        guard let firstEntry = record.frames.first,
-            let firstImage = UIImage(data: firstEntry.image) else {
-                return UIImage(named: "LogoMitText")!
+    private func getDisplayImage(record: Measurement) -> UIImage {
+        guard let firstImage = UIImage(data: record.minROMFrame.image) else {
+            return UIImage(named: "LogoMitText")!
         }
         return firstImage
-    }
-}
-
-// MARK: - Previews
-struct PastRecordsList_Previews: PreviewProvider {
-    static var previews: some View {
-        PastRecords()
     }
 }

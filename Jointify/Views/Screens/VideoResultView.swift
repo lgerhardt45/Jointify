@@ -39,19 +39,31 @@ struct VideoResultView: View {
                 
                 ScrollView {
                     VStack(spacing: 16) {
-                        if self.measurement.frames.isEmpty {
-                            Text("Frames could not be analysed 😔")
-                        } else {
-                            ForEach(self.measurement.frames, id: \.self) { frame in
-                                VStack(spacing: 8) {
-                                    // sorry for the force unwrap
-                                    Image(uiImage: UIImage(data: frame.image) ?? UIImage(systemName: "heart.fill")!)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .cornerRadius(5)
-                                    Text("Degree: \(Int(round(frame.degree)))°")
-                                }
-                            }
+                        
+                        // min
+                        VStack(spacing: 8) {
+                            // sorry for the force unwrap
+                            Image(
+                                uiImage: UIImage(data: self.measurement.minROMFrame.image)
+                                    ?? UIImage(systemName: "heart.fill")!
+                            )
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(5)
+                            Text("Minimum degree: \(Int(round(self.measurement.minROMFrame.degree)))°")
+                        }
+                        
+                        // max
+                        VStack(spacing: 8) {
+                            // sorry for the force unwrap
+                            Image(
+                                uiImage: UIImage(data: self.measurement.maxROMFrame.image)
+                                    ?? UIImage(systemName: "heart.fill")!
+                            )
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(5)
+                            Text("Maximum degree: \(Int(round(self.measurement.maxROMFrame.degree)))°")
                         }
                     }
                 }
@@ -80,13 +92,7 @@ struct VideoResultView: View {
 struct VideoResultView_Previews: PreviewProvider {
     static var previews: some View {
         VideoResultView(
-            measurement: Measurement(
-                date: Date(),
-                frames: [
-                    MeasurementFrame(degree: 0, image: UIImage(named: "placeholder")!),
-                    MeasurementFrame(degree: 0, image: UIImage(named: "placeholder")!),
-                    MeasurementFrame(degree: 0, image: UIImage(named: "placeholder")!)
-                ]
-        ))
+            measurement: DataHandler.mockMeasurements[0]
+        )
     }
 }

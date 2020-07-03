@@ -15,7 +15,7 @@ struct ProcessingView: View {
     
     // MARK: Binding Instance Properties
     @Binding var videoUrl: NSURL?
-
+    
     // MARK: State Instance Propoerties
     @State private var progress: Int = 0
     @State private var total: Int = 0
@@ -23,9 +23,15 @@ struct ProcessingView: View {
     @State private var finishedProcessing: Bool = false
     @State private var measurement: Measurement?
     @State private var acceptedFramesCounter = 0
+    @State private var analysisFailed: Bool = false
     
     // MARK: Stored Instance Properties
-    private let acceptedFramesThreshold: Double = 0.45
+    private let errorMessage = """
+        Unfortunately, the analysis failed.
+        Please follow the instructions carefully when preparing your video for the analysis and try again.
+        NOTE: In the future, we want to show you a detailed reason for the failure.
+    """
+    private let acceptedFramesThreshold: Double = 0.55
     let chosenSide: Side
     
     // MARK: Body
@@ -53,48 +59,73 @@ struct ProcessingView: View {
                     height: geometry.size.height * 0.20
                 )
                 
-                // Placeholder
                 InfoView(show: .constant(true),
                          displayDismissButton: false,
                          width: geometry.size.width * 0.9)
                     .padding(.vertical)
-                                    
+                
                 ProgressBar(
                     currentProgress: self.$progress,
                     total: self.$total,
+                    failed: self.$analysisFailed,
                     maxWidth: 150,
                     height: 20
                 )
             }.padding(.bottom, 32)
+                
                 // start the analysis when screen is loaded
-                .onAppear(perform: {
-                    guard let videoUrl = self.videoUrl else {
-                        print("videoUrl could not be retrieved")
-                        return
-                    }
-                    
-                    let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
-                    
-                    self.analyseVideo(frames: videoAsImageArray) { (drawnFrames)  in
-                        
-                        // set the measurement property when done
-                        let measurement = Measurement(
-                            date: Date(),
-                            frames: drawnFrames
-                        )
-                        self.measurement = measurement
-                        
-                        // save to DataHandler
-                        DataHandler.saveNewMeasurement(measurement: measurement)
-                        
-                        // trigger navigation to VideoResultView
-                        self.finishedProcessing.toggle()
-                    }
-                })
+                .onAppear(perform: self.analysis)
+                
+                .alert(isPresented: self.$analysisFailed) {
+                    Alert(
+                        title: Text("Please try again"),
+                        message: Text(self.errorMessage),
+                        dismissButton: .cancel(Text("Try again")) {
+                            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
+                                .toWelcomeView()
+                        }
+                    )
+            }
         }
     }
     
     // MARK: Private Instance Methods
+    /// starts the PoseNet analysis on the loaded video(url)
+    private func analysis() {
+        
+        guard let videoUrl = self.videoUrl else {
+            print("videoUrl could not be retrieved")
+            return
+        }
+        
+        let videoAsImageArray: [UIImage] = self.transformVideoToImageArray(videoUrl: videoUrl)
+        
+        self.analyseVideo(frames: videoAsImageArray) { analysisResult  in
+            
+            // work with the success and the passed through Measurement here
+            switch analysisResult {
+            case .success(let measurement):
+                
+                // save to DataHandler
+                DataHandler.saveNewMeasurement(measurement: measurement)
+                self.measurement = measurement
+                
+                // trigger navigation to VideoResultView
+                self.finishedProcessing.toggle()
+                
+            case .failure(let error):
+                
+                // work with the error type here
+                switch error {
+                case .acceptanceCriteriaFailed:
+                    self.analysisFailed.toggle()
+                default:
+                    print("Not implemented yet")
+                }
+            }
+        }
+    }
+    
     /// From https://stackoverflow.com/questions/42665271/swift-get-all-frames-from-video
     /// takes the NSURL of a video and converts it to an UIImage array by taking frame by frame (one per second)
     private func transformVideoToImageArray(videoUrl: NSURL) -> [UIImage] {
@@ -124,32 +155,11 @@ struct ProcessingView: View {
         return frames
     }
     
-    /// Find frames with maximum or minimum degree
-    private func findFrameWithDegree(_ poseNetPredictionOutputArray: [PoseNetPredictionOutput],
-                                     _ value: ExtremeValue) -> PoseNetPredictionOutput? {
-        var poseNetPredictionOutputDegree: PoseNetPredictionOutput?
-        var degree: Float
-        
-        switch value {
-        case .maximum:
-            degree = 0
-            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree > degree {
-                poseNetPredictionOutputDegree = poseNetPredictionOutput
-                degree = poseNetPredictionOutput.degree
-            }
-        case .minimum:
-            degree = 361
-            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree < degree {
-                poseNetPredictionOutputDegree = poseNetPredictionOutput
-                degree = poseNetPredictionOutput.degree
-            }
-        }
-        
-        return poseNetPredictionOutputDegree
-    }
-    
     /// runs the machine learning model on an array of UIImages and returns an array of MeasurementFrame instances
-    private func analyseVideo(frames: [UIImage], completion: @escaping ([MeasurementFrame]) -> Void) {
+    private func analyseVideo(
+        frames: [UIImage],
+        completion: @escaping (Result<Measurement, PoseNetAnalysisError>) -> Void) {
+        
         // total number of frames
         self.total = frames.count
         
@@ -163,7 +173,6 @@ struct ProcessingView: View {
         queue.async {
             
             print("Starting PoseNet analysis")
-            var returnMeasurementFrames: [MeasurementFrame] = []
             var poseNetPredictionOutputArray: [PoseNetPredictionOutput] = []
             
             for (frameCount, frame) in frames.enumerated() {
@@ -193,37 +202,60 @@ struct ProcessingView: View {
             
             // Check if video could be analyzed or if the qualitity assessment failed
             if qualityAssessmentFailed {
-                print("Video could not be anaylzed successfully")
-                completion(returnMeasurementFrames)
-            } else {
-                // Find frames with min and max degree and only draw joints on these frames
-                 guard let poseNetMax = self.findFrameWithDegree(poseNetPredictionOutputArray, .maximum),
-                     let poseNetMin = self.findFrameWithDegree(poseNetPredictionOutputArray, .minimum) else {
-                         print("Minimium or maximum degree could not be obtained")
-                         return
-                 }
-                 
-                 // Draw joints on frame with max degree
-                 returnMeasurementFrames.append(
-                     MeasurementFrame(
-                         degree: poseNetMax.degree,
-                         image: poseNet.show(poseNetMax.image, poseNetMax.pose)
-                     )
-                 )
                 
-                 // Draw joints on frame with min degree
-                  returnMeasurementFrames.append(
-                    MeasurementFrame(
-                        degree: poseNetMin.degree,
-                        image: poseNet.show(poseNetMin.image, poseNetMin.pose)
-                    )
+                print("Video could not be anaylzed successfully")
+                // TODO: Improve the failure reasons with Niki
+                // failure when (...)
+                completion(.failure(.acceptanceCriteriaFailed))
+                
+            } else {
+                
+                // Find frames with min and max degree and only draw joints on these frames
+                guard let poseNetMin = self.findFrameWithDegree(poseNetPredictionOutputArray, .minimum),
+                    let poseNetMax = self.findFrameWithDegree(poseNetPredictionOutputArray, .maximum) else {
+                        print("Minimium or maximum degree could not be obtained")
+                        return
+                }
+                
+                let drawnMinImage = poseNet.show(poseNetMin.image, poseNetMin.pose)
+                let drawnMaxImage = poseNet.show(poseNetMax.image, poseNetMax.pose)
+                
+                // successfully derived a Measurement instance
+                let measurement = Measurement(
+                    date: Date(),
+                    minROMFrame: MeasurementFrame(degree: poseNetMin.degree, image: drawnMinImage),
+                    maxROMFrame: MeasurementFrame(degree: poseNetMax.degree, image: drawnMaxImage)
                 )
-                 
-                 // send when done
-                 print("Done with PoseNet analysis")
-                 completion(returnMeasurementFrames)
+                
+                // success when done
+                print("Done with PoseNet analysis")
+                completion(.success(measurement))
             }
         }
+    }
+    
+    /// Find frames with maximum or minimum degree
+    private func findFrameWithDegree(_ poseNetPredictionOutputArray: [PoseNetPredictionOutput],
+                                     _ value: ExtremeValue) -> PoseNetPredictionOutput? {
+        var poseNetPredictionOutputDegree: PoseNetPredictionOutput?
+        var degree: Float
+        
+        switch value {
+        case .maximum:
+            degree = 0
+            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree > degree {
+                poseNetPredictionOutputDegree = poseNetPredictionOutput
+                degree = poseNetPredictionOutput.degree
+            }
+        case .minimum:
+            degree = 361
+            for poseNetPredictionOutput in poseNetPredictionOutputArray where poseNetPredictionOutput.degree < degree {
+                poseNetPredictionOutputDegree = poseNetPredictionOutput
+                degree = poseNetPredictionOutput.degree
+            }
+        }
+        
+        return poseNetPredictionOutputDegree
     }
 }
 

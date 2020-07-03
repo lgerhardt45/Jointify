@@ -17,12 +17,15 @@ class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
     
     // MARK: Binding Instance Properties
     @Binding var presentation: PresentationMode
+    @Binding var pdfData: Data
     @Binding var result: Result<MFMailComposeResult, Error>?
     
     // MARK: Initializers
     init(presentation: Binding<PresentationMode>,
+         pdfData: Binding<Data>,
          result: Binding<Result<MFMailComposeResult, Error>?>) {
         _presentation = presentation
+        _pdfData = pdfData
         _result = result
     }
     
@@ -49,6 +52,7 @@ struct MailView: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentation
     
     // MARK: Binding Instance Properties
+    @Binding var pdfData: Data
     @Binding var result: Result<MFMailComposeResult, Error>?
     
     // MARK: Overridden/ Lifecycle Methods
@@ -57,19 +61,14 @@ struct MailView: UIViewControllerRepresentable {
         let composeVC = MFMailComposeViewController()
         composeVC.mailComposeDelegate = context.coordinator
         
+        // setup compose view
         var messageBody = "Dear Doc Pförringer,"
         messageBody += "\n\nplease find attached the copy of my recent ROM measurement."
-        
-        // setup compose view
-        composeVC.setToRecipients(["lukas.gerhardt@onlinehome.de"])
         composeVC.setMessageBody(messageBody, isHTML: false)
         composeVC.setSubject("ROM measurement from today")
         
-        if let image = UIImage(systemName: "doc.richtext"),
-            let imageData = image.pngData() {
-            
-            composeVC.addAttachmentData(imageData, mimeType: "image/png", fileName: "ROM measurement.png")
-        }
+        // attach PDF
+        composeVC.addAttachmentData(self.pdfData, mimeType: "application/pdf", fileName: "ROM-measurement.pdf")
 
         return composeVC
     }
@@ -81,6 +80,7 @@ struct MailView: UIViewControllerRepresentable {
     
     func makeCoordinator() -> Coordinator {
         return Coordinator(presentation: presentation,
+                           pdfData: $pdfData,
                            result: $result)
     }
 }

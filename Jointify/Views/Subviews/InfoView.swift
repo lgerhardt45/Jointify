@@ -19,35 +19,51 @@ struct InfoView: View {
     let displayDismissButton: Bool
     let width: CGFloat
     // swiftlint:disable line_length
-    private let infoMessage =
-    """
-    Your values are being measured by the "Neutral-Null-Methode", which is an orthopedic index for measuring joint mobility.
+    let infoMessage = """
 
-    Your mobility will be expressed in 3 angle degrees originating from the neutral-zero position, which is defined for each joint specifically. The neutral-zero position is what we referred to as your starting position earlier.
+    The values you see are the maximum and minumum range of motion angle you were able to reach by straigthening and bending your joint.
 
-    From this position Jointify measures your maximum Range of Motion in both directions and sends it to your doctor, who is then able to determine, if your range of motion is impaired.
+    For the PDF sent to your doctor we will translate your values into the "Neutral-Zero-Method", which is an orthopedic index for measuring joint mobility.
 
-    Values:
-    1) Movement away from body
-    2) 0, if Neutral-Zero is achieved
-    3) Movement towards body
+    Your mobility will be expressed in 3 angle degrees originating from the neutral-zero position, which is defined for each joint specifically.
+
+    Taking your knee as an example, the neutral-zero position would be a 180 degree straight joint.
+
+    Especially during recovery, you might not reach the neutral-zero position, which will be shown in the PDF as well, depending which three values are written in the PDF.
+
+    Hint: If the middle number displays 0, you are able to reach the neutral zero position for the respective joint. :-)
 
     Disclaimer: Please note that Range of Motion values are highly individually dependent on your physical conditions and can only be correctly interpreted by a professional. Do not use these values to diagnose yourself.
-    (Jointify haftet nicht?)
 
-    (Quelle: https://flexikon.doccheck.com/de/Neutral-Null-Methode)
+    If your interested in how exactly the values are read by a doctor please visit:
     """
     // swiftlint:enable line_length
+    let source = "https://flexikon.doccheck.com/de/Neutral-Null-Methode"
     
     // MARK: Body
     var body: some View {
         VStack {
-            Text("What are my values?").font(.title)
+            
+            Text("What are my values?")
+                .font(.title)
             
             ScrollView {
-                Text(infoMessage)
-                    .padding()
+                VStack {
+                    
+                    Text(infoMessage)
+                    
+                    Text(source)
+                        .foregroundColor(.blue)
+                        .underline()
+                        .multilineTextAlignment(.center)
+                        .onTapGesture {
+                            let url = URL.init(string: self.source)
+                            guard let infoURL = url, UIApplication.shared.canOpenURL(infoURL) else { return }
+                            UIApplication.shared.open(infoURL)
+                    }
+                }.padding(.horizontal, 8)
             }
+            
             if self.displayDismissButton {
                 Button(action: {
                     self.show.toggle()
@@ -55,6 +71,7 @@ struct InfoView: View {
                     Text("Dismiss")
                 }.padding(.top)
             }
+            
         }
         .padding(.vertical)
         .frame(width: width)

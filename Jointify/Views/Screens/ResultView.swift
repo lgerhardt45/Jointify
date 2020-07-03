@@ -20,12 +20,19 @@ struct ResultView: View {
     @State private var homeButtonPressed: Bool = false
     // Report button
     @State private var isShowingMailView: Bool = false
+    @State private var isShowingAlert: Bool = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
     @State private var result: Result<MFMailComposeResult, Error>?
+    @State private var pdfData: Data = Data()
+
     
     // MARK: Stored Instance Properties
     let measurement: Measurement
     let mockedPreviousMinValue: Int = -45
     let mockedPreviousMaxValue: Int = 80
+    let cannotSendMailErrorMessage =
+    "We cannot send the report. Please make sure that your mail account is setup on your phone."
     
     // MARK: Computed Instance Properties
     let canSendMail: Bool = MFMailComposeViewController.canSendMail()
@@ -60,31 +67,37 @@ struct ResultView: View {
                     Spacer()
                     
                     // Content: Result Values
-                    VStack(spacing: 8.0) {
+                    VStack(spacing: 16.0) {
+                        
+                        // current values
+                        HStack(spacing: 16.0) {
+                            ResultValues(valueType: "Max Value",
+                                         value: Int(round(self.measurement.maxROMFrame.degree)),
+                                         showText: true)
+                            ResultValues(valueType: "Min Value",
+                                         value: Int(round(self.measurement.minROMFrame.degree)),
+                                         showText: true)
+                        }
+                        
+                        // last values
                         VStack {
-                            
-                            HStack(spacing: 16.0) {
-                                ResultValues(valueType: "Max Value",
-                                             value: Int(self.measurement.maxROM), showText: true)
-                                ResultValues(valueType: "Min Value",
-                                             value: Int(self.measurement.minROM), showText: true)
-                            }
                             Text("Last Measurement (DD/MM/YY)")
                                 .font(.system(size: 18))
                                 .fontWeight(.light)
                             
                             HStack(spacing: 16.0) {
-                                ResultValues(valueType: "Max Value",
+                                ResultValues(valueType: "Max Degree",
                                              value: self.mockedPreviousMaxValue, showText: false)
-                                ResultValues(valueType: "Min Value",
+                                ResultValues(valueType: "Min. Degree",
                                              value: self.mockedPreviousMinValue, showText: false)
                             }
-                            
-                            Button(action: {
-                                self.showInfoView.toggle()
-                            }) {
-                                Text("What do my values mean?")
-                            }.padding()
+                        }
+
+                        // Button for InfoView
+                        Button(action: {
+                            self.showInfoView.toggle()
+                        }) {
+                            Text("What do my values mean?")
                         }
                         
                     }
@@ -98,19 +111,55 @@ struct ResultView: View {
                         Text("Done")
                             .frame(width: geometry.size.width / 3.0)
                     }
+                    
                     // Report button
                     DefaultButton(
                         mode: self.canSendMail ? .enabled : .disabled,
                         action: {
-                            self.isShowingMailView.toggle()
+                            
+                            // possible to send mail
+                            if self.canSendMail {
+                                
+                                let writer = MeasurementSheetPDFWriter(measurement: self.measurement)
+                                
+                                writer.createPDF { result in
+                                    switch result {
+                                    
+                                    // sucessfully written measurements on PDF
+                                    case .success(let pdfData):
+                                        self.pdfData = pdfData
+                                        self.isShowingMailView.toggle()
+                                    
+                                    // error writing pdf: show alert
+                                    case .failure(let error):
+                                        self.alertMessage = error.localizedDescription
+                                        self.isShowingAlert.toggle()
+                                    }
+                                }
+                                
+                            } else {
+                                // mail not configured
+                                self.alertMessage = self.cannotSendMailErrorMessage
+                                self.isShowingAlert.toggle()
+                            }
                     }) {
+                        // Button style
                         self.canSendMail ?
                             self.possibleMailLabel.frame(width: geometry.size.width / 3.0) :
-                            self.notPossibleMailLabel.frame(width: geometry.size.width / 3.0)
+                            self.notPossibleMailLabel.frame(width: geometry.size.width / 2.0)
                     }
+                        
                     .sheet(isPresented: self.$isShowingMailView) {
-                        MailView(result: self.$result)
+                        MailView(pdfData: self.$pdfData, result: self.$result)
                     }
+    
+                    .alert(isPresented: self.$isShowingAlert) {
+                        Alert(
+                            title: Text(self.alertTitle),
+                            message: Text(self.alertMessage),
+                            dismissButton: .cancel(Text("Dismiss")))
+                    }
+                    
                 }
                 .padding(.bottom, 32)
                 
@@ -128,10 +177,6 @@ struct ResultView: View {
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .background(Color.black.opacity(0.3))
                     .edgesIgnoringSafeArea(.all)
-                    .sheet(isPresented: self.$isShowingMailView) {
-                        MailView(result: self.$result)
-                    }
-                    
                 }
             } // end of ZStack
         }
@@ -143,10 +188,7 @@ struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
         
         ResultView(
-            measurement: Measurement(
-                date: Date(),
-                frames: []
-            )
+            measurement: DataHandler.mockMeasurements[0]
         )
     }
 }
