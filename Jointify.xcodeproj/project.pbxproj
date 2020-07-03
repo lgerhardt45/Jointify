@@ -102,6 +102,8 @@
 		80FD2FB324A1514500418DEB /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB124A1514500418DEB /* CustomColors.swift */; };
 		80FD2FB524A151AB00418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB424A151AB00418DEB /* DataHandler.swift */; };
 		80FD2FB624A151AB00418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB424A151AB00418DEB /* DataHandler.swift */; };
+		C198FD3824AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */; };
+		C198FD3924AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */; };
 		C190815C249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
 		C190815D249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
 		C1A84C9824A50ED100AB7B5D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A84C9724A50ED100AB7B5D /* InfoView.swift */; };
@@ -176,6 +178,7 @@
 		80FD2FB124A1514500418DEB /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		80FD2FB424A151AB00418DEB /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.debug.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.debug.xcconfig"; sourceTree = "<group>"; };
+		C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionContentHelpers.swift; sourceTree = "<group>"; };
 		C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementSheetPDFWriter.swift; sourceTree = "<group>"; };
 		C1A84C9724A50ED100AB7B5D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -339,6 +342,7 @@
 				6ED11546249E30BA0020E13F /* SubHeadline.swift */,
 				80F1D4DA2491994B00ACCEC2 /* DefaultButton.swift */,
 				80DFDB742492991B0021124C /* InstructionContent.swift */,
+				C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */,
 				80DFDB772492AAC20021124C /* PastRecords.swift */,
 				8033E54824A72C4C00F0D1E8 /* BodySideChooser.swift */,
 				2141754024865483005CB6E5 /* MediaPicker.swift */,
@@ -548,6 +552,7 @@
 				21CFEA872497EA2F00421B80 /* UIImage+Extensions.swift in Sources */,
 				80EF89BE2497F31100E345F0 /* Edge.swift in Sources */,
 				80FD2FB524A151AB00418DEB /* DataHandler.swift in Sources */,
+				C198FD3824AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */,
 				80F1D4DB2491994B00ACCEC2 /* DefaultButton.swift in Sources */,
 				80DFDB6F24924A450021124C /* ProcessingView.swift in Sources */,
 				21CFEA882497EA2F00421B80 /* CGPoint+MathOperations.swift in Sources */,
@@ -592,6 +597,7 @@
 				80E67BBE249AC56900ECC047 /* Pose.swift in Sources */,
 				80049FC324AF688F00F33CB8 /* PDFWriterConstants.swift in Sources */,
 				6E874DC2249E5682006E4491 /* SubHeadline.swift in Sources */,
+				C198FD3924AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */,
 				80E67BC3249AC63600ECC047 /* JointName.swift in Sources */,
 				8088FB0A249FE30600E156DE /* BackButton.swift in Sources */,
 				80E67BCA249AC8F800ECC047 /* CGImage+Size.swift in Sources */,
