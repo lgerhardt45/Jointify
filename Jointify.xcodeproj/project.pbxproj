@@ -102,10 +102,10 @@
 		80FD2FB324A1514500418DEB /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB124A1514500418DEB /* CustomColors.swift */; };
 		80FD2FB524A151AB00418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB424A151AB00418DEB /* DataHandler.swift */; };
 		80FD2FB624A151AB00418DEB /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD2FB424A151AB00418DEB /* DataHandler.swift */; };
-		C198FD3824AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */; };
-		C198FD3924AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */; };
 		C190815C249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
 		C190815D249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */; };
+		C198FD3824AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */; };
+		C198FD3924AF9344003E0A5D /* InstructionContentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */; };
 		C1A84C9824A50ED100AB7B5D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A84C9724A50ED100AB7B5D /* InfoView.swift */; };
 		C1A84C9924A50ED100AB7B5D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A84C9724A50ED100AB7B5D /* InfoView.swift */; };
 /* End PBXBuildFile section */
@@ -178,8 +178,8 @@
 		80FD2FB124A1514500418DEB /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		80FD2FB424A151AB00418DEB /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		9DF0C0DE6105D932BF2CB209 /* Pods-Jointify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jointify.debug.xcconfig"; path = "Target Support Files/Pods-Jointify/Pods-Jointify.debug.xcconfig"; sourceTree = "<group>"; };
-		C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionContentHelpers.swift; sourceTree = "<group>"; };
 		C190815B249E1AD5001738AC /* MeasurementSheetPDFWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementSheetPDFWriter.swift; sourceTree = "<group>"; };
+		C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionContentHelpers.swift; sourceTree = "<group>"; };
 		C1A84C9724A50ED100AB7B5D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -769,6 +769,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Jointify/Preview Content\"";
 				DEVELOPMENT_TEAM = 4SK5JS59G8;
 				ENABLE_PREVIEWS = YES;
@@ -778,6 +779,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = lukasgerhardt.Jointify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -791,6 +793,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Jointify/Preview Content\"";
 				DEVELOPMENT_TEAM = 4SK5JS59G8;
 				ENABLE_PREVIEWS = YES;
@@ -800,6 +803,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = lukasgerhardt.Jointify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
