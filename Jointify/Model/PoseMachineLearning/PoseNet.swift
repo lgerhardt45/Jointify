@@ -50,11 +50,11 @@ class PoseNet {
         /// on the context of use and target devices, typically discovered through trial and error.
         static let modelInputSize = CGSize(width: 513, height: 513)
         /// The width of the line connecting two joints.
-        static let segmentLineWidth: CGFloat = 5
+        static let segmentLineWidth: CGFloat = 2.5
         /// The color of the line connecting two joints.
         static let segmentColor: UIColor = UIColor.systemTeal
         /// The radius of the circles drawn for each joint.
-        static let jointRadius: CGFloat = 10
+        static let jointRadius: CGFloat = 5
         /// The color of the circles drawn for each joint.
         static let jointColor: UIColor = UIColor.systemPink
         // Degrees that will be subtraced from the measured angle
@@ -102,7 +102,7 @@ class PoseNet {
     
     // MARK: Instance Methods
     /// Returns an image showing the joints and joint segments.
-    func show(_ frame: CGImage, _ pose: Pose) -> UIImage {
+    func show(frame: CGImage, pose: Pose) -> UIImage {
         
         let dstImageSize = CGSize(width: frame.width, height: frame.height)
         let dstImageFormat = UIGraphicsImageRendererFormat()
@@ -270,16 +270,25 @@ class PoseNet {
         let errorOutput = PoseNetPredictionOutput(degree: 0,
                                                   image: defaultCGImage,
                                                   outputQualityAcceptable: false,
-                                                  pose: Pose())
+                                                  pose: Pose(),
+                                                  originalFrameSize: defaultCGImage.size)
         
-        guard let resizedImage = image.resizeTo(size: Constants.modelInputSize) else {
-            print("Error. Image could not be resized.")
+        // scale image down to size expected by model
+        guard let scaledImage = image.scaleTo(heigth: Constants.modelInputSize.height) else {
+            print("Error. Image could not be scaled.")
             return errorOutput
         }
-        guard let ciImage = CIImage(image: resizedImage) else {
+        // extend image to square
+        guard let extendedImage = scaledImage.extendToSquare() else {
+            print("Error. Image could not be extended to a square.")
+            return errorOutput
+        }
+        // convert image to CIImage
+        guard let ciImage = CIImage(image: extendedImage) else {
             print("Error. CIImage could not be created.")
             return errorOutput
         }
+        // convert image to CGImage
         guard let cgImage = convertCIImageToCGImage(inputImage: ciImage) else {
             print("Error. CGImage could not be created.")
             return errorOutput
@@ -305,7 +314,8 @@ class PoseNet {
             let poseNetPredictionOutput = PoseNetPredictionOutput(degree: angleDegree,
                                                                   image: cgImage,
                                                                   outputQualityAcceptable: isOutputQualityAcceptable,
-                                                                  pose: detectedPose)
+                                                                  pose: detectedPose,
+                                                                  originalFrameSize: scaledImage.size)
             
             return(poseNetPredictionOutput)
         } else {
