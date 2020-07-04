@@ -25,7 +25,6 @@ struct ResultView: View {
     @State private var alertMessage = ""
     @State private var result: Result<MFMailComposeResult, Error>?
     @State private var pdfData: Data = Data()
-
     
     // MARK: Stored Instance Properties
     let measurement: Measurement
