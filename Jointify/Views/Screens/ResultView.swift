@@ -45,6 +45,15 @@ struct ResultView: View {
         Text("Can't send mail")
     }
     
+    var previousMeasurement: Measurement? {
+        // there exists at least one more previous recording
+        if DataHandler.actualMeasurements.count > 1 {
+            return DataHandler.actualMeasurements[1]
+        } else {
+            return nil
+        }
+    }
+        
     // MARK: Body
     var body: some View {
         
@@ -80,15 +89,28 @@ struct ResultView: View {
                         
                         // last values
                         VStack {
-                            Text("Last Measurement (DD/MM/YY)")
+                            Text(
+                                self.previousMeasurement != nil
+                                    ? """
+                                        Last Measurement (\(
+                                        self.previousMeasurement!.date, formatter: DateFormats.dateOnlyFormatter
+                                        ))
+                                        """
+                                    : "Last Measurement"
+                            )
                                 .font(.system(size: 18))
                                 .fontWeight(.light)
                             
                             HStack(spacing: 16.0) {
-                                ResultValues(valueType: "Max Degree",
-                                             value: self.mockedPreviousMaxValue, showText: false)
-                                ResultValues(valueType: "Min. Degree",
-                                             value: self.mockedPreviousMinValue, showText: false)
+                                ResultValues(
+                                    valueType: "Max Degree",
+                                    value: self.previousMeasurement != nil ? self.previousMeasurement!.maxROMValue : 0,
+                                    showText: false
+                                )
+                                ResultValues(
+                                    valueType: "Min. Degree",
+                                    value: self.previousMeasurement != nil ? self.previousMeasurement!.minROMValue : 0,
+                                    showText: false)
                             }
                         }
 

@@ -29,7 +29,7 @@ struct ResultValues: View {
                 .frame(width: 80.0, height: 30.0)
                 .foregroundColor(.lightGray)
                 .overlay(
-                    Text("\(value)°").padding(.horizontal))
+                    Text(value == 0 ? "-" : "\(value)°").padding(.horizontal))
         }
     }
 }
