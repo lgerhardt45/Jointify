@@ -35,6 +35,36 @@ extension UIImage {
         return squared
     }
     
+    /// Scales down width of image to the given height, while maintaining the aspect ratio
+    /// returns:
+    /// - self scaled down to given height
+    func scaleTo(heigth scaleToHeight: CGFloat) -> UIImage? {
+        
+        let originalImage = self
+        
+        let originalHeight = originalImage.size.height
+        let originalWidth = originalImage.size.width
+        
+        let scaleRatio = originalHeight / scaleToHeight
+        
+        let scaleToWidth = originalWidth / scaleRatio
+        
+        let scaledSize = CGSize(width: scaleToWidth, height: scaleToHeight)
+        
+        // start drawing environment with size = extended square
+        print("Scaling image from \(originalWidth) * \(originalHeight) to \(scaleToWidth) * \(scaleToHeight)")
+        UIGraphicsBeginImageContextWithOptions(scaledSize, false, self.scale)
+        
+        // draw original image in top left corner
+        originalImage.draw(in: CGRect(x: 0, y: 0, width: scaleToWidth, height: scaleToHeight))
+        
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        print("finished scaling image to \(scaleToWidth) * \(scaleToHeight)")
+        UIGraphicsEndImageContext()
+        
+        return scaledImage
+    }
+    
     /// resize the image size the correct input size by cropping it size square
     /// from https://stackoverflow.com/a/38777678
     func resizeTo(size: CGSize) -> UIImage? {
@@ -88,5 +118,31 @@ extension UIImage {
            UIGraphicsEndImageContext()
 
            return resized ?? self
+    }
+    
+    /// Cuts self to the given width from the left side
+    /// returns:
+    /// - new UIImage from self with given width
+    func cutToWidthFromLeft(_ cutToWidth: CGFloat) -> UIImage? {
+        let originalImage = self
+        
+        let originalHeight = originalImage.size.height
+        let originalWidth = originalImage.size.width
+        
+        let cutToSize = CGSize(width: cutToWidth, height: originalHeight)
+        
+        // start drawing environment with size = extended square
+        print("Cutting image from \(originalWidth) * \(originalWidth) to \(cutToSize.width) * \(cutToSize.height)")
+        UIGraphicsBeginImageContextWithOptions(cutToSize, false, self.scale)
+        
+        // draw original image in top left corner
+        originalImage.draw(in: CGRect(x: 0, y: 0, width: cutToSize.width, height: cutToSize.height))
+        
+        let cutToImage = UIGraphicsGetImageFromCurrentImageContext()
+        print("finished scaling image to \(cutToSize.width) * \(cutToSize.height)")
+        UIGraphicsEndImageContext()
+        
+        return cutToImage
+        
     }
 }
