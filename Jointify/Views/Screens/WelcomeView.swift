@@ -43,7 +43,7 @@ struct WelcomeView: View {
                     
                     // SubHeadline
                     SubHeadline(
-                        subheadline: "Start your remote joint measurement journey.",
+                        subheadline: "Start your remote knee measurement journey.",
                         width: geometry.size.width * Constants.subHeadlineWidthPercentage
                     )
                     
