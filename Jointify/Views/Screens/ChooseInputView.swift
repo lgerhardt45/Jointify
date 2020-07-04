@@ -25,6 +25,12 @@ struct ChooseInputView: View {
     /// trigger for navigation to ProcessingView
     @State var goToProcessingView: Bool = false
     
+    // MARK: Recording Not Yet Supported Properties
+    @State var showRecordingNotSupportedAlert: Bool = false
+    let recordingSupported: Bool = false
+    // swiftlint:disable:next line_length
+    let recordingNotSupportedText = "Currently, the recording in the app is not supported. Please use the Camera app to record the video and modify it according to the instructions."
+    
     // MARK: Body
     var body: some View {
         
@@ -81,16 +87,20 @@ struct ChooseInputView: View {
                     // Buttons
                     VStack(spacing: 16) {
                         
-                        // don't show Record button in simulator to avoid accidental crashes
-                        #if !targetEnvironment(simulator)
-                        DefaultButton(action: {
-                            self.sourceType = UIImagePickerController.SourceType.camera
-                            self.videoPickerSheetIsPresented.toggle()
+                        // Record
+                        DefaultButton(mode: .disabled,
+                                      action: {
+                            if self.recordingSupported {
+                                self.sourceType = UIImagePickerController.SourceType.camera
+                                self.videoPickerSheetIsPresented.toggle()
+                            } else {
+                                self.showRecordingNotSupportedAlert.toggle()
+                            }
                         }) {
                             Text("Record").frame(width: geometry.size.width / 3.0)
                         }
-                        #endif
                         
+                        // Gallery
                         DefaultButton(action: {
                             self.sourceType = UIImagePickerController.SourceType.photoLibrary
                             self.videoPickerSheetIsPresented.toggle()
@@ -109,6 +119,14 @@ struct ChooseInputView: View {
                             sourceType: self.$sourceType,
                             videoURL: self.$videoUrl)
                     }
+                        
+                    .alert(isPresented: self.$showRecordingNotSupportedAlert) {
+                        Alert(
+                            title: Text("Recording not supported yet"),
+                            message: Text(self.recordingNotSupportedText),
+                            dismissButton: .cancel(Text("Dismiss")))
+                    }
+                    
                 }.padding(.bottom, 32)
             }
         }
