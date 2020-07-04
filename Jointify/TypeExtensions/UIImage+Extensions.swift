@@ -14,6 +14,27 @@ import UIKit
 extension UIImage {
     
     // MARK: Stored Instance Methods
+    func extendToSquare() -> UIImage? {
+        let originalImage = self
+        let originalSize = originalImage.size
+        let originalWidth = originalSize.width
+        let originalHeight = originalSize.height
+        
+        // set extendedSize to square (width = height)
+        let extendedSize = CGSize(width: originalHeight, height: originalHeight)
+            
+        // start drawing environment with size = extended square
+        UIGraphicsBeginImageContextWithOptions(extendedSize, false, self.scale)
+        
+        // draw original image in top left corner
+        originalImage.draw(in: CGRect(x: 0, y: 0, width: originalWidth, height: originalHeight))
+        
+        let squared = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return squared
+    }
+    
     /// resize the image size the correct input size by cropping it size square
     /// from https://stackoverflow.com/a/38777678
     func resizeTo(size: CGSize) -> UIImage? {
