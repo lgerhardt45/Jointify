@@ -114,7 +114,7 @@ enum DataHandler {
     
     static func saveNewMeasurement(measurement: Measurement) {
         var measurements = DataHandler.actualMeasurements
-        measurements.append(measurement)
+        measurements.insert(measurement, at: 0)
         DataHandler.saveToJSON(this: measurements, as: DataHandler.measurementStorageFileName)
     }
     
