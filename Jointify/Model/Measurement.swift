@@ -26,24 +26,24 @@ struct Measurement: Codable, Identifiable {
     var id: UUID = UUID()
     
     // MARK: Computed Instance Properties
-    var minROMValue: Float {
-        return minROMFrame.degree
+    var minROMValue: Int {
+        return Int(round(minROMFrame.degree))
     }
     
-    var maxROMValue: Float {
-        return maxROMFrame.degree
+    var maxROMValue: Int {
+        return Int(round(maxROMFrame.degree))
     }
     
     var neutralNullKneeLeftValue: Int {
-        return maxROMValue >= 180 ? Int(round(maxROMValue - 180)) : 0
+        return maxROMValue >= 180 ? maxROMValue - 180 : 0
     }
 
     var neutralNullKneeMiddleValue: Int {
-        return maxROMValue >= 180 ? 0 : Int(round(maxROMValue))
+        return maxROMValue >= 180 ? 0 : maxROMValue
     }
     
     var neutralNullKneeRightValue: Int {
-        return 180 - Int(round(minROMValue))
+        return 180 - minROMValue
     }
     
     // MARK: Initializers
