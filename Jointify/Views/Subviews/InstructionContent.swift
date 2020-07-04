@@ -32,31 +32,23 @@ struct InstructionContent: View {
     "1) Go to your Gallery and start editing the video."
     
     let videoEditingInstructions2 =
-    "2) Trim video so that the first frame is the initial position as indicated above."
+    "2) Cut video such that the first frame is the initial position as indicated above."
     
     let videoEditingInstructions3 =
-    "3) Trim video so that the last frame is the initial position as indicated above."
-    
-    let videoEditingInstructions4 =
-    "4) Select the crop symbol."
-    
-    let videoEditingInstructions5 =
-    "5) Select the resize symbol."
-    
-    let videoEditingInstructions6 =
-    "6) Select square format and press done."
-    
-    let privacyDisclaimer =
-    "No submitted videos will be saved or leave your phone in any way. All these restrictions are simply needed to ensure correct measurement results."
+    "3) Cut video such that the last frame is the initial position as indicated above."
     
     let howToImprove = [
         "Find a suitable spot with as little visual distraction as possible. The analysis works best in front of a plain white wall.",
-        "Place your mobile phone roughly 3 meters away from you on a object which is at least 60 centimetres high (e.g. a chair) or on the floor. It is important that your whole body is in the centre of the picture, since you have to submit a video in square format.",
-        "Make sure that your face is visible (no caps or similar), as it helps the analysis to identify your complete body pose.",
+        "Place your mobile phone on a object (e.g. a chair) or on the floor.",
+        "Make sure that your face is visible (no caps or similar) and show the palms of your hands.",
         "Please wear short pants or underwear, since trousers can distort the measurement results.",
         "Please be barefoot.",
-        "Please ensure that there is no lighting source in the background facing the camera (e.g. windows)."
+        "Please ensure that there is no lighting source in the background facing the camera (e.g. windows).",
+        "Make sure to excecute the movement slow and steady."
     ]
+    
+    let privacyDisclaimer =
+    "No submitted videos will be saved or leave your phone in any way. All these restrictions are simply needed to ensure correct measurement results."
     // swiftlint:enable line_length
     
     // MARK: Body
@@ -70,6 +62,9 @@ struct InstructionContent: View {
                 VStack {
                     
                     InstructionHeadline(headline: "Recording Instructions")
+                    
+                    Text("Make sure that your whole body is visible in the video.")
+                        .multilineTextAlignment(.center)
                     
                     ScrollView(.horizontal) {
                         HStack(alignment: .top, spacing: 16) {
@@ -123,21 +118,6 @@ struct InstructionContent: View {
                             InstructionPoint(
                                 text: videoEditingInstructions3,
                                 image: Image("TrimEnd"),
-                                width: instructionPointWidth)
-                            
-                            InstructionPoint(
-                                text: videoEditingInstructions4,
-                                image: Image("CropStarts"),
-                                width: instructionPointWidth)
-                            
-                            InstructionPoint(
-                                text: videoEditingInstructions5,
-                                image: Image("CropMid"),
-                                width: instructionPointWidth)
-                            
-                            InstructionPoint(
-                                text: videoEditingInstructions6,
-                                image: Image("CropEnd"),
                                 width: instructionPointWidth)
                             
                         }.padding(.all, 8)

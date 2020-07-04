@@ -217,14 +217,22 @@ struct ProcessingView: View {
                         return
                 }
                 
-                let drawnMinImage = poseNet.show(poseNetMin.image, poseNetMin.pose)
-                let drawnMaxImage = poseNet.show(poseNetMax.image, poseNetMax.pose)
+                let drawnMinImage = poseNet.show(frame: poseNetMin.image,
+                                                 pose: poseNetMin.pose)
+                let drawnMaxImage = poseNet.show(frame: poseNetMax.image,
+                                                 pose: poseNetMax.pose)
+                
+                guard let finalMinImage = drawnMinImage.cutToWidthFromLeft(poseNetMin.originalFrameSize.width),
+                    let finalMaxImage = drawnMaxImage.cutToWidthFromLeft(poseNetMax.originalFrameSize.width) else {
+                        print("Error. Image could not be cut to original width.")
+                        return
+                }
                 
                 // successfully derived a Measurement instance
                 let measurement = Measurement(
                     date: Date(),
-                    minROMFrame: MeasurementFrame(degree: poseNetMin.degree, image: drawnMinImage),
-                    maxROMFrame: MeasurementFrame(degree: poseNetMax.degree, image: drawnMaxImage)
+                    minROMFrame: MeasurementFrame(degree: poseNetMin.degree, image: finalMinImage),
+                    maxROMFrame: MeasurementFrame(degree: poseNetMax.degree, image: finalMaxImage)
                 )
                 
                 // success when done

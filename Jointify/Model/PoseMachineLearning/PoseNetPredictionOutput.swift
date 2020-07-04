@@ -18,4 +18,5 @@ struct PoseNetPredictionOutput {
     let image: CGImage
     let outputQualityAcceptable: Bool
     let pose: Pose
+    let originalFrameSize: CGSize
 }
