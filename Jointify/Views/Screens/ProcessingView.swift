@@ -44,12 +44,14 @@ struct ProcessingView: View {
             VStack(spacing: 16.0) {
                 
                 // pass analysed images further
-                NavigationLink(
-                    destination: VideoResultView(measurement: self.measurement ?? Measurement())
+                if self.measurement != nil {
+                    NavigationLink(
+                    destination: VideoResultView(measurement: self.measurement!)
                         // hide the navigation bar of the VideoResultView, too
                         .navigationBarTitle("")
                         .navigationBarHidden(true),
                     isActive: self.$finishedProcessing) { EmptyView() }
+                }
                 
                 // 20% for the headline
                 LogoAndHeadlineView(

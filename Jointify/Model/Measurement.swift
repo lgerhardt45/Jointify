@@ -52,11 +52,4 @@ struct Measurement: Codable, Identifiable {
         self.minROMFrame = minROMFrame
         self.maxROMFrame = maxROMFrame
     }
-    
-    /// creates a mock instance
-    init() {
-        self.date = Date()
-        self.minROMFrame = MeasurementFrame(degree: 0, image: UIImage(named: "LogoMitText")!)
-        self.maxROMFrame = MeasurementFrame(degree: 0, image: UIImage(named: "LogoMitText")!)
-    }
 }

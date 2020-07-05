@@ -8,6 +8,7 @@
 
 // MARK: - Imports
 import Foundation
+import UIKit
 
 // MARK: - DataHandler
 enum DataHandler {
@@ -16,9 +17,25 @@ enum DataHandler {
     static var measurementStorageFileName = "measurements.json"
     
     static var mockMeasurements: [Measurement] = [
-        Measurement(),
-        Measurement(),
-        Measurement()
+        Measurement(
+            date: Date(),
+            minROMFrame: MeasurementFrame(
+                degree: 180,
+                image: UIImage(named: "mock_measurement_frame")!),
+            maxROMFrame: MeasurementFrame(
+                degree: 20,
+                image: UIImage(named: "mock_measurement_frame")!)
+        ),
+        
+        Measurement(
+            date: Date(),
+            minROMFrame: MeasurementFrame(
+                degree: 180,
+                image: UIImage(named: "mock_measurement_frame")!),
+            maxROMFrame: MeasurementFrame(
+                degree: 20,
+                image: UIImage(named: "mock_measurement_frame")!)
+        )
     ]
 
     // MARK: Computed Type Properties
