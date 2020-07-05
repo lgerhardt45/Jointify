@@ -37,8 +37,8 @@ struct VideoResultView: View {
                 // subheadline
                 SubHeadline(subheadline: "Your video was analyzed succesfully.", width: geometry.size.width / 2.0)
                 
-                ScrollView {
-                    VStack(spacing: 16) {
+                ScrollView(.horizontal) {
+                    HStack(spacing: 24) {
                         
                         // min
                         VStack(spacing: 8) {
@@ -63,10 +63,11 @@ struct VideoResultView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .cornerRadius(5)
+
                             Text("Maximum degree: \(Int(round(self.measurement.maxROMFrame.degree)))°")
                         }
                     }
-                }
+                }.padding(.horizontal, geometry.size.width * 0.05) // ScrollView padding
                 
                 // Button to ResultView
                 NavigationLink(
