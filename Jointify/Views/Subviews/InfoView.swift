@@ -44,7 +44,7 @@ struct InfoView: View {
     var body: some View {
         VStack {
             
-            Text("What are my values?")
+            Text("What do my values mean?")
                 .font(.title)
             
             ScrollView {
