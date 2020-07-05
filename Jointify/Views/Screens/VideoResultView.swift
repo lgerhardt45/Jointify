@@ -78,7 +78,7 @@ struct VideoResultView: View {
                         DefaultButton(action: {
                             self.goToResultView.toggle()
                         }) {
-                            Text("Done")
+                            Text("Next")
                                 .frame(width: geometry.size.width / 3.0)
                         }
                 }
