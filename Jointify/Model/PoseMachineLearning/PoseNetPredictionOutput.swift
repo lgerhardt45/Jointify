@@ -11,9 +11,10 @@ import Foundation
 import SwiftUI
 
 // MARK: - PoseNetPredictionOutput
-struct PoseNetPredictionOutput {
+struct PoseNetPredictionOutput: Identifiable {
     
     // MARK: Stored Instance Properties
+    let id = UUID()
     let degree: Float
     let image: CGImage
     let outputQualityAcceptable: Bool

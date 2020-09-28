@@ -13,6 +13,7 @@ import SwiftUI
 struct BodySideChooser: View {
     
     // MARK: Binding Instance Properties
+    // 0 referrs to left, 1 referrs to right
     @Binding var chosenSideIndex: Int
     
     // MARK: Stored Instance Properties

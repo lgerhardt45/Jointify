@@ -25,7 +25,10 @@ struct ProcessingView: View {
     @State private var acceptedFramesCounter = 0
     @State private var analysisFailed: Bool = false
     
+    @State private var poseNetPredictionOutputArray: [PoseNetPredictionOutput] = []
+    
     // MARK: Stored Instance Properties
+    private var poseNet: PoseNet
     private let errorMessage = """
         Unfortunately, the analysis failed.
         Please follow the instructions carefully when preparing your video for the analysis and try again.
@@ -33,6 +36,15 @@ struct ProcessingView: View {
     """
     private let acceptedFramesThreshold: Double = 0.55
     let chosenSide: Side
+    let chosenJointCase: JointCase
+    
+    // MARK: Initializers
+    init(videoUrl: Binding<NSURL?>, chosenSide: Side, chosenJointCase: JointCase) {
+        self._videoUrl = videoUrl
+        self.chosenSide = chosenSide
+        self.chosenJointCase = chosenJointCase
+        self.poseNet = PoseNet(side: self.chosenSide, jointCase: self.chosenJointCase)
+    }
     
     // MARK: Body
     var body: some View {
@@ -46,7 +58,11 @@ struct ProcessingView: View {
                 // pass analysed images further
                 if self.measurement != nil {
                     NavigationLink(
-                    destination: VideoResultView(measurement: self.measurement!)
+                        destination: VideoResultView(
+                            poseNetPredictionOutputArray: self.$poseNetPredictionOutputArray,
+                            measurement: self.measurement!,
+                            poseNet: self.poseNet
+                        )
                         // hide the navigation bar of the VideoResultView, too
                         .navigationBarTitle("")
                         .navigationBarHidden(true),
@@ -129,7 +145,7 @@ struct ProcessingView: View {
     }
     
     /// From https://stackoverflow.com/questions/42665271/swift-get-all-frames-from-video
-    /// takes the NSURL of a video and converts it to an UIImage array by taking frame by frame (one per second)
+    /// takes the NSURL of a video and converts it to an UIImage array by taking frame by frame
     private func transformVideoToImageArray(videoUrl: NSURL) -> [UIImage] {
         print("Getting frames from \(videoUrl)")
         
@@ -168,38 +184,41 @@ struct ProcessingView: View {
         var qualityAssessmentFailed = false
         // instantiate PoseNet model
         print("Chosen side: \(self.chosenSide)")
-        let poseNet = PoseNet(side: self.chosenSide)
+        print("Chosen joint case: \(self.chosenJointCase)")
         
         // let model run asnyc
         let queue = DispatchQueue(label: "ml-queue", qos: .utility)
         queue.async {
             
             print("Starting PoseNet analysis")
-            var poseNetPredictionOutputArray: [PoseNetPredictionOutput] = []
             
             for (frameCount, frame) in frames.enumerated() {
                 print("Analysing frame \(frameCount+1)/\(frames.count)")
                 
                 // let model run over current frame
-                let poseNetPredictionOutput = poseNet.predict(frame)
+                let poseNetPredictionOutput = self.poseNet.predict(frame)
                 
                 // Only append measurement frame if it fulfills quality criteria
-                if poseNetPredictionOutput.outputQualityAcceptable {
+                // This functionality was commented out for debugging
+                /*if poseNetPredictionOutput.outputQualityAcceptable {
                     self.acceptedFramesCounter += 1
-                    poseNetPredictionOutputArray.append(poseNetPredictionOutput)
-                }
+                    self.poseNetPredictionOutputArray.append(poseNetPredictionOutput)
+                }*/
                 
                 self.progress += 1
+                
+                // This was added for debugging
+                self.poseNetPredictionOutputArray.append(poseNetPredictionOutput)
                 
                 self.remainingFrames = self.total - self.progress
                 
                 ///Provide early exit possibility if acceptedFramesThreshold cannot be reached anymore
                 /// -> too little frames were of sufficient quality
-                if (Double(self.acceptedFramesCounter + self.remainingFrames)
+                /*if (Double(self.acceptedFramesCounter + self.remainingFrames)
                     / Double(self.total)) < self.acceptedFramesThreshold {
                     qualityAssessmentFailed = true
                     break
-                }
+                }*/
             }
             
             // Check if video could be analyzed or if the qualitity assessment failed
@@ -213,15 +232,15 @@ struct ProcessingView: View {
             } else {
                 
                 // Find frames with min and max degree and only draw joints on these frames
-                guard let poseNetMin = self.findFrameWithDegree(poseNetPredictionOutputArray, .minimum),
-                    let poseNetMax = self.findFrameWithDegree(poseNetPredictionOutputArray, .maximum) else {
+                guard let poseNetMin = self.findFrameWithDegree(self.poseNetPredictionOutputArray, .minimum),
+                    let poseNetMax = self.findFrameWithDegree(self.poseNetPredictionOutputArray, .maximum) else {
                         print("Minimium or maximum degree could not be obtained")
                         return
                 }
                 
-                let drawnMinImage = poseNet.show(frame: poseNetMin.image,
+                let drawnMinImage = self.poseNet.show(frame: poseNetMin.image,
                                                  pose: poseNetMin.pose)
-                let drawnMaxImage = poseNet.show(frame: poseNetMax.image,
+                let drawnMaxImage = self.poseNet.show(frame: poseNetMax.image,
                                                  pose: poseNetMax.pose)
                 
                 guard let finalMinImage = drawnMinImage.cutToWidthFromLeft(poseNetMin.originalFrameSize.width),
@@ -272,6 +291,6 @@ struct ProcessingView: View {
 // MARK: - Previews
 struct ProcessingView_Previews: PreviewProvider {
     static var previews: some View {
-        ProcessingView(videoUrl: .constant(nil), chosenSide: .right)
+        ProcessingView(videoUrl: .constant(nil), chosenSide: .right, chosenJointCase: .knee)
     }
 }

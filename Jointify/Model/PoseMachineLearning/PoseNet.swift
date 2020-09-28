@@ -70,6 +70,7 @@ class PoseNet {
     // MARK: Stored Instance Properties
     public var degree: Float = 0.0
     private let side: Side
+    private let jointCase: JointCase
     private let jointSegments: [JointSegment]
     private let selectedJointNames: [JointName]
     // mapping the recognized Joints to their respective coordinates on the canvas
@@ -81,22 +82,42 @@ class PoseNet {
     private var poseBuilderConfiguration = PoseBuilderConfiguration()
 
     // MARK: Initializers
-    init(side: Side) {
+    init(side: Side, jointCase: JointCase) {
         self.side = side
+        self.jointCase = jointCase
         
-        switch side {
-        case .left:
-            jointSegments = [
-                JointSegment(jointA: .leftHip, jointB: .leftKnee),
-                JointSegment(jointA: .leftKnee, jointB: .leftAnkle)
-            ]
-            selectedJointNames = [.leftHip, .leftKnee, .leftAnkle]
-        case .right:
-            jointSegments = [
-                JointSegment(jointA: .rightHip, jointB: .rightKnee),
-                JointSegment(jointA: .rightKnee, jointB: .rightAnkle)
-            ]
-            selectedJointNames = [.rightHip, .rightKnee, .rightAnkle]
+        switch jointCase {
+        case .knee:
+            switch side {
+            case .left:
+                self.jointSegments = [
+                    JointSegment(jointA: .leftHip, jointB: .leftKnee),
+                    JointSegment(jointA: .leftKnee, jointB: .leftAnkle)
+                ]
+                self.selectedJointNames = [.leftHip, .leftKnee, .leftAnkle]
+            case .right:
+                self.jointSegments = [
+                    JointSegment(jointA: .rightHip, jointB: .rightKnee),
+                    JointSegment(jointA: .rightKnee, jointB: .rightAnkle)
+                ]
+                self.selectedJointNames = [.rightHip, .rightKnee, .rightAnkle]
+            }
+            
+        case .shoulder:
+            switch side {
+            case .left:
+                self.jointSegments = [
+                    JointSegment(jointA: .leftElbow, jointB: .leftShoulder),
+                    JointSegment(jointA: .leftShoulder, jointB: .leftHip)
+                ]
+                self.selectedJointNames = [.leftElbow, .leftShoulder, .leftHip]
+            case .right:
+                self.jointSegments = [
+                    JointSegment(jointA: .rightElbow, jointB: .rightShoulder),
+                    JointSegment(jointA: .rightShoulder, jointB: .rightHip)
+                ]
+                self.selectedJointNames = [.rightElbow, .rightShoulder, .rightHip]
+            }
         }
     }
     
@@ -132,24 +153,42 @@ class PoseNet {
             guard let leftKneeJoint = pose.joints[.leftKnee],
                 let leftHipJoint = pose.joints[.leftHip],
                 let leftAnkleJoint = pose.joints[.leftAnkle],
+                let leftElbowJoint = pose.joints[.leftElbow],
+                let leftShoulderJoint = pose.joints[.leftShoulder],
                 let rightKneeJoint = pose.joints[.rightKnee],
                 let rightHipJoint = pose.joints[.rightHip],
-                let rightAnkleJoint = pose.joints[.rightAnkle] else {
+                let rightAnkleJoint = pose.joints[.rightAnkle],
+                let rightElbowJoint = pose.joints[.rightElbow],
+                let rightShoulderJoint = pose.joints[.rightShoulder] else {
                     return
             }
             
             // Draw joints on the correct side only.
-            switch side {
-            case .left:
-                drawJoints(circle: leftKneeJoint, in: rendererContext.cgContext)
-                drawJoints(circle: leftHipJoint, in: rendererContext.cgContext)
-                drawJoints(circle: leftAnkleJoint, in: rendererContext.cgContext)
-            case .right:
-                drawJoints(circle: rightKneeJoint, in: rendererContext.cgContext)
-                drawJoints(circle: rightHipJoint, in: rendererContext.cgContext)
-                drawJoints(circle: rightAnkleJoint, in: rendererContext.cgContext)
+            switch jointCase {
+            case .knee:
+                switch side {
+                case .left:
+                    drawJoints(circle: leftKneeJoint, in: rendererContext.cgContext)
+                    drawJoints(circle: leftHipJoint, in: rendererContext.cgContext)
+                    drawJoints(circle: leftAnkleJoint, in: rendererContext.cgContext)
+                case .right:
+                    drawJoints(circle: rightKneeJoint, in: rendererContext.cgContext)
+                    drawJoints(circle: rightHipJoint, in: rendererContext.cgContext)
+                    drawJoints(circle: rightAnkleJoint, in: rendererContext.cgContext)
+                }
+            case .shoulder:
+                switch side {
+                case .left:
+                    drawJoints(circle: leftShoulderJoint, in: rendererContext.cgContext)
+                    drawJoints(circle: leftHipJoint, in: rendererContext.cgContext)
+                    drawJoints(circle: leftElbowJoint, in: rendererContext.cgContext)
+                case .right:
+                    drawJoints(circle: rightShoulderJoint, in: rendererContext.cgContext)
+                    drawJoints(circle: rightHipJoint, in: rendererContext.cgContext)
+                    drawJoints(circle: rightElbowJoint, in: rendererContext.cgContext)
+                }
             }
-                 
+            
         }
         return dstImage
     }
@@ -168,6 +207,8 @@ class PoseNet {
     /// Returns a Float degree number.
     func calcAngleBetweenJoints(_ pose: Pose) -> Float {
         var innerAngle: Float = 0.0
+        var amountProduct: Float = 0.0
+        var scalarProduct: Float = 0.0
         // Place the joint coordinates in the global class dictionary jointPositions
         fillJointCoordinatesDictionaries(pose)
         guard let jointPositionsHipX = jointPositions["\(side)HipX"],
@@ -175,24 +216,48 @@ class PoseNet {
             let jointPositionsKneeX = jointPositions["\(side)KneeX"],
             let jointPositionsKneeY = jointPositions["\(side)KneeY"],
             let jointPositionsAnkleX = jointPositions["\(side)AnkleX"],
-            let jointPositionsAnkleY = jointPositions["\(side)AnkleY"]
+            let jointPositionsAnkleY = jointPositions["\(side)AnkleY"],
+            let jointPositionsElbowX = jointPositions["\(side)ElbowX"],
+            let jointPositionsElbowY = jointPositions["\(side)ElbowY"],
+            let jointPositionsShoulderX = jointPositions["\(side)ShoulderX"],
+            let jointPositionsShoulderY = jointPositions["\(side)ShoulderY"]
         else {
             print("Error. At least one joint position could not be obtained.")
             return innerAngle
         }
-        // Create vectors leading from ankle and hip towards knee
-        let vectorKneeHip: [String: Float] = ["X": jointPositionsHipX - jointPositionsKneeX,
-                                              "Y": jointPositionsHipY - jointPositionsKneeY]
-        let vectorKneeAnkle: [String: Float] = ["X": jointPositionsAnkleX - jointPositionsKneeX,
-                                                "Y": jointPositionsAnkleY - jointPositionsKneeY]
-        // Calculate inner angle of knee
-        guard let vectorKneeHipX = vectorKneeHip["X"], let vectorKneeAnkleX = vectorKneeAnkle["X"],
-            let vectorKneeHipY = vectorKneeHip["Y"], let vectorKneeAnkleY = vectorKneeAnkle["Y"] else {
-                return innerAngle
+        
+        switch jointCase {
+        case .knee:
+            // Create vectors leading from ankle and hip towards knee
+            let vectorKneeHip: [String: Float] = ["X": jointPositionsHipX - jointPositionsKneeX,
+                                                  "Y": jointPositionsHipY - jointPositionsKneeY]
+            let vectorKneeAnkle: [String: Float] = ["X": jointPositionsAnkleX - jointPositionsKneeX,
+                                                    "Y": jointPositionsAnkleY - jointPositionsKneeY]
+            // Calculate inner angle of knee
+            guard let vectorKneeHipX = vectorKneeHip["X"], let vectorKneeAnkleX = vectorKneeAnkle["X"],
+                let vectorKneeHipY = vectorKneeHip["Y"], let vectorKneeAnkleY = vectorKneeAnkle["Y"] else {
+                    return innerAngle
+            }
+            scalarProduct = (vectorKneeHipX * vectorKneeAnkleX + vectorKneeHipY * vectorKneeAnkleY)
+            amountProduct = sqrt(pow(vectorKneeHip["X"]!, 2) + pow(vectorKneeHip["Y"]!, 2)) *
+                sqrt(pow(vectorKneeAnkle["X"]!, 2) + pow(vectorKneeAnkle["Y"]!, 2))
+            
+        case .shoulder:
+            // Create vectors leading from ankle and hip towards knee
+            let vectorShoulderElbow: [String: Float] = ["X": jointPositionsElbowX - jointPositionsShoulderX,
+                                                  "Y": jointPositionsElbowY - jointPositionsShoulderY]
+            let vectorShoulderHip: [String: Float] = ["X": jointPositionsHipX - jointPositionsShoulderX,
+                                                    "Y": jointPositionsHipY - jointPositionsShoulderY]
+            // Calculate inner angle of knee
+            guard let vectorShoulderElbowX = vectorShoulderElbow["X"], let vectorShoulderHipX = vectorShoulderHip["X"],
+                let vectorShoulderElbowY = vectorShoulderElbow["Y"], let vectorShoulderHipY = vectorShoulderHip["Y"] else {
+                    return innerAngle
+            }
+            scalarProduct = (vectorShoulderElbowX * vectorShoulderHipX + vectorShoulderElbowY * vectorShoulderHipY)
+            amountProduct = sqrt(pow(vectorShoulderElbow["X"]!, 2) + pow(vectorShoulderElbow["Y"]!, 2)) *
+                sqrt(pow(vectorShoulderHip["X"]!, 2) + pow(vectorShoulderHip["Y"]!, 2))
         }
-        let scalarProduct = (vectorKneeHipX * vectorKneeAnkleX + vectorKneeHipY * vectorKneeAnkleY)
-        let amountProduct = sqrt(pow(vectorKneeHip["X"]!, 2) + pow(vectorKneeHip["Y"]!, 2)) *
-            sqrt(pow(vectorKneeAnkle["X"]!, 2) + pow(vectorKneeAnkle["Y"]!, 2))
+        
         // Prevent divided by zero bug
         if amountProduct != 0.0 {
             innerAngle = acos(scalarProduct / amountProduct) * 180 / Float.pi

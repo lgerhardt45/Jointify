@@ -12,11 +12,15 @@ import SwiftUI
 // MARK: - VideoResultView
 struct VideoResultView: View {
     
+    // MARK: Binding Instance Properties
+    @Binding var poseNetPredictionOutputArray: [PoseNetPredictionOutput]
+    
     // MARK: State Instance Properties
     @State var goToResultView: Bool = false
     
     // MARK: Stored Instance Properties
     let measurement: Measurement
+    let poseNet: PoseNet
     
     // MARK: Body
     var body: some View {
@@ -37,8 +41,26 @@ struct VideoResultView: View {
                 // subheadline
                 SubHeadline(subheadline: "Your video was analyzed succesfully.", width: geometry.size.width / 2.0)
                 
-                ScrollView(.horizontal) {
-                    HStack(spacing: 24) {
+                VStack {
+                    
+                    // all others
+                    ScrollView(.vertical) {
+                        
+                        VStack {
+                            ForEach(self.poseNetPredictionOutputArray) { poseNetPredictionOutput in
+                                Image(
+                                    uiImage:
+                                    self.poseNet.show(
+                                        frame: poseNetPredictionOutput.image,
+                                        pose: poseNetPredictionOutput.pose
+                                    )
+                                        .cutToWidthFromLeft(poseNetPredictionOutput.originalFrameSize.width)!
+                                )
+                                Text("Degree: \(Int(round(poseNetPredictionOutput.degree)))°")
+                            }
+                        }
+                        Text("---------------")
+                        Text("Min and max:")
                         
                         // min
                         VStack(spacing: 8) {
@@ -63,11 +85,11 @@ struct VideoResultView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .cornerRadius(5)
-
+                            
                             Text("Maximum degree: \(Int(round(self.measurement.maxROMFrame.degree)))°")
                         }
                     }
-                }.padding(.horizontal, geometry.size.width * 0.05) // ScrollView padding
+                }
                 
                 // Button to ResultView
                 NavigationLink(
@@ -93,7 +115,9 @@ struct VideoResultView: View {
 struct VideoResultView_Previews: PreviewProvider {
     static var previews: some View {
         VideoResultView(
-            measurement: DataHandler.mockMeasurements[0]
+            poseNetPredictionOutputArray: .constant([]),
+            measurement: DataHandler.mockMeasurements[0],
+            poseNet: PoseNet(side: .left, jointCase: .knee)
         )
     }
 }

@@ -13,6 +13,9 @@ import SwiftUI
 struct ChooseInputView: View {
     
     // MARK: State Instance Properties
+    /// the chosen joint. Needs to be a Double as the value is used
+    ///  for the slider that choses the body side
+    @State var chosenJointIndex: Int = 1
     /// the chosen body side. Needs to be a Double as the value is used
     ///  for the slider that choses the body side
     @State var chosenSideIndex: Int = 1
@@ -27,7 +30,7 @@ struct ChooseInputView: View {
     
     // MARK: Recording Not Yet Supported Properties
     @State var showRecordingNotSupportedAlert: Bool = false
-    let recordingSupported: Bool = false
+    let recordingSupported: Bool = true
     // swiftlint:disable:next line_length
     let recordingNotSupportedText = "Currently, the recording in the app is not supported. Please use the Camera app to record the video and modify it according to the instructions."
     
@@ -44,7 +47,8 @@ struct ChooseInputView: View {
                     destination: ProcessingView(
                         videoUrl: self.$videoUrl,
                         // the chosen side returned by the slider is used in the allCases array of Side
-                        chosenSide: Side.allCases[Int(self.chosenSideIndex)])
+                        chosenSide: Side.allCases[Int(self.chosenSideIndex)],
+                        chosenJointCase: JointCase.allCases[Int(self.chosenJointIndex)])
                         // hide the navigation bar on the ProcessingView, too
                         .navigationBarTitle("")
                         .navigationBarHidden(true),
@@ -73,6 +77,17 @@ struct ChooseInputView: View {
                     
                     Spacer()
                     
+                    // Choose joint
+                    VStack {
+                        Text("Choose joint")
+                        JointChooser(
+                            chosenJointIndex: self.$chosenJointIndex,
+                            width: geometry.size.width * 0.6
+                        )
+                    }
+                    
+                    Spacer()
+                    
                     // Choose body side
                     VStack {
                         Text("Choose side")
@@ -88,7 +103,7 @@ struct ChooseInputView: View {
                     VStack(spacing: 16) {
                         
                         // Record
-                        DefaultButton(mode: .disabled,
+                        DefaultButton(mode: .enabled,
                                       action: {
                             if self.recordingSupported {
                                 self.sourceType = UIImagePickerController.SourceType.camera
