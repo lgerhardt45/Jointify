@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21315ED1252207F200CED050 /* JointChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21315ED0252207F200CED050 /* JointChooser.swift */; };
+		21315ED3252208CC00CED050 /* JointCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21315ED2252208CC00CED050 /* JointCase.swift */; };
 		2141754124865483005CB6E5 /* MediaPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141754024865483005CB6E5 /* MediaPicker.swift */; };
 		2161A0BB24A53A9C0038E410 /* ExtremeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161A0BA24A53A9C0038E410 /* ExtremeValue.swift */; };
 		21CFEA762497E9F500421B80 /* Pose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CFEA722497E9F500421B80 /* Pose.swift */; };
@@ -121,6 +123,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		21315ED0252207F200CED050 /* JointChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointChooser.swift; sourceTree = "<group>"; };
+		21315ED2252208CC00CED050 /* JointCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointCase.swift; sourceTree = "<group>"; };
 		2141754024865483005CB6E5 /* MediaPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPicker.swift; sourceTree = "<group>"; };
 		2161A0BA24A53A9C0038E410 /* ExtremeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtremeValue.swift; sourceTree = "<group>"; };
 		21CFEA722497E9F500421B80 /* Pose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pose.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 				21CFEA792497EA0300421B80 /* Joint.swift */,
 				21ED3CFD249A06FD0031199A /* JointName.swift */,
 				21CFEA722497E9F500421B80 /* Pose.swift */,
+				21315ED2252208CC00CED050 /* JointCase.swift */,
 				80EF89BD2497F31100E345F0 /* Edge.swift */,
 				21ED3CFF249A0E250031199A /* Cell.swift */,
 				21ED3D01249A0F4E0031199A /* Side.swift */,
@@ -345,6 +350,7 @@
 				C198FD3724AF9344003E0A5D /* InstructionContentHelpers.swift */,
 				80DFDB772492AAC20021124C /* PastRecords.swift */,
 				8033E54824A72C4C00F0D1E8 /* BodySideChooser.swift */,
+				21315ED0252207F200CED050 /* JointChooser.swift */,
 				2141754024865483005CB6E5 /* MediaPicker.swift */,
 				80EF89C02498242000E345F0 /* ProgressBar.swift */,
 				8088FB05249C155E00E156DE /* MailView.swift */,
@@ -544,10 +550,12 @@
 				21CFEA772497E9F500421B80 /* PoseBuilder.swift in Sources */,
 				C190815C249E1AD5001738AC /* MeasurementSheetPDFWriter.swift in Sources */,
 				6EC86732249C0A740012C30B /* Logo.swift in Sources */,
+				21315ED1252207F200CED050 /* JointChooser.swift in Sources */,
 				6ED11547249E30BA0020E13F /* SubHeadline.swift in Sources */,
 				80F1D4D8249198B600ACCEC2 /* WelcomeView.swift in Sources */,
 				2141754124865483005CB6E5 /* MediaPicker.swift in Sources */,
 				80049FC224AF688F00F33CB8 /* PDFWriterConstants.swift in Sources */,
+				21315ED3252208CC00CED050 /* JointCase.swift in Sources */,
 				80DFDB782492AAC20021124C /* PastRecords.swift in Sources */,
 				21CFEA872497EA2F00421B80 /* UIImage+Extensions.swift in Sources */,
 				80EF89BE2497F31100E345F0 /* Edge.swift in Sources */,
