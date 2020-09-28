@@ -157,7 +157,7 @@ struct ProcessingView: View {
         generator.appliesPreferredTrackTransform = true
         
         // change frequency of frame creation here by making it a float
-        for index in stride(from: 0.0, to: duration, by: 0.33) {
+        for index in stride(from: 0.0, to: duration, by: 1) {
             let time: CMTime = CMTimeMakeWithSeconds(Float64(index), preferredTimescale: 600)
             let image: CGImage
             do {

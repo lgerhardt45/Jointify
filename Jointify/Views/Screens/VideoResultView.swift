@@ -38,9 +38,6 @@ struct VideoResultView: View {
                     height: geometry.size.height * 0.2
                 )
                 
-                // subheadline
-                SubHeadline(subheadline: "Your video was analyzed succesfully.", width: geometry.size.width / 2.0)
-                
                 VStack {
                     
                     // all others
