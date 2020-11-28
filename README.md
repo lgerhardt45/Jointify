@@ -43,7 +43,7 @@ This also represents the expected user walk through, i.e. how she uses the app. 
 
 3. **`ChooseInputView`**: Choosing the body side to be analysed happens through a `SegmentedControllPicker`. The choice is passed through to the `ProcessingView`. The two buttons below offer the choice to use an existing recording or record a video right in the app. With a click on _Record_ or _Gallery_, the `MediaPicker` is opened with the `UIImagePickerController.SourceType` `.camera` or `.gallery`, respectively.
 
-4. **`MediaPicker`**: The `MediaPicker` encapsulates the system way to choose media from the gallery or camera. The `mediaType` has to be set to ``[kUTTypeMovie as String]` in order to only show videos in the gallery or have the video mode set in the camera. For a video, the `imagePicker` returns a `NSURL`, i.e. the internal file location where the chosen video is stored.
+4. **`MediaPicker`**: The `MediaPicker` encapsulates the system way to choose media from the gallery or camera. The `mediaType` has to be set to `[kUTTypeMovie as String]` in order to only show videos in the gallery or have the video mode set in the camera. For a video, the `imagePicker` returns a `NSURL`, i.e. the internal file location where the chosen video is stored.
 
 5. **`ProcessingView`**: Here, the magic happens. The video is split up into frames (we chose three frames per second), passed through the PoseNet analysis (see [Load PoseNet model](#load-posenet-model)) and returns the frames with the minimum and maximum range of motion values (those are calculated from the vectors between the joints, compare [Calculate angles](#calculate-angles)). To give the user something to do while he waits for the analysis to finish we added an info box. A `ProgressBar` is added to give feedback on the progress. If the analysis fails, the user is shown an `Alert` that prompts him to try again.
 
@@ -51,16 +51,14 @@ This also represents the expected user walk through, i.e. how she uses the app. 
 
 7. **`ResultView`**: The values only are shown on the last screen. Previous values, if they exist, are displayed below. From here, the user can go back to the WelcomeView (button Done) or choose to create a PDF which translates the angles into standardized medical values along the “Neutral-Null-Methode” (compare [PDFWriter](#pdfwriter)).
 
-8. **`ResultView`**: The values only are shown on the last screen. Previous values, if they exist, are displayed below. From here, the user can go back to the WelcomeView (button Done) or choose to create a PDF which translates the angles into standardized medical values along the “Neutral-Null-Methode” (compare [PDFWriter](#pdfwriter)).
-
 9. **`MailView`**: The result PDF from the PDFWriter is attached to an email draft. We utilize the system mail programm by wrapping a `MFMailComposeViewController`. Hitting send dismisses the view and brings you back to the `ResultView`.
 
 
 ### Load PoseNet model
-We used the PoseNet model provided by Apple in their .mlmodel format. We chose the PoseNetMobileNet075S8FP16 version because it is said to be the most accurate and light-weight enough to also run on low-end devices (compare the description of the official [PoseNet TensorFlow model on GitHub](https://github.com/tensorflow/tfjs-models/tree/master/posenet)). While still taking the longest to process, we decided to suit Jointify as medical application to go for the highest accuracy possible. The model is available to download from developer.apple.com/machine-learning/models -> PoseNet or directly [here](https://ml-assets.apple.com/coreml/models/Image/PoseEstimation/PoseNet/PoseNetMobileNet075S8FP16.mlmodel). 
+We used the PoseNet model provided by Apple in their `.mlmodel` format. We chose the _PoseNetMobileNet075S8FP16_ version because it is said to be the most accurate and light-weight enough to also run on low-end devices (compare the description of the official [PoseNet TensorFlow model on GitHub](https://github.com/tensorflow/tfjs-models/tree/master/posenet)). While still taking the longest to process, we decided to suit Jointify as medical application to go for the highest accuracy possible. The model is available to download from https://developer.apple.com/machine-learning/models -> _PoseNet_ or directly [here](https://ml-assets.apple.com/coreml/models/Image/PoseEstimation/PoseNet/PoseNetMobileNet075S8FP16.mlmodel). 
 To get the model into the app and up and running on passed into images, we mostly followed [this tutorial](https://developer.apple.com/documentation/coreml/detecting_human_body_poses_in_an_image) provided by Apple.
 The following diagram from the tutorial shows which body features the model recognizes and how those can be connected by vectors. The coordinates of the body features and the vectors are used to get the angles of a joint.
-<insert image here>
+![PoseNet body recognition](/readme_images/posenet_joint_recognition.png)
 
 ### Use video frame by frame
 As the PoseNet model runs on single images, you first have to cut the video returned by the MediaPicker into separate frames. We found that 3 frames per second make a good balance between enough frames to have retrieved the required values and not letting the user wait too long for the results on the ProcessingView. Getting the frames from the NSURL  (i.e. the storage location of the selected video) was rather straightforward: 
