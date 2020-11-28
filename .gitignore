@@ -22,7 +22,7 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 
-## Obj-C/Swift specific
+## Obj-C/Swift speci._*
 *.hmap
 
 ## App packaging
@@ -33,6 +33,10 @@ DerivedData/
 ## Playgrounds
 timeline.xctimeline
 playground.xcworkspace
+
+## Mac stuff
+._*
+.DS_Store
 
 # Swift Package Manager
 #
