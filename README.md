@@ -17,7 +17,7 @@ iPhone or iPad running at least iOS 13. Alternatively, you can use the simulator
 
 
 ## Story
-Jointify was developed during the TechChallenge of the Technical University Munich in the summer semester 2020. This guide features how to reproduce the prototype with which we won the challenge proposed by the Technical Univerity's hospital [MRI](https://www.mri.tum.de/)
+Jointify was developed during the TechChallenge of the Technical University Munich in the summer semester 2020. This guide features how to reproduce the prototype with which we won the challenge proposed by the [Technical University's hospital MRI](https://www.mri.tum.de/).
 
 ### What is Jointify
 Jointify is an iOS app that allows patients to take range of motion (ROM) measurements right at home, rather than having to visit a doctor. This is made feasible by a machine learning model that analyzes a patient’s video in which she performs the flexing and bending of the joint. The final prototype has the measurement for the knee implemented. 
@@ -79,18 +79,18 @@ Example 1 | Example 2 | Example 3
 #### How to tackle the erroneous output examples
 1. The lowest confidence value that PoseNet assigns to the recognized coordinates of all relevant joints must be over `0.3`
 2. All X coordinates must be rational (_Example 1_)
-  1. Left joints: X Coordinate of each joint must be larger than or equal to the X Coordinate of respective right joint
-  2. Right joints: X Coordinate of each joint must be lower than or equal to the X Coordinate of respective left joint
+   1. Left joints: X Coordinate of each joint must be larger than or equal to the X Coordinate of respective right joint
+   2. Right joints: X Coordinate of each joint must be lower than or equal to the X Coordinate of respective left joint
 3. X and Y Coordinates of knee must be rational (_Example 2_). **Problem**: hip and ankle are analysed correctly, but knee is not. **Solutions**:
-  1. Left knee: The X Coordinate must be larger than the X Coordinate of left ankle OR the Y Coordinate must be lower than the Y Coordinate of the left ankle
-  2. Right knee: X coordinate must be lower than X Coordinate of right ankle OR Y coordinate must be lower than Y Coordinate of right ankle
+   1. Left knee: The X Coordinate must be larger than the X Coordinate of left ankle `OR` the Y Coordinate must be lower than the Y Coordinate of the left ankle
+   2. Right knee: X coordinate must be lower than X Coordinate of right ankle `OR` Y coordinate must be lower than Y Coordinate of right ankle
 4. Knee and ankle coordinates must be rational (_Example 3_). **Problem**: only hip is analysed correctly, but knee and ankles are not. **Solutions**:
-  1. Left hip: X Coordinate must be lower than X Coordinate of left ankle OR X Coordinate must be higher than X coordinate of left knee
-  2. Right hip: X Coordinate must be lower than X Coordinate of right ankle OR X Coordinate must be higher than X coordinate of right knee
+   1. Left hip: X Coordinate must be lower than X Coordinate of left ankle `OR` X Coordinate must be higher than X coordinate of left knee
+   2. Right hip: X Coordinate must be lower than X Coordinate of right ankle `OR` X Coordinate must be higher than X coordinate of right knee
 5. **Final check: At least 55% of all extracted frames must conform to all of the previous checks.**
 
 ### Calculate angles
-Once we obtain the joints’ coordinates from the model, we use these to create two vectors between the hip joint and the knee joint (_v1_) and twohe ankle joint and the knee joint (_v2_). Then, we use the following formula to calculate the cutting angle of both vectors: ![calc angles formular](calculate_angles_formular.png)
+Once we obtain the joints’ coordinates from the model, we use these to create two vectors between the hip joint and the knee joint (_v1_) and twohe ankle joint and the knee joint (_v2_). Then, we use the following formula to calculate the cutting angle of both vectors: ![calc angles formular](/readme_images/calculate_angles_formular.png)
 
 ### PDFWriter
 The results of the measurement can be sent via mail in a standardized form that is used by doctors to log your range of motions. The form for the upper and lower extremities are, among others, provided by the Deutsche Gesetzliche Unfallsversicherung (DGUV) here: [upper extremities](https://www.dguv.de/medien/formtexte/aerzte/f_4222/f4222.pdf), [lower extremities](https://www.dguv.de/medien/formtexte/aerzte/f_4224/f4224.pdf). For writing the extracted values into the PDF form, we created a dedicated class `MeasurementSheetPDFWriter` which offers one public method `createPDF()` that takes the measurement values, writes them into the PDF and returns it. The following steps are well documented in the method: 
@@ -110,6 +110,7 @@ TechChallenge SS20 team Jointify:
 * Lennart Jayasuriya: l.jayasuriya@tum.de 
 * Niklas Bergmüller: niklas.bergmueller@tum.de 
 * Lukas Gerhardt: lukas.gerhardt@tum.de
+
 Feel free to reach out if you have any further questions about the project, the code or our implementation of PoseNet.
 
 # Version
