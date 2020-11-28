@@ -37,23 +37,23 @@ As always with a new prototype you need to consider what it will look like. We f
 
 This also represents the expected user walk through, i.e. how she uses the app. In this order, we go into more detail about what the `View` holds and what needs to be considered when implementing them.
 
-1. `WelcomeView`: The WelcomeView holds a button that starts the user flow through the app. To realise the navigation through the app, NavigationLinks are used. Further, previous records are shown in a List. See Final remarks for information on how the user data (i.e. past measurements) that is shown in the List is stored on the device.
+1. **`WelcomeView`**: The `WelcomeView` holds a button that starts the user flow through the app. To realise the navigation through the app, `NavigationLinks` are used. Further, previous records are shown in a `List`. See [Final remarks](#final-remarks) for information on how the user data (i.e. past measurements) that is shown in the `List` is stored on the device.
 
-2. `InstructionsView`: This screen holds instructions on how to use the app. A combination of horizontal and vertical ScrollViews is used to have all necessary information in one place.
+2. **`InstructionsView`**: This screen holds instructions on how to use the app. A combination of horizontal and vertical `ScrollView`s is used to have all necessary information in one place.
 
-3. `ChooseInputView`: Choosing the body side to be analysed happens through a SegmentedControllPicker. The choice is passed through to the ProcessingView. The two buttons below offer the choice to use an existing recording or record a video right in the app. With a click on Record or Gallery, the MediaPicker is opened with the UIImagePickerController.SourceType .camera or .gallery, respectively.
+3. **`ChooseInputView`**: Choosing the body side to be analysed happens through a `SegmentedControllPicker`. The choice is passed through to the `ProcessingView`. The two buttons below offer the choice to use an existing recording or record a video right in the app. With a click on _Record_ or _Gallery_, the `MediaPicker` is opened with the `UIImagePickerController.SourceType` `.camera` or `.gallery`, respectively.
 
-4. `MediaPicker`: The MediaPicker encapsulates the system way to choose media from the gallery or camera. The mediaType has to be set to [kUTTypeMovie as String] in order to only show videos in the gallery or have the video mode set in the camera. For a video, the imagePicker returns a NSURL, i.e. the internal file location where the chosen video is stored.
+4. **`MediaPicker`**: The `MediaPicker` encapsulates the system way to choose media from the gallery or camera. The `mediaType` has to be set to ``[kUTTypeMovie as String]` in order to only show videos in the gallery or have the video mode set in the camera. For a video, the `imagePicker` returns a `NSURL`, i.e. the internal file location where the chosen video is stored.
 
-5. `ProcessingView`: Here, the magic happens. The video is split up into frames (we chose three frames per second), passed through the PoseNet analysis (see Load PoseNet model) and returns the frames with the minimum and maximum range of motion values (those are calculated from the vectors between the joints, compare Calculate angles). To give the user something to do, while he waits for the analysis to finish, we added a info box. A ProgressBar is added to give feedback on the progress. If the analysis fails, the user is shown an Alert that prompts him to try again.
+5. **`ProcessingView`**: Here, the magic happens. The video is split up into frames (we chose three frames per second), passed through the PoseNet analysis (see [Load PoseNet model](#load-posenet-model)) and returns the frames with the minimum and maximum range of motion values (those are calculated from the vectors between the joints, compare [Calculate angles](#calculate-angles)). To give the user something to do while he waits for the analysis to finish we added an info box. A `ProgressBar` is added to give feedback on the progress. If the analysis fails, the user is shown an `Alert` that prompts him to try again.
 
-6. `VideoResultView`: After a successful analysis, the frames on which the highest and lowest angle of your joint bending/ flexing is shown with their respective values.
+6. **`VideoResultView`**: After a successful analysis, the frames on which the highest and lowest angle of your joint bending/ flexing is shown with their respective values.
 
-7. `ResultView`: The values only are shown on the last screen. Previous values, if they exist, are displayed below. From here, the user can go back to the WelcomeView (button Done) or choose to create a PDF which translates the angles into standardized medical values along the “Neutral-Null-Methode” (compare `PDFWriter.swift`).
+7. **`ResultView`**: The values only are shown on the last screen. Previous values, if they exist, are displayed below. From here, the user can go back to the WelcomeView (button Done) or choose to create a PDF which translates the angles into standardized medical values along the “Neutral-Null-Methode” (compare [PDFWriter](#pdfwriter)).
 
-8. `ResultView`: The values only are shown on the last screen. Previous values, if they exist, are displayed below. From here, the user can go back to the WelcomeView (button Done) or choose to create a PDF which translates the angles into standardized medical values along the “Neutral-Null-Methode” (compare `PDFWriter.swift`).
+8. **`ResultView`**: The values only are shown on the last screen. Previous values, if they exist, are displayed below. From here, the user can go back to the WelcomeView (button Done) or choose to create a PDF which translates the angles into standardized medical values along the “Neutral-Null-Methode” (compare [PDFWriter](#pdfwriter)).
 
-9. `MailView`: The result PDF from the PDFWriter is attached to an email draft. We utilize the system mail programm by wrapping a MFMailComposeViewController. Hitting send dismisses the view and brings you back to the ResultView.
+9. **`MailView`**: The result PDF from the PDFWriter is attached to an email draft. We utilize the system mail programm by wrapping a `MFMailComposeViewController`. Hitting send dismisses the view and brings you back to the `ResultView`.
 
 
 ### Load PoseNet model
